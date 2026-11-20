@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same Offer, Different City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: one hostel room at sunset; every glowing object in the room opens a part of the argument, then the page scrolls out through the window into the city. */
+:root{
+  --sky:#FFC84A;
+  --dusk:#B5561B;
+  --ink:#2A170C;
+  --panel:#F9A94B;
+  --paper:#FFF8EE;
+  --screen:#39C6C0;
+  --cloud:#B3AEDB;
+  --brick:#8E4420;
+  --muted:#6E4A33;
+  --her:#E2557A;
+  --him:#3C7FD0;
+  --display:"Pixelify Sans", "Courier New", monospace;
+  --body:"Exo 2", "Trebuchet MS", system-ui, sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--dusk);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.1;text-wrap:balance;margin:0}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--screen);outline-offset:3px}
+
+/* ---------- chrome: id card, menu, top links ---------- */
+.idcard{position:fixed;top:14px;left:14px;z-index:40;display:flex;gap:10px;align-items:center;background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:6px 12px 6px 6px;text-decoration:none}
+.idcard canvas{width:44px;height:44px;image-rendering:pixelated;background:#F6D7B0;border:2px solid var(--ink)}
+.idcard b{display:block;font-family:var(--display);font-size:17px;line-height:1}
+.idcard span{display:block;font-size:12px;color:var(--muted)}
+.idcard i{font-style:normal;color:#1C8A57;font-size:11px}
+.menu{position:fixed;top:96px;left:16px;z-index:40;display:flex;flex-direction:column;gap:2px}
+.menu small{font-size:12px;color:rgba(255,248,238,.7);margin-bottom:6px}
+.menu a{font-family:var(--display);font-weight:700;color:var(--paper);text-decoration:none;font-size:16px;letter-spacing:.04em;text-shadow:2px 2px 0 rgba(42,23,12,.45)}
+.menu a:hover,.menu a.on{color:var(--sky)}
+.toplinks{position:fixed;top:18px;right:18px;z-index:40;display:flex;gap:14px}
+.toplinks a{color:var(--paper);font-size:15px;text-underline-offset:3px;text-shadow:1px 1px 0 rgba(42,23,12,.5)}
+@media (max-width:900px){
+  .menu{top:auto;bottom:0;left:0;right:0;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:4px 14px;background:var(--ink);padding:8px}
+  .menu small{display:none}
+  .menu a{font-size:13px}
+  .toplinks{display:none}
+  .idcard b{font-size:15px}
+}
+
+/* ---------- the room ---------- */
+.room{position:relative;height:320vh;background:#8A4524}
+.room .sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;padding:96px 16px 24px}
+.layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%;image-rendering:pixelated;transform-origin:50% 50%;will-change:transform;z-index:0;pointer-events:none}
+.stage{position:relative;z-index:2;width:min(1000px,100%,calc((100svh - 150px) * 1.6));aspect-ratio:240/150;transform-origin:50% 36.667%;will-change:transform}
+.fadeable{transition:opacity .2s}
+.scrollcue{position:absolute;z-index:5;right:22px;bottom:22px;font-family:var(--display);color:var(--paper);font-size:14px;text-shadow:2px 2px 0 rgba(42,23,12,.5)}
+.arrive{position:absolute;z-index:6;left:50%;top:22%;transform:translateX(-50%);opacity:0;pointer-events:none;background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 20px;text-align:center;width:min(440px,calc(100% - 32px))}
+.arrive b{display:block;font-family:var(--display);font-size:clamp(28px,5vw,48px);line-height:1}
+.arrive span{display:block;margin-top:6px;font-size:15px}
+@media (prefers-reduced-motion: reduce){.room{height:auto}.room .sticky{position:relative;height:auto;min-height:100svh}.arrive{display:none}}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.hot{position:absolute;border:0;background:transparent;cursor:pointer;padding:0}
+.hot::after{content:"";position:absolute;inset:-3px;border:3px solid var(--screen);opacity:0;transition:opacity .15s}
+.hot:hover::after,.hot:focus-visible::after{opacity:1}
+.hot .tag{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;background:var(--paper);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-family:var(--display);font-weight:600;font-size:clamp(11px,1.4vw,15px);padding:3px 8px;pointer-events:none}
+.hot .tag::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink)}
+.hot .tag.below{bottom:auto;top:calc(100% + 8px)}
+.hot .tag.below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--ink)}
+.pulse{animation:pulse 1.6s steps(2) infinite}
+@keyframes pulse{50%{filter:brightness(1.25)}}
+.hint{position:absolute;left:16px;bottom:20px;z-index:5;max-width:min(430px,calc(100% - 32px));background:var(--paper);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 16px}
+.hint h1{font-size:clamp(20px,2.8vw,30px)}
+.hint p{margin:6px 0 0;font-size:clamp(13px,1.4vw,15px)}
+@media (max-width:700px){.hint{padding:8px 12px}.hint p{display:none}.scrollcue{display:none}}
+
+/* ---------- city band ---------- */
+.city{position:relative;background:#6B3518;padding:28px 16px 8px}
+.city .intro{width:min(720px,100%);margin:0 auto;background:var(--paper);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:18px 22px}
+.city .intro p{margin:0}
+.city .intro strong{font-family:var(--display);font-size:20px}
+
+/* ---------- sections ---------- */
+main{padding:0 16px 90px}
+.panel{width:min(1000px,100%);margin:64px auto 0;background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:clamp(18px,4vw,40px)}
+.panel>header{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:20px}
+.panel>header .chip{font-family:var(--display);font-size:13px;background:var(--ink);color:var(--paper);padding:3px 8px}
+.panel>header h2{font-size:clamp(28px,4.5vw,44px)}
+.lead{font-size:19px;max-width:65ch;margin:0 0 22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--paper);border:2px solid var(--ink);box-shadow:0 5px 0 rgba(42,23,12,.55);padding:16px 18px}
+.card h3{font-size:20px;margin-bottom:6px}
+.card p{margin:0;font-size:15px}
+.card .src{display:block;margin-top:8px;font-size:12px;color:var(--muted)}
+.big{font-family:var(--display);font-size:42px;line-height:1;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.big .f{color:var(--her)} .big .m{color:var(--him)} .big small{font-size:14px;font-family:var(--body);color:var(--muted)}
+.prose{max-width:68ch}
+.prose p{margin:0 0 12px}
+.eq{font-family:var(--display);font-size:clamp(17px,2.4vw,24px);background:var(--ink);color:var(--sky);padding:14px 18px;margin:14px 0;overflow-x:auto;white-space:nowrap}
+.eq em{font-style:normal;color:var(--screen)}
+.table-wrap{overflow-x:auto;margin:14px 0}
+table{border-collapse:collapse;width:100%;background:var(--paper);border:2px solid var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid rgba(42,23,12,.2);padding:8px 12px;text-align:left;vertical-align:top}
+th{font-family:var(--display);font-weight:600;background:#FBE3C2}
+td.n,th.n{text-align:right}
+.f-col{color:var(--her);font-weight:700}.m-col{color:var(--him);font-weight:700}
+h3.sub{font-size:24px;margin:28px 0 10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+
+/* ---------- game ---------- */
+.arcade{background:var(--ink);border:2px solid var(--ink);padding:clamp(14px,3vw,26px);color:var(--paper)}
+.arcade .screen{background:#123638;border:4px solid var(--screen);box-shadow:inset 0 0 0 4px #0D2627;padding:clamp(14px,3vw,26px);min-height:380px}
+.arcade h3{color:var(--sky);font-size:24px;margin-bottom:8px}
+.arcade p{margin:0 0 12px}
+.choices{display:grid;gap:10px;margin-top:14px}
+.choice{display:flex;justify-content:space-between;gap:12px;align-items:center;text-align:left;width:100%;background:#1B4A4C;color:var(--paper);border:2px solid var(--screen);padding:12px 14px;font-size:16px;cursor:pointer}
+.choice:hover{background:#246063}
+.choice b{font-family:var(--display);font-weight:600;font-size:17px;display:block}
+.choice span{font-size:13px;opacity:.85}
+.choice .cost{font-family:var(--display);color:var(--sky);white-space:nowrap}
+.who{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.who button{background:#1B4A4C;border:2px solid var(--screen);color:var(--paper);padding:16px;cursor:pointer;text-align:left}
+.who button:hover{background:#246063}
+.who canvas{width:64px;height:64px;image-rendering:pixelated;display:block;margin-bottom:8px;background:#F6D7B0}
+.who b{font-family:var(--display);font-size:22px;display:block}
+.ledger{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0}
+.ledger div{background:#0D2627;border:1px solid var(--screen);padding:8px 10px}
+.ledger small{display:block;font-size:12px;opacity:.75}
+.ledger b{font-family:var(--display);font-size:20px;color:var(--sky);font-variant-numeric:tabular-nums}
+.verdict{font-family:var(--display);font-size:26px;margin:12px 0}
+.verdict.yes{color:#7BE495}.verdict.no{color:#FF8FA8}
+.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-family:var(--display);font-size:14px;color:var(--screen);margin-bottom:14px}
+.btn{display:inline-block;background:var(--sky);color:var(--ink);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-family:var(--display);font-weight:600;font-size:16px;padding:8px 16px;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:var(--paper);border-color:var(--screen);box-shadow:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.receipt{background:#FFF8EE;color:var(--ink);font-family:var(--body);font-size:14px;padding:12px 14px;margin:12px 0;border:2px dashed var(--ink);font-variant-numeric:tabular-nums}
+.receipt table{border:0;background:transparent;font-size:14px}
+.receipt td{border-bottom:1px dotted rgba(42,23,12,.3);padding:5px 6px}
+.receipt td small{display:block;color:var(--muted);font-size:12px}
+.receipt tr.tot td{font-family:var(--display);font-size:16px;border-bottom:0;border-top:2px solid var(--ink)}
+.flag{display:inline-block;font-family:var(--display);font-size:12px;padding:1px 6px;margin:4px 6px 0 0;border:1px solid currentColor}
+.flag.risk{color:#FF8FA8}.flag.info{color:var(--sky)}
+.meter{display:flex;height:14px;border:2px solid var(--screen);background:#0D2627;margin:0 0 6px}
+.meter span{display:block;height:100%;transition:width .25s steps(6)}
+.m-st{background:#7BE495}.m-sh{background:#FF8FA8}
+.meterkey{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;opacity:.9;margin-bottom:14px}
+.meterkey i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.paths{background:#0D2627;border:1px solid var(--screen);padding:12px 14px;margin:14px 0}
+.paths h4{font-family:var(--display);font-weight:600;color:var(--sky);margin:0 0 10px;font-size:18px}
+.paths p{font-size:14px;margin:8px 0 0}
+.pathrow{display:grid;grid-template-columns:70px 1fr;gap:4px 10px;align-items:center;margin-bottom:8px;font-size:14px}
+.pathrow>span{grid-column:2}
+.pbar{height:12px;background:#123638;border:1px solid var(--screen)}
+.pbar span{display:block;height:100%}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.vs div{background:#0D2627;border:1px solid var(--screen);padding:10px 12px;font-size:14px}
+.vs b{font-family:var(--display);font-size:18px;display:block}
+.calc{font-family:var(--display);font-size:15px;background:#0D2627;border-left:4px solid var(--sky);padding:10px 12px;margin:8px 0;line-height:1.6}
+
+/* ---------- policy lab ---------- */
+.lab{display:grid;grid-template-columns:minmax(260px,1fr) 1.3fr;gap:18px}
+@media (max-width:820px){.lab{grid-template-columns:1fr}}
+.ctrl{display:grid;gap:14px}
+.ctrl label{display:block;font-weight:600;font-size:15px}
+.ctrl output{float:right;font-family:var(--display);font-variant-numeric:tabular-nums}
+.ctrl input[type=range]{width:100%;accent-color:var(--brick)}
+.ctrl .note{font-size:12.5px;color:var(--muted);font-weight:400}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:15px}
+.check input{width:18px;height:18px;margin-top:3px;accent-color:var(--brick)}
+.bars{display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:90px 1fr 64px;gap:10px;align-items:center;font-family:var(--display)}
+.bar .track{height:28px;background:repeating-linear-gradient(90deg,#F3DDBF 0 10px,#EBD0AC 10px 20px);border:2px solid var(--ink);position:relative}
+.bar .fill{position:absolute;inset:0 auto 0 0;transition:width .25s steps(8)}
+.bar .val{text-align:right;font-size:22px;font-variant-numeric:tabular-nums}
+.gapbig{font-family:var(--display);font-size:48px;line-height:1;margin:4px 0}
+.line{position:relative;height:74px;margin-top:12px}
+.line .axis{position:absolute;left:0;right:0;top:34px;height:4px;background:var(--ink)}
+.line .mark{position:absolute;top:6px;transform:translateX(-50%);text-align:center;font-family:var(--display);font-size:12px;white-space:nowrap;transition:left .25s}
+.line .mark i{display:block;width:4px;height:30px;margin:2px auto 0;font-style:normal}
+.line .ends{position:absolute;top:44px;font-size:12px;color:var(--muted)}
+
+/* ---------- voices ---------- */
+.tv{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.tvbtn{background:none;border:0;padding:0;cursor:pointer;position:relative}
+.tvbtn canvas{width:190px;height:150px;image-rendering:pixelated;display:block}
+.tvbtn:hover canvas{filter:brightness(1.12)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tags span{font-family:var(--display);font-size:13px;background:var(--paper);border:2px solid var(--ink);padding:2px 8px}
+dialog{border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:0;width:min(900px,calc(100% - 24px));background:var(--ink);color:var(--paper)}
+dialog::backdrop{background:rgba(42,23,12,.75)}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--brick)}
+.dlg-head h3{font-size:20px}
+.dlg-head button{background:var(--paper);border:2px solid var(--ink);font-family:var(--display);cursor:pointer;padding:2px 10px;font-size:15px}
+.player{aspect-ratio:16/9;background:#0D2627;display:grid;place-items:center;position:relative}
+.player video{width:100%;height:100%;display:block;background:#000}
+.soon{text-align:center;padding:24px;max-width:46ch}
+.soon b{font-family:var(--display);font-size:26px;color:var(--sky);display:block;margin-bottom:6px}
+.chapters{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;padding:12px 14px}
+.chapters button{text-align:left;background:#1B4A4C;color:var(--paper);border:2px solid var(--screen);padding:8px 10px;cursor:pointer;font-size:14px}
+.chapters button:hover{background:#246063}
+.chapters b{display:block;font-family:var(--display);font-weight:600}
+
+/* ---------- notes ---------- */
+.refs{columns:2 300px;column-gap:28px;font-size:14px;padding-left:18px}
+.refs li{break-inside:avoid;margin-bottom:8px}
+footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110px}
+</style>
+</head>
+<body>
+
+<a class="idcard" href="#top" aria-label="Back to the room">
+  <canvas id="avatar" width="16" height="16"></canvas>
+  <div><b>Same Offer, Different City</b><span>UG project · Explaining gendered outcomes</span><i>● Gender and out-of-city internships</i></div>
+</a>
+<nav class="menu" aria-label="Sections">
+  <small>Menu</small>
+  <a href="#gap">THE GAP</a>
+  <a href="#textbook">TEXTBOOK</a>
+  <a href="#play">PLAY</a>
+  <a href="#model">MODEL</a>
+  <a href="#policy">POLICY LAB</a>
+  <a href="#voices">VOICES</a>
+  <a href="#notes">NOTES</a>
+</nav>
+<div class="toplinks"><a href="#notes">Model note</a><a href="#sources">Sources</a><a href="#play">Play</a></div>
+
+<!-- ================= ROOM ================= -->
+<section class="room" id="top" aria-label="Ananya's hostel room">
+ <div class="sticky">
+  <canvas class="layer" id="cFar" width="384" height="216" aria-hidden="true"></canvas>
+  <canvas class="layer" id="cMid" width="384" height="216" aria-hidden="true"></canvas>
+  <canvas class="layer" id="cNear" width="384" height="216" aria-hidden="true"></canvas>
+  <div class="stage" id="stage">
+    <canvas id="roomc" width="240" height="150" aria-hidden="true"></canvas>
+    <!-- hotspots placed in % of the 240x150 room grid -->
+    <button class="hot" style="left:5%;top:11%;width:15%;height:27%" data-go="model"><span class="tag">The model</span></button>
+    <button class="hot" style="left:5.8%;top:46%;width:13.4%;height:22%" data-video="1"><span class="tag">▶ Voices: 6 interviews</span></button>
+    <button class="hot" style="left:49%;top:51%;width:10%;height:12%" data-go="gap"><span class="tag">The gap</span></button>
+    <button class="hot" style="left:24.5%;top:53%;width:6%;height:7%" data-go="textbook"><span class="tag">The textbook</span></button>
+    <button class="hot" style="left:34%;top:57%;width:4.5%;height:6%" data-go="policy" id="phoneHot"><span class="tag below">Mummy calling… (policy lab)</span></button>
+    <button class="hot" style="left:80%;top:32%;width:13%;height:56%" data-go="play"><span class="tag">Play: Pack Your Bags</span></button>
+    <button class="hot" style="left:63%;top:77%;width:10%;height:15%" data-go="notes"><span class="tag">Model note + sources</span></button>
+    <button class="hot" style="left:77%;top:12%;width:6%;height:10%" data-clock="1"><span class="tag" id="clockTag">9:30 pm · PG curfew at 10</span></button>
+  </div>
+  <div class="hint fadeable">
+    <h1>Same CGPA. Same offer. Only one of them goes.</h1>
+    <p>Ananya and Arjun both got a two-month internship at a Bengaluru startup. This site asks why women students are less likely to take internships in another city. Click the glowing things in the room, or scroll to fly out of the window.</p>
+  </div>
+  <div class="scrollcue fadeable">Scroll ↓ to fly out of the window</div>
+  <div class="arrive" id="arrive" aria-hidden="true"><b>Bengaluru</b><span>About 1,700 km from home. Rent is due before the first stipend arrives.</span></div>
+ </div>
+</section>
+
+<!-- ================= CITY BAND ================= -->
+<section class="city" aria-label="Bengaluru skyline">
+  <div class="intro">
+    <p><strong>The question.</strong> Among undergraduates in Indian cities who get an in-office internship offer in another city, women accept less often than men with the same grades, course and offer. Here is the evidence, why the textbook can't explain it, and a model where everyone is rational and the gap still appears.</p>
+  </div>
+</section>
+
+<main>
+
+<!-- ================= 1. GAP ================= -->
+<section class="panel" id="gap">
+  <header><span class="chip">01 · The question · 20%</span><h2>The gap is real</h2></header>
+  <p class="lead">No national dataset records out-of-city internships by gender, so the case rests on four kinds of evidence that all point the same way. The survey in the notes measures the gap directly.</p>
+  <div class="cards">
+    <article class="card">
+      <div class="big"><span class="f">1.8%</span><span class="m">55.3%</span></div>
+      <h3>Who moves for work</h3>
+      <p>Share of migrants aged 15 to 59 who moved for a job: women vs men, PLFS 2020-21.</p>
+      <a class="src" href="https://www.theindiaforum.in/economy/women-work-not-move-what-do-data-say">The India Forum, using PLFS</a>
+    </article>
+    <article class="card">
+      <div class="big"><span class="f">Farther</span><small>= wider gap</small></div>
+      <h3>Offers turned down</h3>
+      <p>Young women trained for skilled jobs in 7 states accepted fewer offers than men, and the gap widened as jobs got farther from home, holding education, caste, age, trade and district constant.</p>
+      <a class="src" href="https://ie.yale.edu/news/180223/vocational-training-programs-india-are-leaving-women-behind-neednt-be-case">Moore and Pande, Yale, 2018</a>
+    </article>
+    <article class="card">
+      <div class="big"><span class="f">8.5</span><small>college ranks</small></div>
+      <h3>Paying for a safe route</h3>
+      <p>Delhi University women chose colleges about 8.5 ranks below what they qualified for, to get a safer commute. Men did not make this trade.</p>
+      <a class="src" href="https://www.cgdev.org/node/3136414">Borker, via CGD</a>
+    </article>
+    <article class="card">
+      <div class="big"><span class="f">50%</span><small>allowed to go alone</small></div>
+      <h3>Permission</h3>
+      <p>Only half of women aged 15 to 49 are allowed to go alone to places outside their village or community (NFHS-5, 2019-21).</p>
+      <a class="src" href="https://theprint.in/india/82-women-in-india-able-to-refuse-sex-to-their-husbands-finds-govts-family-health-survey/948810">ThePrint, NFHS-5</a>
+    </article>
+  </div>
+
+  <h3 class="sub">Why it matters</h3>
+  <div class="cards">
+    <article class="card"><h3>Welfare</h3><p>In a randomised résumé test, internship experience raised interview requests by about 14%. A declined internship is a lost step up.</p><a class="src" href="https://www.hum.utah.edu/_resources/documents/internships/major%20internship%20and%20employment.pdf">Nunley et al., Labour Economics</a></article>
+    <article class="card"><h3>Efficiency</h3><p>Women are about 48% of students in higher education. If they can't follow the best match across cities, talent lands in the wrong jobs.</p><a class="src" href="https://rsdebate.nic.in/bitstream/123456789/750825/1/PQ_265_07082024_U1798_p211_p212.pdf">AISHE 2021-22, Rajya Sabha reply</a></article>
+    <article class="card"><h3>Business</h3><p>In the PM Internship Scheme pilot, location was a leading reason offers were turned down. The parliamentary committee flagged that relocation and safety problems may hit women harder.</p><a class="src" href="https://m.thewire.in/article/economy/only-1-5-of-funds-used-the-pm-internship-scheme-has-missed-its-targets-by-a-wide-margin">The Wire</a></article>
+  </div>
+</section>
+
+<!-- ================= 2. TEXTBOOK ================= -->
+<section class="panel" id="textbook">
+  <header><span class="chip">02 · Standard theory · 25%</span><h2>What the textbook predicts</h2></header>
+  <div class="two">
+    <div class="prose">
+      <p><strong>Human capital theory, with a unitary household.</strong> An internship is an investment. Take it if the career gain is bigger than the extra cost:</p>
+      <div class="eq">Go to city O &nbsp;⇔&nbsp; <em>ΔR</em> ≥ <em>C</em> − <em>S</em></div>
+      <p>ΔR is the career gain, C the cost of living there, S the stipend. A unitary household pools its money and backs whichever child has the higher return.</p>
+      <p><strong>Prediction:</strong> same ability, same rents, same tastes, so the same take-up for women and men.</p>
+    </div>
+    <div class="prose">
+      <p><strong>Where the evidence breaks it.</strong></p>
+      <p>The gap shows up <em>after</em> an offer is made, and it grows with distance. The textbook can only explain that if moving costs rise faster with distance for women. That is a gendered cost, which it assumes away.</p>
+      <p>Women are not avoiding investing in themselves: female enrolment in higher education has been above male for five years in a row.</p>
+    </div>
+  </div>
+  <h3 class="sub">Ruling out the easy answers</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Easy explanation</th><th>Why it doesn't fit</th></tr></thead>
+    <tbody>
+      <tr><td>Women have less education or skill</td><td>Female gross enrolment is above male (gender parity index 1.01). The survey holds CGPA constant.</td></tr>
+      <tr><td>Women are less productive, so returns are lower</td><td>Once placed, women stayed in jobs as long as or longer than men.</td></tr>
+      <tr><td>Women don't want to work</td><td>The gap is about moving. Women take internships that need no move, such as remote ones.</td></tr>
+      <tr><td>Employers only hire men</td><td>The gap is in accepting an offer, after the employer has already said yes.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="prose"><strong>What's left:</strong> the constraints and payoffs around moving differ by gender. Play it and see.</p>
+</section>
+
+<!-- ================= 3. GAME ================= -->
+<section class="panel" id="play">
+  <header><span class="chip">Bridge to the model</span><h2>Pack Your Bags</h2></header>
+  <p class="lead">Same offer, two players, this year's Bengaluru prices. Choose a flight or train, a PG in Koramangala, HSR Layout, BTM Layout, Electronic City or near Silk Board (or a relative's place in Whitefield), a commute, a way home after launch nights, and whether to join the Friday outings. Rents, fares and passes come from listings and official fare charts (see Sources). Every choice is sensible for the person making it. Play as Ananya, then as Arjun, and the game checks every possible plan for both.</p>
+  <div class="arcade"><div class="screen" id="game" aria-live="polite"></div></div>
+</section>
+
+<!-- ================= 4. MODEL ================= -->
+<section class="panel" id="model">
+  <header><span class="chip">03 · Rational-choice model · 35%</span><h2>The game, written out</h2></header>
+  <p class="lead">Moving costs a daughter more, and the parents who have to cover the shortfall get back less from her career. Everyone optimises, and nobody's ability or preferences differ.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Agent</th><th>Chooses</th><th>Maximises</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Student</strong> (woman or man)</td><td>Accept the out-of-city offer O, or stay with the local option L</td><td>Career gain ΔR minus own costs, including harassment risk h</td></tr>
+      <tr><td><strong>Parents</strong></td><td>Pay the shortfall and give permission (both needed)</td><td>Their share θ of the child's gain, minus the money they pay, minus reputational cost σ</td></tr>
+      <tr><td><strong>Employer</strong> (extension)</td><td>Whom to make out-of-city offers to</td><td>Value of the hire minus recruiting cost, given the chance the offer is accepted</td></tr>
+    </tbody>
+  </table></div>
+  <div class="cards">
+    <article class="card"><h3>Same for both</h3><p>Career gain ΔR is spread evenly from ₹0 to ₹1,00,000. Stipend S = ₹16,000 for two months, matching the 2024 average of about ₹8,000 a month. A 20-year-old can't borrow, so any shortfall D = C − S must come from the parents.</p></article>
+    <article class="card"><h3>Feature 1: the price of being safe</h3><p>The same level of safety costs a woman more: a women's PG, a bigger deposit, a cab instead of the metro after dark. So her cost is the man's cost plus a premium π, and she also bears a harassment-risk cost h.</p></article>
+    <article class="card"><h3>Feature 2: what parents get back</h3><p>Under patrilocal marriage, a daughter's later earnings mostly go to her husband's household, so θ is lower for daughters. Parents of a daughter living alone also face "log kya kahenge", a reputational cost σ.</p></article>
+  </div>
+  <h3 class="sub">Decision rules</h3>
+  <div class="eq">Student wants to go: &nbsp;<em>ΔR</em> ≥ <em>D</em> + <em>h</em></div>
+  <div class="eq">Parents agree: &nbsp;<em>θ</em>·<em>ΔR</em> − <em>σ</em> ≥ <em>D</em> &nbsp;⇔&nbsp; <em>ΔR</em> ≥ (<em>D</em> + <em>σ</em>) / <em>θ</em></div>
+  <p class="prose">She goes only if both hold. Because θ is below 1, the parents' threshold is the one that binds, so take-up = 1 − threshold / 100 (in ₹ thousand).</p>
+  <h3 class="sub">Numerical example (₹ thousand, two months)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Parameter</th><th class="n m-col">Arjun</th><th class="n f-col">Ananya</th></tr></thead>
+    <tbody>
+      <tr><td>Living cost C</td><td class="n">24 (room 20 + travel 4)</td><td class="n">34 (safe PG 25 + safe travel 9)</td></tr>
+      <tr><td>Stipend S</td><td class="n">16</td><td class="n">16</td></tr>
+      <tr><td>Shortfall D = C − S</td><td class="n">8</td><td class="n">18</td></tr>
+      <tr><td>Harassment-risk cost h</td><td class="n">0</td><td class="n">6</td></tr>
+      <tr><td>Parents' share θ</td><td class="n">0.5</td><td class="n">0.4</td></tr>
+      <tr><td>Reputational cost σ</td><td class="n">0</td><td class="n">4</td></tr>
+      <tr><td>Parents' threshold (D + σ)/θ</td><td class="n">16</td><td class="n">55</td></tr>
+      <tr><th>Take-up</th><th class="n m-col">84%</th><th class="n f-col">45%</th></tr>
+    </tbody>
+  </table></div>
+  <div class="two">
+    <article class="card"><h3>The two features multiply</h3><p>The safety cost alone opens a 20-point gap, and the family effect alone opens 14. Together they open 39, because every rupee of extra cost is divided by a smaller θ.</p></article>
+    <article class="card"><h3>Employers make it stick</h3><p>Recruiters who see women accepting less often rationally make them fewer out-of-city offers. That is statistical discrimination, and it keeps families from ever seeing a daughter go.</p></article>
+  </div>
+  <h3 class="sub">What the model predicts beyond the gap</h3>
+  <div class="cards">
+    <article class="card"><h3>Relatives nearby</h3><p>A relative in the internship city cuts rent and σ, so the gap shrinks.</p></article>
+    <article class="card"><h3>No gap if remote</h3><p>With no move, D, h and σ are zero, so women take remote internships as often as men.</p></article>
+    <article class="card"><h3>Women who go are stronger</h3><p>Only women with ΔR above 55 go, against 16 for men, so women who do move should outperform and convert more pre-placement offers.</p></article>
+    <article class="card"><h3>Longer means wider</h3><p>Rent grows every month and the gain grows more slowly, so 12-month placements show the biggest gaps.</p></article>
+  </div>
+</section>
+
+<!-- ================= 5. POLICY LAB ================= -->
+<section class="panel" id="policy">
+  <header><span class="chip">03 · Policy</span><h2>Policy Lab</h2></header>
+  <p class="lead">Move the sliders and the model recalculates take-up for 100 identical students of each gender. Defaults are the numerical example. Numbers are illustrative until the survey replaces them.</p>
+  <div class="lab">
+    <div class="ctrl card">
+      <div><label for="sStip">Monthly stipend <output id="oStip"></output></label><input type="range" id="sStip" min="0" max="20" step="1" value="8"><span class="note">Same for both. Two-month internship.</span></div>
+      <div><label for="sPrem">Safety premium for women <output id="oPrem"></output></label><input type="range" id="sPrem" min="0" max="16" step="1" value="10"><span class="note">Extra paid over two months for a safe PG and cabs after dark.</span></div>
+      <div><label for="sSig">Parents' reputational worry, σ <output id="oSig"></output></label><input type="range" id="sSig" min="0" max="12" step="1" value="4"><span class="note">What "log kya kahenge" costs the family, in ₹ thousand. Cohort placements and parent sessions lower it.</span></div>
+      <div><label for="sTh">Parents' share of a daughter's gain, θ <output id="oTh"></output></label><input type="range" id="sTh" min="0.2" max="0.5" step="0.05" value="0.4"><span class="note">0.5 for sons. Shifts slowly with norms about where a daughter's income goes.</span></div>
+      <label class="check" for="cHouse"><input type="checkbox" id="cHouse"> Company provides safe housing for all interns<br><span class="note">Removes rent and the safety premium; travel stays.</span></label>
+      <label class="check" for="cRemote"><input type="checkbox" id="cRemote"> Offer a remote option</label>
+      <button class="btn" id="labReset" type="button">Reset to the example</button>
+    </div>
+    <div class="card">
+      <h3>Take-up of the out-of-city internship</h3>
+      <div class="bars" style="margin-top:12px">
+        <div class="bar"><span class="m-col">Men</span><div class="track"><div class="fill" id="bM" style="background:var(--him)"></div></div><span class="val m-col" id="vM"></span></div>
+        <div class="bar"><span class="f-col">Women</span><div class="track"><div class="fill" id="bF" style="background:var(--her)"></div></div><span class="val f-col" id="vF"></span></div>
+      </div>
+      <p style="margin:18px 0 0;font-size:15px">Gap in take-up</p>
+      <div class="gapbig" id="vGap"></div>
+      <p style="margin:14px 0 0;font-size:15px">Career gain needed before parents agree (₹ thousand)</p>
+      <div class="line" id="tline">
+        <div class="axis"></div>
+        <div class="mark" id="mkM"><span class="m-col">Men <b id="tM"></b></span><i style="background:var(--him)"></i></div>
+        <div class="mark" id="mkF"><span class="f-col">Women <b id="tF"></b></span><i style="background:var(--her)"></i></div>
+        <span class="ends" style="left:0">0</span><span class="ends" style="right:0">100</span>
+      </div>
+      <p id="labNote" style="font-size:14px;margin:10px 0 0;color:var(--muted)"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. VOICES ================= -->
+<section class="panel" id="voices">
+  <header><span class="chip">Evidence in their words</span><h2>Voices</h2></header>
+  <div class="tv">
+    <button class="tvbtn" type="button" data-video="1" aria-label="Play the interviews video"><canvas id="tvc" width="38" height="30"></canvas></button>
+    <div class="prose" style="flex:1;min-width:260px">
+      <p><strong>Six students on why they did or didn't go.</strong> Click the TV to watch. The interviews show what the barriers feel like. The survey is what shows the gap is real, so men are interviewed too, for contrast.</p>
+      <div class="tags"><span>Rent</span><span>Commute</span><span>Safety</span><span>Family</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. NOTES ================= -->
+<section class="panel" id="notes">
+  <header><span class="chip">Companion note</span><h2>Model note, survey and sources</h2></header>
+  <div class="two">
+    <article class="card">
+      <h3>The model on one card</h3>
+      <p>Student g goes iff ΔR ≥ D<sub>g</sub> + h<sub>g</sub> and θ<sub>g</sub>ΔR − σ<sub>g</sub> ≥ D<sub>g</sub>, with D<sub>g</sub> = C<sub>g</sub> − S. Gendered features: C<sub>F</sub> = C<sub>M</sub> + π, h<sub>F</sub> &gt; 0 (safety); θ<sub>F</sub> &lt; θ<sub>M</sub>, σ<sub>F</sub> &gt; 0 (family). With ΔR ~ U[0, 100], take-up = 1 − (D<sub>g</sub> + σ<sub>g</sub>)/(100·θ<sub>g</sub>). Example: men 84%, women 45%.</p>
+    </article>
+    <article class="card">
+      <h3>The survey</h3>
+      <p>60 to 100 second- and third-year students, about half women, anonymous. It asks about offers, acceptance and reasons for declining, the monthly cost of a place they'd feel safe in, what family would pay, whether they'd need permission, parents' worry about relatives (1 to 5), and CGPA and course. The analysis compares acceptance by gender within the same CGPA band and course.</p>
+    </article>
+  </div>
+  <h3 class="sub" id="sources">Sources</h3>
+  <ul class="refs">
+    <li>Borker, G. (2018). Safety First: Perceived Risk of Street Harassment and Educational Choices of Women. <a href="https://data2x.org/wp-content/uploads/2019/11/PerceivedRiskStreetHarassmentandEdChoicesofWomen_Borker.pdf">PDF</a> · <a href="https://voxdev.org/topic/education/perceived-risk-street-harassment-and-college-choice-women-delhi">VoxDev</a></li>
+    <li>Bursztyn, González and Yanagizawa-Drott (2020). Misperceived Social Norms. American Economic Review 110(10). <a href="https://www.aeaweb.org/doi/10.1257/aer.20180975">AEA</a></li>
+    <li>Chakraborty, Mukherjee, Rachapalli and Saha (2018). Stigma of Sexual Violence and Women's Decision to Work. World Development 103. <a href="https://docs.iza.org/dp10934.pdf">IZA</a></li>
+    <li>Moore and Pande (2018). Vocational training programs in India are leaving women behind. <a href="https://ie.yale.edu/news/180223/vocational-training-programs-india-are-leaving-women-behind-neednt-be-case">Yale</a></li>
+    <li>Nunley, Pugh, Romero and Seals (2016). College Major, Internship Experience, and Employment Opportunities. <a href="https://www.hum.utah.edu/_resources/documents/internships/major%20internship%20and%20employment.pdf">PDF</a></li>
+    <li>Siddique (2020). Does a fear of violence reduce female labour supply? <a href="https://www.voxdev.org/topic/labour-markets/does-fear-violence-reduce-female-labour-supply-evidence-india">VoxDev</a></li>
+    <li>AISHE 2021-22, Rajya Sabha Unstarred Question 1798. <a href="https://rsdebate.nic.in/bitstream/123456789/750825/1/PQ_265_07082024_U1798_p211_p212.pdf">PDF</a></li>
+    <li>PLFS 2020-21 migration: Women at Work, But Not on the Move. <a href="https://www.theindiaforum.in/economy/women-work-not-move-what-do-data-say">The India Forum</a></li>
+    <li>NFHS-5 mobility figures. <a href="https://theprint.in/india/82-women-in-india-able-to-refuse-sex-to-their-husbands-finds-govts-family-health-survey/948810">ThePrint</a></li>
+    <li>PM Internship Scheme. <a href="https://theprint.in/economy/modi-govts-pm-internship-scheme-saw-high-attrition-in-year-1-just-30-joined-41-quit-midway/2795773">ThePrint</a> · <a href="https://m.thewire.in/article/economy/only-1-5-of-funds-used-the-pm-internship-scheme-has-missed-its-targets-by-a-wide-margin">The Wire</a></li>
+    <li>Internshala Internship Trends 2024 (average stipend). <a href="https://www.storyboard18.com/how-it-works/internship-opportunities-surge-by-25-in-2024-report-50595.htm">Storyboard18</a></li>
+    <li>Women's housing costs. <a href="https://community.verified.realestate/article/why-single-women-still-struggle-to-find-rental-homes-in-india-challenges-trends-and-safer-housing-options/">Verified Real Estate</a> · <a href="https://thesoftcopy.in/?p=34684">The Softcopy</a></li>
+    <li>Game prices, rent and deposits: <a href="https://stanzaliving.com/bengaluru/pg-hostel-in-koramangala">Stanza Living, Koramangala (double sharing ₹11,000–18,000)</a> · <a href="https://www.stanzaliving.com/pg-in-btm-layout">Stanza Living, BTM Layout (₹8,500–18,000)</a> · <a href="https://www.colive.com/blog/?p=6679">Colive, HSR Layout (from ₹11,999)</a> · <a href="https://www.colive.com/bangalore/pg-in-btm-layout/">Colive, BTM Layout (from ₹7,000)</a> · <a href="https://zolostays.com/blog/understanding-the-price-of-pg-accommodation-in-bangalore">Zolo, PG rent by area (Electronic City ₹8,000–13,000)</a> · <a href="https://zolostays.com/bangalore/">Zolo, food add-on ₹2,500–5,000</a> · <a href="https://thesoftcopy.in/?p=34684">women's hostels charge 62% higher deposits</a> · <a href="https://newskarnataka.com/bengaluru/interns-%e2%82%b926000-monthly-budget-in-bengaluru-sparks-online-debate/17032026/">an intern's ₹26,000-a-month Bengaluru budget</a></li>
+    <li>Game prices, getting there: <a href="https://flights.airindiaexpress.com/en/delhi-to-bengaluru-flights">Delhi–Bengaluru economy fares from about ₹5,700–6,300</a> · <a href="https://ixigo.com/by-train-rail/new-delhi-to-bengaluru-by-train">Rajdhani 3AC and Karnataka Express fares</a> · <a href="https://www.rome2rio.com/s/Bengaluru-Airport-BLR/HSR-Layout">airport cab ₹1,200–1,500 and Vayu Vajra ₹260–300</a></li>
+    <li>Game prices, getting around: <a href="https://thesouthfirst.com/karnataka/auto-fares-revised-in-bengaluru-effective-from-august-1/">auto meter fares and 1.5× night rate</a> · <a href="https://www.siasat.com/uber-ola-to-fall-in-line-as-karnataka-govt-fixes-uniform-fare-2971440/amp/">uniform cab fare</a> · <a href="https://www.deccanherald.com/india/karnataka/bengaluru/cab-drivers-unions-seek-uniform-fares-across-apps-3102276">10% night charge</a> · <a href="https://thesouthfirst.com/karnataka/karnataka-a-day-after-fare-hike-bmtc-bus-pass-rates-raised-by-up-to-25-bjp-stages-protest-at-majestic/">BMTC passes (non-AC ₹1,500, Volvo ₹2,500)</a> · <a href="https://www.91mobiles.com/hub/?p=529286">Shakti free bus rides limited to Karnataka residents</a> · <a href="https://www.thenewsminute.com/amp/story/karnataka/karnataka-hc-lifts-bike-taxi-ban-directs-state-govt-to-grant-permits">bike taxis legal again, January 2026</a> · <a href="https://www.tomtom.com/traffic-index/bengaluru-traffic">TomTom: 10 km took about 45 minutes in 2025</a>. Bike-taxi fares, the ₹600 outing, career value, risk and worry are estimates.</li>
+  </ul>
+  <p style="font-size:13px;margin:10px 0 0">Model parameters (θ, σ, h, the safety premium) are illustrative and consistent with the evidence above; survey results will replace them.</p>
+</section>
+</main>
+
+<footer>Same Offer, Different City · UG Economics project on gendered outcomes · Pixel room drawn in code</footer>
+
+<dialog id="vid" aria-labelledby="vidTitle">
+  <div class="dlg-head"><h3 id="vidTitle">Voices: six interviews</h3><button type="button" id="vidClose">Close ✕</button></div>
+  <div class="player" id="player">
+    <video id="video" controls preload="metadata" playsinline hidden></video>
+    <div class="soon" id="soon"><b>Tape loading…</b>The interview video goes here. It will play on this screen with chapters for each student.</div>
+  </div>
+  <div class="chapters" id="chapters"></div>
+</dialog>
+
+<script>
+(() => {
+// ---------------- config ----------------
+const VIDEO_SRC = "voices.mp4"; // the interview video, published beside this page
+const CHAPTERS = [ // set start times (seconds) once the video is in
+  {t:0, who:"Interview 1", tag:"Rent"},
+  {t:0, who:"Interview 2", tag:"Safety"},
+  {t:0, who:"Interview 3", tag:"Family"},
+  {t:0, who:"Interview 4", tag:"Commute"},
+  {t:0, who:"Interview 5", tag:"Family"},
+  {t:0, who:"Interview 6", tag:"Rent"}
+];
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---------------- pixel helpers ----------------
+function seeded(s){return()=>{s=(s*16807)%2147483647;return (s-1)/2147483646}}
+function px(ctx,c,x,y,w=1,h=1){ctx.fillStyle=c;ctx.fillRect(x,y,w,h)}
+
+// ---------------- avatar (16x16) ----------------
+function drawFace(ctx, girl){
+  const P = girl
+   ? ["................","....HHHHHHH.....","...HHHHHHHHH....","..HHHSSSSSHHH...","..HHSSSSSSSHH...","..HHSESSSESHH...","..HHSSSSSSSHH...","..HHSSSMSSSHH...","..HH.SSSSS.HH...","..HH..SSS..HH...","..HHCCCCCCCHH...","...CCCCCCCCC....","..CCCCCCCCCCC...","..CCCCCCCCCCC...","..CCCCCCCCCCC...","................"]
+   : ["................","................","....HHHHHHH.....","...HHHHHHHHH....","...HSSSSSSSH....","...SSSSSSSSS....","...SSESSSESS....","...SSSSSSSSS....","...SSSSMSSSS....","....SSSSSSS.....","......SSS.......","...DDDDDDDDD....","..DDDDDDDDDDD...","..DDDDDDDDDDD...","..DDDDDDDDDDD...","................"];
+  const col={H:"#3A2114",S:"#E9B48A",E:"#2A170C",M:"#B5504A",C:"#E2557A",D:"#3C7FD0"};
+  ctx.clearRect(0,0,16,16);
+  P.forEach((r,y)=>[...r].forEach((ch,x)=>{if(col[ch])px(ctx,col[ch],x,y)}));
+}
+drawFace(document.getElementById("avatar").getContext("2d"), true);
+
+// ---------------- room (240x150) ----------------
+const rc = document.getElementById("roomc"), r = rc.getContext("2d");
+const skyRand = seeded(7);
+const towers = []; {let x=62; while(x<178){const w=3+Math.floor(skyRand()*7), h=10+Math.floor(skyRand()*34); towers.push([x,w,h]); x+=w;}}
+const towers2 = []; {let x=62; while(x<178){const w=4+Math.floor(skyRand()*8), h=6+Math.floor(skyRand()*18); towers2.push([x,w,h]); x+=w;}}
+const clouds = Array.from({length:9},()=>[62+skyRand()*120, 18+skyRand()*24, 8+Math.floor(skyRand()*14)]);
+let tick=0;
+function room(){
+  // wall + floor
+  px(r,"#D9783A",0,0,240,150);
+  px(r,"#C96C31",0,0,240,4);
+  px(r,"#9C5A33",0,118,240,32);
+  for(let x=0;x<240;x+=16) px(r,"#8E5230",x,118,1,32);
+  px(r,"#B06538",0,116,240,2);
+  // window frame
+  px(r,"#5E5A62",52,6,10,112); px(r,"#5E5A62",178,6,10,112);
+  px(r,"#BFA38E",46,12,148,6); px(r,"#2A170C",46,18,148,1);
+  px(r,"#F08E3E",62,18,116,74);
+  px(r,"#2A170C",64,22,112,66);
+  // glass: left transparent so the city layers behind show through
+  r.clearRect(65,23,110,64);
+  // window glass glare
+  px(r,"#FFE38A",68,26,2,6); px(r,"#FFE38A",71,26,1,3);
+  // sign in window
+  px(r,"#2A170C",146,26,26,9); px(r,"#FFF8EE",147,27,24,7);
+  // tiny "BLR" letters
+  const L={B:["110","101","110","101","110"],L:["100","100","100","100","111"],R:["110","101","110","110","101"],"→":["000","010","111","010","000"]};
+  let lx=149; ["B","L","R","→"].forEach(ch=>{L[ch].forEach((row,yy)=>[...row].forEach((b,xx)=>{if(b==="1")px(r,"#B5561B",lx+xx,28+yy)})); lx+=5;});
+  // noticeboard (model)
+  px(r,"#2A170C",12,16,38,42); px(r,"#C8955E",13,17,36,40);
+  px(r,"#FFF8EE",16,20,14,10); px(r,"#FFE38A",32,21,14,9); px(r,"#9FE3DE",16,33,15,9); px(r,"#F7B7C6",33,33,13,9); px(r,"#FFF8EE",18,45,26,9);
+  for(let i=0;i<5;i++){px(r,"#6E4A33",18,22+i*2,8-i%2*3,1)}
+  px(r,"#E2557A",22,19,2,2); px(r,"#3C7FD0",38,20,2,2); px(r,"#2A170C",20,49,20,1); px(r,"#2A170C",20,51,14,1);
+  // clock
+  px(r,"#2A170C",185,18,14,14); px(r,"#F0C29A",186,19,12,12); px(r,"#2A170C",191,21,1,5); px(r,"#2A170C",191,25,1,1); px(r,"#2A170C",191,26,1,3);
+  px(r,"#C04A2A",190,25,3,1);
+  // TV on stand (voices)
+  px(r,"#6B3518",14,98,34,20); px(r,"#4F2610",16,118,4,6); px(r,"#4F2610",42,118,4,6);
+  px(r,"#2A170C",14,68,34,30); px(r,"#5E5A62",15,69,32,28);
+  const glow = (Math.floor(tick/30)%2)?"#46D4CE":"#39C6C0";
+  px(r,"#123638",17,71,24,22); px(r,glow,18,72,22,20);
+  for(let i=0;i<7;i++){px(r,"#FFF8EE",26,76+i,1+ (i<4?i:6-i),1)} // play triangle
+  px(r,"#2A170C",43,73,2,2); px(r,"#2A170C",43,78,2,2); px(r,"#C04A2A",43,88,2,2);
+  px(r,"#2A170C",22,64,1,4); px(r,"#2A170C",36,62,1,6);
+  // desk
+  px(r,"#2A170C",56,91,130,2); px(r,"#F2C46B",56,93,130,8); px(r,"#D9A24E",56,100,130,3);
+  px(r,"#7A3E1C",60,103,4,28); px(r,"#7A3E1C",178,103,4,28);
+  // books (textbook)
+  px(r,"#3C7FD0",60,86,13,3); px(r,"#C04A2A",61,83,12,3); px(r,"#1C8A57",59,80,14,3); px(r,"#FFF8EE",60,81,1,1); px(r,"#FFF8EE",61,84,1,1);
+  // phone (ringing → policy)
+  const ring = (Math.floor(tick/20)%2)===0;
+  px(r,"#2A170C",82,87,8,5); px(r,ring?"#7BE495":"#39C6C0",83,88,6,3);
+  if(ring&&!reduce){px(r,"#FFF8EE",80,85,1,1);px(r,"#FFF8EE",91,85,1,1);px(r,"#FFF8EE",79,83,1,1);px(r,"#FFF8EE",92,83,1,1)}
+  // laptop (gap)
+  px(r,"#2A170C",118,77,24,15); px(r,"#5E5A62",119,78,22,13); px(r,glow,120,79,20,11);
+  px(r,"#2A170C",123,82,4,6); px(r,"#E2557A",123,85,4,3); px(r,"#2A170C",130,82,4,6); px(r,"#3C7FD0",130,81,4,7);
+  px(r,"#9A9AA2",115,92,30,2);
+  // mug
+  px(r,"#C04A2A",150,86,6,6); px(r,"#C04A2A",156,87,2,3); px(r,"#FFF8EE",151,84,1,2); px(r,"#FFF8EE",153,82,1,3);
+  // student from behind
+  px(r,"#3A2114",95,78,18,15); px(r,"#3A2114",93,82,22,10); px(r,"#2E190F",97,92,14,6);
+  px(r,"#E2557A",91,96,26,22); px(r,"#C9456A",91,96,26,2); px(r,"#3A2114",98,96,12,9);
+  px(r,"#E9B48A",114,95,6,3); px(r,"#E9B48A",88,95,5,3);
+  px(r,"#4F2610",92,118,24,8); // chair
+  // suitcase (notes)
+  px(r,"#2A170C",151,116,24,22); px(r,"#3C7FD0",152,117,22,20); px(r,"#2F67AE",152,126,22,2);
+  px(r,"#2A170C",159,112,8,1); px(r,"#2A170C",159,112,1,4); px(r,"#2A170C",166,112,1,4);
+  px(r,"#FFF8EE",155,120,6,4); px(r,"#E2557A",165,129,5,5);
+  // arcade (game)
+  px(r,"#2A170C",191,44,33,90); px(r,"#F2C46B",192,45,31,88); px(r,"#D9A24E",192,45,4,88);
+  px(r,"#2A170C",194,47,27,13); px(r,"#FFE38A",195,48,25,11);
+  // letters "PLAY"
+  const A={P:["110","101","110","100","100"],L:["100","100","100","100","111"],A:["010","101","111","101","101"],Y:["101","101","010","010","010"]};
+  let ax=199; ["P","L","A","Y"].forEach(ch=>{A[ch].forEach((row,yy)=>[...row].forEach((b,xx)=>{if(b==="1")px(r,"#B5561B",ax+xx,51+yy)})); ax+=4;});
+  px(r,"#2A170C",195,63,26,24); px(r,glow,196,64,24,22);
+  // suitcase icon on arcade screen
+  px(r,"#E2557A",202,70,12,9); px(r,"#2A170C",206,68,4,2); px(r,"#FFF8EE",204,73,2,2);
+  px(r,"#2A170C",194,90,27,10); px(r,"#5E5A62",195,91,25,8); px(r,"#C04A2A",199,93,3,3); px(r,"#3C7FD0",206,94,2,2); px(r,"#1C8A57",210,94,2,2);
+  px(r,"#2A170C",200,108,15,2); px(r,"#2A170C",204,112,7,6);
+  // rug
+  px(r,"#C04A2A",70,136,72,6); px(r,"#E2557A",74,137,64,1); px(r,"#E2557A",74,140,64,1);
+}
+function loop(){tick++; room(); drawCity(tick); if(!reduce) setTimeout(()=>requestAnimationFrame(loop),66)}
+
+// ---------------- city layers seen through the window ----------------
+const CW=384, CH=216, cr=seeded(11);
+const L1=document.getElementById("cFar").getContext("2d"), L2=document.getElementById("cMid").getContext("2d"), L3=document.getElementById("cNear").getContext("2d");
+const farB=[]; {let x=-4; while(x<CW+4){const w=6+Math.floor(cr()*12), h=30+Math.floor(cr()*46); farB.push([x,w,h,cr()<.18]); x+=w+(cr()<.25?3:0);}}
+const midB=[]; {let x=-6; while(x<CW+6){const w=9+Math.floor(cr()*16), h=34+Math.floor(cr()*64); midB.push([x,w,h,Math.floor(cr()*997)]); x+=w;}}
+const cloudsC=Array.from({length:16},()=>[cr()*CW, 10+cr()*64, 14+Math.floor(cr()*30)]);
+const treesC=Array.from({length:26},(_,i)=>[i*16+Math.floor(cr()*9)-6, 7+Math.floor(cr()*6)]);
+function drawCity(t){
+  // far: sky, sun, clouds, distant towers
+  const sky=["#FFDB6E","#FFD45A","#FFCD50","#FFC54B","#FFBC48","#FDB146","#FAA744","#F79F42"];
+  sky.forEach((c,i)=>px(L1,c,0,i*18,CW,18)); px(L1,"#F79F42",0,144,CW,72);
+  for(let y=-11;y<=11;y++){const w=Math.round(Math.sqrt(121-y*y)); px(L1,y<0?"#FFE9A8":"#FFE08A",300-w,118+y,w*2,1)}
+  cloudsC.forEach(([x0,y,w],i)=>{const x=((x0+t*(0.12+i%3*0.04))%(CW+60))-40; px(L1,"#B3AEDB",Math.floor(x),Math.floor(y),w,3); px(L1,"#C6C2E6",Math.floor(x)+3,Math.floor(y)-2,w-8,2); px(L1,"#9C97C8",Math.floor(x)+2,Math.floor(y)+3,w-5,1)});
+  farB.forEach(([x,w,h,ant])=>{px(L1,"#CC6B30",x,CH-h-34,w,h+34); if(ant)px(L1,"#CC6B30",x+Math.floor(w/2),CH-h-40,1,6)});
+  // mid: city blocks with lit windows and one tall tower
+  L2.clearRect(0,0,CW,CH);
+  midB.forEach(([x,w,h,seed],i)=>{const top=CH-h-16; px(L2,i%4===0?"#9A5128":"#8F4A24",x,top,w,h+16); px(L2,"#7E3F1D",x+w-2,top,2,h+16);
+    for(let wy=top+4;wy<CH-18;wy+=6)for(let wx=x+2;wx<x+w-3;wx+=4){const on=((wx*13+wy*7+seed+Math.floor(t/45)*(i%5===0?3:0))%9)<2; if(on)px(L2,"#FFD45A",wx,wy,2,2)}});
+  px(L2,"#7A3E1C",232,CH-150,16,150); px(L2,"#8F4A24",234,CH-150,12,150); px(L2,"#7A3E1C",238,CH-164,4,14); px(L2,"#7A3E1C",239,CH-176,2,12);
+  if(Math.floor(t/12)%2===0) px(L2,"#FF4D4D",239,CH-178,2,2);
+  for(let wy=CH-144;wy<CH-20;wy+=7){px(L2,"#FFD45A",236,wy,2,3); if((wy>>3)%3)px(L2,"#FFD45A",241,wy,2,3)}
+  // near: elevated metro line with a moving train, trees, street
+  L3.clearRect(0,0,CW,CH);
+  for(let x=10;x<CW;x+=58){px(L3,"#8C7B70",x,182,7,34); px(L3,"#76665C",x+5,182,2,34); px(L3,"#8C7B70",x-4,180,15,3)}
+  px(L3,"#A39184",0,174,CW,6); px(L3,"#6E5E55",0,180,CW,2); px(L3,"#C9B8A8",0,173,CW,1);
+  const tx=((t*1.6)%(CW+260))-130;
+  px(L3,"#5B2C82",Math.floor(tx),163,112,10); px(L3,"#7A3E9E",Math.floor(tx),163,112,7); px(L3,"#5B2C82",Math.floor(tx)+112,165,4,8);
+  for(let wx=4;wx<108;wx+=8) px(L3,"#F3E3FF",Math.floor(tx)+wx,165,5,3);
+  px(L3,"#FFE08A",Math.floor(tx)+113,167,2,2);
+  px(L3,"#4A2410",0,206,CW,10); px(L3,"#6B3518",0,212,CW,4);
+  treesC.forEach(([x,r])=>{for(let y=-r;y<=r;y++){const w=Math.round(Math.sqrt(r*r-y*y)*1.3); px(L3,y<-r/3?"#5E9447":"#3F7337",x-w,200+y,w*2,1)} px(L3,"#4A2410",x-1,200+r-1,2,8)});
+  for(let x=30;x<CW;x+=90){px(L3,"#3A2A22",x,184,1,22); px(L3,"#3A2A22",x,184,5,1); px(L3,"#FFE08A",x+4,185,2,1)}
+}
+
+loop();
+
+// ---------------- hotspots ----------------
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.go).scrollIntoView({behavior:reduce?"auto":"smooth"})));
+document.querySelectorAll("[data-video]").forEach(b=>b.addEventListener("click",openVideo));
+
+// ---------------- TV icon in Voices ----------------
+(function tv(){
+  const c=document.getElementById("tvc"), g=c.getContext("2d");
+  px(g,"#2A170C",0,0,38,26); px(g,"#5E5A62",1,1,36,24); px(g,"#123638",3,3,26,20); px(g,"#39C6C0",4,4,24,18);
+  for(let i=0;i<9;i++) px(g,"#FFF8EE",13,8+i,1+(i<5?i:8-i),1);
+  px(g,"#2A170C",31,5,3,3); px(g,"#2A170C",31,10,3,3); px(g,"#C04A2A",31,18,3,3);
+  px(g,"#4F2610",5,26,4,4); px(g,"#4F2610",29,26,4,4);
+})();
+
+// ---------------- video dialog ----------------
+const dlg=document.getElementById("vid"), video=document.getElementById("video"), soon=document.getElementById("soon");
+let videoReady=null;
+function openVideo(){
+  if(videoReady===null){
+    video.src=VIDEO_SRC;
+    video.addEventListener("loadedmetadata",()=>{videoReady=true; video.hidden=false; soon.hidden=true},{once:true});
+    video.addEventListener("error",()=>{videoReady=false; video.hidden=true; soon.hidden=false},{once:true});
+  }
+  try{dlg.showModal()}catch(e){dlg.setAttribute("open","")}
+}
+document.getElementById("vidClose").addEventListener("click",()=>{video.pause(); dlg.close()});
+dlg.addEventListener("close",()=>video.pause());
+const chapEl=document.getElementById("chapters");
+CHAPTERS.forEach(ch=>{const b=document.createElement("button"); b.type="button"; b.innerHTML=`<b>${ch.who}</b>${ch.tag}`;
+  b.addEventListener("click",()=>{if(videoReady){video.currentTime=ch.t; video.play().catch(()=>{})}}); chapEl.appendChild(b)});
+
+// ---------------- game ----------------
+const G=document.getElementById("game");
+// All money in rupees. Each price is noted with its source in the Sources section ("Game prices").
+const STIPEND=8000, MONTHS=2, DAYS=42, LATE=8, OUTINGS=4, BASE_DR=100000, MISC=1500;
+const OFFICE="a startup on 80 Feet Road, Koramangala";
+const autoFare=(km,night)=>Math.round((36+Math.max(0,km-2)*18)*(night?1.5:1));   // RTA Bengaluru meter fare from Aug 2025; 1.5x from 10 pm to 5 am
+const cabFare=(km,night)=>Math.round((100+Math.max(0,km-4)*24)*(night?1.1:1));   // Karnataka uniform cab fare (non-AC, first 4 km Rs 100, then Rs 24/km); 10% night charge
+const bikeFare=km=>Math.max(30,Math.round(km*12));                                 // estimate: bike taxis run below auto fares
+const rs=n=>(n<0?"−":"")+"₹"+Math.abs(Math.round(n)).toLocaleString("en-IN");
+const k=n=>Math.round(n/100)/10;
+const CHARS={
+  ananya:{name:"Ananya",girl:true,theta:.4,sigma:12000,parent:"Her parents",obj:"her",subj:"she",rel:"Chachi"},
+  arjun:{name:"Arjun",girl:false,theta:.5,sigma:0,parent:"His parents",obj:"him",subj:"he",rel:"Mama"}
+};
+const F=(who,fx)=>CHARS[who].girl?fx:{};   // effects that only bite for Ananya
+
+// Round 1: getting there and back
+function travelOpts(who){
+  const girl=CHARS[who].girl;
+  return [
+    {k:"fly",b:"Flight + cab from the airport",s:"About ₹6,000 each way on a budget airline · airport cab to Koramangala ₹1,200–1,500 · lands 9:40 pm",cost:2*(6000+1300),fx:{},flags:["info:Fastest"]},
+    {k:"vv",b:"Flight + Vayu Vajra airport bus",s:`About ₹6,000 each way · airport bus to HSR ₹230–300, then a night auto · home around 11:30 pm`,cost:2*(6000+300+autoFare(4,true)),fx:F(who,{h:2000,sigma:3000}),flags:girl?["risk:Night auto from Silk Board, alone"]:[]},
+    {k:"raj",b:"Rajdhani Express, 3AC",s:"About ₹4,250 each way, meals included · 33½ hours · reaches KSR Bengaluru 5:20 am, then an auto",cost:2*(4250+autoFare(10)),fx:F(who,{sigma:2000}),flags:girl?["info:One night on the train"]:[]},
+    {k:"sl",b:"Karnataka Express, sleeper",s:"About ₹865 each way · nearly 40 hours, open berths",cost:2*(865+autoFare(10)),fx:F(who,{h:3000,sigma:6000}),flags:girl?["risk:Two nights alone in an open coach"]:["info:Cheapest"]}
+  ];
+}
+
+// Round 2: where to live. Same listings for both players; what differs is the deposit, the curfew and how parents react.
+const HOMES=[
+  {k:"kor",b:"Managed PG, Koramangala 6th Block",s:"Double sharing, meals included · 8-minute walk to work",month:14000,km:1.5,meals:true,curfewF:"10 pm"},
+  {k:"hsr",b:"PG in HSR Layout Sector 2",s:"Double sharing, meals included · 5 km from work",month:12000,km:5,meals:true,curfewF:"10 pm"},
+  {k:"btm",b:"PG in BTM Layout 2nd Stage",s:"Triple sharing, meals included · 4 km from work",month:9500,km:4,meals:true,curfewF:"9:30 pm"},
+  {k:"ec",b:"PG in Electronic City Phase 1",s:"Triple sharing, meals included · 16 km from work, via Silk Board",month:8000,km:16,meals:true,curfewF:"9:30 pm"},
+  {k:"cheap",b:"Budget co-ed PG near Silk Board",s:"Triple sharing, no meals (food about ₹3,500 a month) · no warden · 5 km",month:7000,km:5,meals:false,coed:true},
+  {k:"rel",b:"Stay with a relative in Whitefield",s:"Free room and home food · 17 km from work, up to 2 hours each way on the Outer Ring Road",month:0,km:17,meals:true,relative:true}
+];
+function homeOpts(who){
+  const girl=CHARS[who].girl, ch=CHARS[who];
+  return HOMES.map(h=>{
+    const food=h.meals?0:3500, dep=h.relative?0:Math.round(girl?h.month*1.62:h.month);
+    let fx={}, flags=[], b=h.b, s=h.s;
+    if(h.relative){ b=`Stay with ${ch.rel} in Whitefield`; fx={dR:-15000}; if(girl){fx.sigma=-12000; flags.push(`info:Family watching, so no "log kya kahenge"`)} flags.push("risk:Misses most evenings at work"); }
+    else if(girl && h.coed){ fx={h:6000,sigma:10000}; flags.push("risk:No warden, men on the same floor"); }
+    else if(girl){ flags.push(`info:Women's PG: in by ${h.curfewF}`); }
+    if(girl && !h.relative) flags.push(`info:Deposit ${rs(dep)}, women's hostels ask about 62% more`);
+    return {...h,b,s,cost:(h.month+food)*MONTHS,dep,food,curfew:girl&&h.curfewF?h.curfewF:null,fx,flags,costLabel:h.month?`${rs(h.month+food)}/mo`:"Free"};
+  });
+}
+
+// Round 3: daily commute, priced from the distance
+function commuteOpts(who,home){
+  const girl=CHARS[who].girl, km=home.km, trips=DAYS*2, o=[];
+  if(km<=2){
+    o.push({k:"walk",b:"Walk",s:"8 minutes along 80 Feet Road",cost:0,fx:{}});
+    return o;
+  }
+  if(home.relative){
+    o.push({k:"vajra",b:"Vajra AC bus pass",s:`₹2,500 a month · 75–120 minutes each way${girl?" · Karnataka's free Shakti bus rides are for state residents, so she pays":""}`,cost:2500*MONTHS,fx:{}});
+    o.push({k:"cab",b:"Cab both ways",s:`${rs(cabFare(km))} a ride on the government fare chart · ${trips} rides`,cost:cabFare(km)*trips,fx:{}});
+    return o;
+  }
+  o.push({k:"bus",b:"BMTC bus pass",s:`Non-AC monthly pass ₹1,500${girl?" · free Shakti rides are for Karnataka residents only":""}${km>10?" · 60–90 min, packed at Silk Board":" · 30–45 min"}`,cost:1500*MONTHS,fx:F(who,km>10?{h:2000}:{h:1000}),flags:girl?["info:She pays: not a Karnataka resident"]:[]});
+  o.push({k:"auto",b:"Auto both ways",s:`${rs(autoFare(km))} a ride on the meter (₹36 for 2 km + ₹18/km) · ${trips} rides`,cost:autoFare(km)*trips,fx:{}});
+  o.push({k:"bike",b:"Bike taxi",s:`About ${rs(bikeFare(km))} a ride (estimate) · legal again since January 2026`,cost:bikeFare(km)*trips,fx:F(who,{sigma:3000}),flags:girl?["risk:Parents: behind a stranger, every day?"]:[]});
+  return o;
+}
+
+// Round 4: launch fortnight, eight nights past 10 pm
+function lateOpts(who,home){
+  const girl=CHARS[who].girl, km=home.km, o=[];
+  if(km<=2){
+    if(girl){
+      o.push({k:"early",b:"Leave at 9:45 to make curfew",s:"Miss the end of every launch night",cost:0,fx:{dR:-8000}});
+      o.push({k:"late",b:"Stay late, walk back after curfew",s:"The warden logs it and calls home",cost:0,fx:{sigma:5000,h:1000}});
+    } else o.push({k:"late",b:"Stay late and walk back",s:"8 minutes · no curfew",cost:0,fx:{}});
+    return o;
+  }
+  if(home.relative){
+    o.push({k:"early",b:"Leave at 7 for the bus",s:`${CHARS[who].rel} expects you for dinner · you miss launch nights`,cost:0,fx:{dR:-8000}});
+    o.push({k:"cab",b:"Stay late, night cab to Whitefield",s:`${rs(cabFare(km,true))} a night with the 10% night charge`,cost:cabFare(km,true)*LATE,fx:F(who,{sigma:3000}),flags:girl?[`risk:${CHARS[who].rel} waits up and tells your mother`]:[]});
+    o.push({k:"bus",b:"Stay late, last Vajra bus",s:"Covered by the pass · after midnight by the time you're home",cost:0,fx:F(who,{h:5000,sigma:5000}),flags:girl?["risk:Long walk from the stop after midnight"]:[]});
+    return o;
+  }
+  const curfew=girl&&home.curfew, cf=curfew?5000:0;
+  if(curfew) o.push({k:"early",b:`Leave in time for the ${home.curfew} curfew`,s:"Miss the end of every launch night",cost:0,fx:{dR:-8000}});
+  o.push({k:"auto",b:"Night auto home",s:`${rs(autoFare(km,true))} a night (meter + 50% after 10 pm)${curfew?" · breaks curfew":""}`,cost:autoFare(km,true)*LATE,fx:F(who,{sigma:cf,h:1000})});
+  o.push({k:"cab",b:"Cab home",s:`${rs(cabFare(km,true))} a night${curfew?" · breaks curfew":""}`,cost:cabFare(km,true)*LATE,fx:F(who,{sigma:cf})});
+  o.push({k:"bus",b:"Last bus and a walk",s:`Cheapest${km>10?" · over an hour at night":""}${curfew?" · breaks curfew":""}`,cost:0,fx:F(who,{sigma:cf,h:6000}),flags:girl?["risk:Dark stretch from the stop"]:[]});
+  return o;
+}
+
+// Round 5: Friday team outings, where the pre-placement offer gets talked about
+function outingOpts(who,home){
+  const girl=CHARS[who].girl, km=home.km, lock=girl&&(home.curfew||home.relative);
+  const ride=km<=2?0:(home.relative?cabFare(km,true):autoFare(km,true));
+  return [
+    {k:"go",b:"Go every Friday, home after 11",s:`About ₹600 a head${ride?` + ${rs(ride)} home`:""}, ${OUTINGS} times${lock?(home.relative?` · ${CHARS[who].rel} calls your mother`:" · breaks curfew"):""}`,cost:(600+ride)*OUTINGS,fx:F(who,lock?{sigma:5000}:(home.coed?{h:2000}:{}))},
+    {k:"half",b:"Go, leave by 9",s:"Make an appearance, miss the real conversations",cost:600*OUTINGS,fx:{dR:-5000}},
+    {k:"skip",b:"Skip them",s:"Save the money",cost:0,fx:{dR:-10000}}
+  ];
+}
+
+function rounds(who,picks){
+  const home=homeOpts(who).find(h=>h.k===picks[1]);
+  return [
+    {title:"Getting there",tag:"Delhi → Bengaluru and back",text:`The internship is at ${OFFICE}. First you have to get there, and home again in two months.`,opts:travelOpts(who),label:"Train or flight, return"},
+    {title:"Where do you live?",tag:"Two months of rent",text:"Rent and the deposit are due before the first stipend arrives. Prices are this year's listings.",opts:homeOpts(who),label:"Rent, food and bills"},
+    {title:"The daily commute",tag:`${DAYS} office days`,text:home?`${home.km} km to the office. In 2025, 10 km took about 45 minutes on average in Bengaluru traffic.`:"",opts:home?commuteOpts(who,home):[],label:"Daily commute"},
+    {title:"Launch fortnight",tag:`${LATE} late nights`,text:"The product ships this month. Eight nights run past 10 pm, and that's when the team decides who gets a pre-placement offer.",opts:home?lateOpts(who,home):[],label:"Late nights home"},
+    {title:"Friday team outings",tag:`${OUTINGS} Fridays`,text:"The team goes out every Friday. Your manager says this is where people get to know you.",opts:home?outingOpts(who,home):[],label:"Team outings"}
+  ];
+}
+const NROUNDS=5;
+function totals(who,picks){
+  const ch=CHARS[who], rd=rounds(who,picks); let h=0,sigma=ch.sigma,dR=BASE_DR; const lines=[];
+  picks.forEach((p,i)=>{const o=rd[i].opts.find(o=>o.k===p); if(!o)return; h+=o.fx.h||0; sigma+=o.fx.sigma||0; dR+=o.fx.dR||0; lines.push({label:rd[i].label,what:o.b,cost:o.cost});});
+  if(picks.length>=NROUNDS) lines.push({label:"Phone, laundry, toiletries",what:`About ${rs(MISC)} a month`,cost:MISC*MONTHS});
+  sigma=Math.max(0,sigma);
+  const home=homeOpts(who).find(x=>x.k===picks[1]);
+  const C=lines.reduce((a,l)=>a+l.cost,0), S=STIPEND*MONTHS, D=Math.max(0,C-S);
+  const upfront=(lines[0]?lines[0].cost/2:0)+(home?home.month+home.food+home.dep:0);
+  const studentOK=dR>=D+h, parentsGain=ch.theta*dR-sigma, parentsOK=parentsGain>=D;
+  return {C,S,D,h,sigma,dR,lines,upfront,deposit:home?home.dep:0,studentOK,parentsGain,parentsOK,go:studentOK&&parentsOK};
+}
+function allPaths(who){
+  const out=[];
+  for(const t of travelOpts(who)) for(const hm of homeOpts(who)) for(const c of commuteOpts(who,hm)) for(const l of lateOpts(who,hm)) for(const o of outingOpts(who,hm)){
+    const picks=[t.k,hm.k,c.k,l.k,o.k]; out.push({picks,home:hm.k,...totals(who,picks)});
+  }
+  return out;
+}
+function pathSummary(who){
+  const all=allPaths(who), ok=all.filter(p=>p.go);
+  const homes=[...new Set(ok.map(p=>p.home))].map(k=>HOMES.find(h=>h.k===k)).map(h=>h.relative?`staying with ${CHARS[who].rel}`:h.b.replace(/^(Managed |Budget )?/,"").replace(/^PG in /,"").replace(/^co-ed PG near /,"co-ed PG near ")).join(", ");
+  const avg=ok.length?ok.reduce((a,p)=>a+p.dR,0)/ok.length:0;
+  return {n:all.length,go:ok.length,homes,avg};
+}
+
+let gs={view:"start",who:null,step:0,picks:[],played:{}};
+function faceCanvas(girl){const c=document.createElement("canvas");c.width=16;c.height=16;drawFace(c.getContext("2d"),girl);return c}
+function flagHTML(o){return (o.flags||[]).map(f=>{const i=f.indexOf(":");return `<span class="flag ${f.slice(0,i)}">${f.slice(i+1)}</span>`}).join("")}
+function receipt(t){
+  return `<div class="receipt"><table><tbody>${t.lines.map(l=>`<tr><td>${l.label}<small>${l.what}</small></td><td class="n">${rs(l.cost)}</td></tr>`).join("")}
+    <tr><td>Stipend, 2 months at ₹8,000</td><td class="n">−${rs(t.S)}</td></tr>
+    <tr class="tot"><td>Shortfall the family must cover, D</td><td class="n">${rs(t.D)}</td></tr></tbody></table>
+    <small>Cash needed in week one (one-way ticket, first month, deposit): <b>${rs(t.upfront)}</b>.${t.deposit?` The ${rs(t.deposit)} deposit comes back at the end, but someone has to find it now.`:""}</small></div>`;
+}
+function meter(t){
+  const max=Math.max(60000,t.C);
+  return `<div class="meter" aria-hidden="true"><span style="width:${Math.min(100,t.S/max*100)}%" class="m-st"></span><span style="width:${Math.min(100,Math.max(0,t.C-t.S)/max*100)}%" class="m-sh"></span></div>
+    <div class="meterkey"><span><i class="m-st"></i>Covered by stipend</span><span><i class="m-sh"></i>Family has to pay</span></div>`;
+}
+function render(){
+  G.innerHTML="";
+  if(gs.view==="start"){
+    G.innerHTML=`<div class="hud"><span>PACK YOUR BAGS</span><span>Bengaluru · 2 months · ₹8,000 a month</span></div>
+      <h3>The offer</h3><p>A two-month product internship at ${OFFICE}, in Bengaluru's startup belt. The stipend is <b>₹8,000 a month</b>, India's 2024 average. Doing it is worth about <b>₹1,00,000</b> in career value: a shot at a pre-placement offer, references, a line on the CV.</p>
+      <p>Five rounds of real choices, priced at this year's Bengaluru rates: the journey, where to live, the commute, late nights, and the Friday outings. Then you call home.</p>
+      <p>Pick who you play. Same CGPA, same offer, both from Delhi, same prices.</p><div class="who"></div>`;
+    const w=G.querySelector(".who");
+    ["ananya","arjun"].forEach(key=>{const b=document.createElement("button");b.type="button";b.appendChild(faceCanvas(CHARS[key].girl));
+      const p=gs.played[key];
+      b.insertAdjacentHTML("beforeend",`<b>${CHARS[key].name}</b><span>${p?`Played: ${p.go?"went":"stayed home"} · costs ${rs(p.C)}`:"3rd year · CGPA 8.4 · Delhi"}</span>`);
+      b.addEventListener("click",()=>{gs={...gs,view:"round",who:key,step:0,picks:[]};render()});w.appendChild(b)});
+    return;
+  }
+  const ch=CHARS[gs.who];
+  if(gs.view==="round"){
+    const rd=rounds(gs.who,gs.picks)[gs.step], t=totals(gs.who,gs.picks);
+    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · ROUND ${gs.step+1} OF 6 · ${rd.tag.toUpperCase()}</span><span>Costs so far ${rs(t.C)} · stipend ${rs(STIPEND*MONTHS)}</span></div>
+      ${meter(t)}
+      <h3>${rd.title}</h3><p>${rd.text}</p><div class="choices"></div>
+      ${gs.step>0?`<div class="row"><button class="btn ghost" type="button" id="back">← Back</button></div>`:""}`;
+    const box=G.querySelector(".choices");
+    rd.opts.forEach(o=>{const b=document.createElement("button");b.type="button";b.className="choice";
+      b.innerHTML=`<div><b>${o.b}</b><span>${o.s}</span><div>${flagHTML(o)}</div></div><span class="cost">${o.costLabel||(o.cost?rs(o.cost):"₹0")}</span>`;
+      b.addEventListener("click",()=>{gs.picks=[...gs.picks,o.k]; gs.step++; gs.view=gs.step>=NROUNDS?"call":"round"; render()});
+      box.appendChild(b)});
+    const back=G.querySelector("#back"); if(back) back.addEventListener("click",()=>{gs.picks=gs.picks.slice(0,-1); gs.step--; render()});
+    return;
+  }
+  if(gs.view==="call"){
+    const t=totals(gs.who,gs.picks);
+    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · ROUND 6 OF 6 · THE CALL</span><span>Calling home…</span></div>
+      ${meter(t)}
+      <h3>The family call</h3>
+      <p>${t.D>0?`The stipend doesn't cover it. ${ch.parent} need to send <b>${rs(t.D)}</b>, and say yes.`:`The stipend covers the costs, but ${ch.parent.toLowerCase()} still have to say yes.`}</p>
+      ${receipt(t)}
+      <div class="ledger">
+        <div><small>Career value ΔR</small><b>${rs(t.dR)}</b></div>
+        <div><small>Risk cost to ${ch.obj}, h</small><b>${rs(t.h)}</b></div>
+        <div><small>Parents' worry, σ</small><b>${rs(t.sigma)}</b></div>
+        <div><small>Parents' share, θ</small><b>${ch.theta}</b></div>
+      </div>
+      <div class="row"><button class="btn" type="button" id="dial">Call home</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
+    G.querySelector("#dial").addEventListener("click",()=>{gs.view="end";render()});
+    G.querySelector("#back").addEventListener("click",()=>{gs.picks=gs.picks.slice(0,-1); gs.step=NROUNDS-1; gs.view="round"; render()});
+    return;
+  }
+  if(gs.view==="end"){
+    const t=totals(gs.who,gs.picks); gs.played[gs.who]=t;
+    const other=gs.who==="ananya"?"arjun":"ananya", o=gs.played[other];
+    const said=t.parentsOK?`"Theek hai, go. We'll send ${rs(t.D)}."`:(ch.girl?`"Beta, so far, alone… find something here."`:`"That's too much money this time."`);
+    let why;
+    if(!t.studentOK) why=`It isn't worth it to ${ch.obj}: the shortfall plus the risk (${rs(t.D+t.h)}) is more than the career value (${rs(t.dR)}).`;
+    else if(!t.parentsOK) why=`${ch.parent} get back ${ch.theta} of the ${rs(t.dR)} gain, which is ${rs(ch.theta*t.dR)}. Minus ${rs(t.sigma)} of worry, that leaves ${rs(t.parentsGain)}, less than the ${rs(t.D)} they would have to send. Saying no is the rational choice for them.`;
+    else why=`${ch.parent} get back ${ch.theta} × ${rs(t.dR)} − ${rs(t.sigma)} = ${rs(t.parentsGain)}, which covers the ${rs(t.D)} shortfall.${t.dR<BASE_DR?` But ${ch.subj} goes with ${rs(BASE_DR-t.dR)} less career value than the full offer${t.h>0?`, and carries ${rs(t.h)} of risk`:""}.`:(t.h>0?` ${ch.subj[0].toUpperCase()+ch.subj.slice(1)} carries ${rs(t.h)} of risk to get there.`:"")}`;
+    const sA=pathSummary("ananya"), sR=pathSummary("arjun");
+    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · RESULT</span><span>${said}</span></div>
+      <div class="verdict ${t.go?"yes":"no"}">${t.go?`${ch.name} goes to Bengaluru`:`${ch.name} stays home`}</div>
+      <div class="calc">Student: ΔR ${k(t.dR)}k ≥ D + h = ${k(t.D+t.h)}k? ${t.studentOK?"yes":"no"}<br>Parents: θ·ΔR − σ = ${ch.theta}×${k(t.dR)}k − ${k(t.sigma)}k = ${k(t.parentsGain)}k ≥ D = ${k(t.D)}k? ${t.parentsOK?"yes":"no"}</div>
+      <p>${why}</p>
+      ${receipt(t)}
+      ${o?`<div class="vs"><div><b>${CHARS.ananya.name}</b>${gs.played.ananya.go?"Went":"Stayed home"} · costs ${rs(gs.played.ananya.C)} · career value ${rs(gs.played.ananya.dR)} · risk ${rs(gs.played.ananya.h)}</div><div><b>${CHARS.arjun.name}</b>${gs.played.arjun.go?"Went":"Stayed home"} · costs ${rs(gs.played.arjun.C)} · career value ${rs(gs.played.arjun.dR)} · risk ${rs(gs.played.arjun.h)}</div></div>`:`<p>Now play the same offer as ${CHARS[other].name}.</p>`}
+      <div class="paths"><h4>Every possible plan, checked</h4>
+        <div class="pathrow"><b class="m-col">Arjun</b><div class="pbar"><span style="width:${sR.go/sR.n*100}%;background:var(--him)"></span></div><span>${sR.go} of ${sR.n} plans get him there · average career value ${rs(sR.avg)}</span></div>
+        <div class="pathrow"><b class="f-col">Ananya</b><div class="pbar"><span style="width:${sA.go/sA.n*100}%;background:var(--her)"></span></div><span>${sA.go} of ${sA.n} plans get her there · average career value ${rs(sA.avg)}</span></div>
+        <p>Same prices, same offer. The plans that work for Ananya run through ${sA.homes||"none of the homes"}. Her safe choices cost more, her deposit is bigger, the curfew takes evenings away, and every extra rupee is divided by a smaller θ.</p></div>
+      <div class="row"><button class="btn" type="button" id="again">Play as ${CHARS[other].name}</button><button class="btn ghost" type="button" id="retry">Try ${ch.name} again</button><a class="btn ghost" href="#model">See the model</a></div>`;
+    G.querySelector("#again").addEventListener("click",()=>{gs={...gs,view:"round",who:other,step:0,picks:[]};render()});
+    G.querySelector("#retry").addEventListener("click",()=>{gs={...gs,view:"round",step:0,picks:[]};render()});
+  }
+}
+
+function start(data){ if(data&&data.gs) gs=data.gs; render(); labInit(data&&data.lab); }
+window.claude?.hot?.snapshot?.(()=>({gs, lab:labState()}));
+
+// ---------------- policy lab ----------------
+const $=id=>document.getElementById(id);
+const DEF={stip:8,prem:10,sig:4,th:0.4,house:false,remote:false};
+function labState(){return{stip:+$("sStip").value,prem:+$("sPrem").value,sig:+$("sSig").value,th:+$("sTh").value,house:$("cHouse").checked,remote:$("cRemote").checked}}
+function setLab(s){$("sStip").value=s.stip;$("sPrem").value=s.prem;$("sSig").value=s.sig;$("sTh").value=s.th;$("cHouse").checked=s.house;$("cRemote").checked=s.remote;lab()}
+function takeup(D,h,sigma,theta){const par=(Math.max(D,0)+sigma)/theta, stu=Math.max(D,0)+h, th=Math.max(par,stu); return {th, rate:Math.max(0,Math.min(1,1-th/100))}}
+function lab(){
+  const s=labState(), Sx=2*s.stip;
+  $("oStip").textContent=`₹${s.stip},000`; $("oPrem").textContent=`₹${s.prem},000`; $("oSig").textContent=`₹${s.sig},000`; $("oTh").textContent=s.th.toFixed(2);
+  let m,f;
+  if(s.remote){m={th:0,rate:1};f={th:0,rate:1}}
+  else{
+    const CM = s.house?4:24, CF = s.house?4:24+s.prem, hF = s.house?3:6;
+    m=takeup(CM-Sx,0,0,.5); f=takeup(CF-Sx,hF,s.sig,s.th);
+  }
+  const pm=Math.round(m.rate*100), pf=Math.round(f.rate*100);
+  $("bM").style.width=pm+"%"; $("bF").style.width=pf+"%"; $("vM").textContent=pm+"%"; $("vF").textContent=pf+"%";
+  $("vGap").textContent=(pm-pf)+" points";
+  const cl=v=>Math.max(0,Math.min(100,v));
+  $("mkM").style.left=cl(m.th)+"%"; $("mkF").style.left=cl(f.th)+"%";
+  $("tM").textContent=m.th>100?">100":Math.round(m.th); $("tF").textContent=f.th>100?">100":Math.round(f.th);
+  $("labNote").textContent = s.remote ? "With a remote option nobody moves, so cost, risk and worry drop out and the gap closes."
+    : `A student goes only if her career gain is to the right of her marker. Women's marker = (shortfall ${Math.max(0,(s.house?4:24+s.prem)-Sx)} + worry ${s.sig}) ÷ θ ${s.th.toFixed(2)}.`;
+}
+function labInit(saved){["sStip","sPrem","sSig","sTh","cHouse","cRemote"].forEach(id=>$(id).addEventListener("input",lab)); $("labReset").addEventListener("click",()=>setLab(DEF)); setLab(saved||DEF)}
+
+// ---------------- scroll zoom: fly through the window into the city ----------------
+(function zoom(){
+  const room=document.getElementById("top"), sticky=room.querySelector(".sticky"), stage=document.getElementById("stage");
+  const layers=[["cFar",0],["cMid",.14],["cNear",.32]].map(([id,a])=>[document.getElementById(id),a]);
+  const fades=[...room.querySelectorAll(".fadeable")], hots=[...stage.querySelectorAll(".hot")], arrive=document.getElementById("arrive");
+  let geo=null, ticking=false;
+  function measure(){
+    stage.style.transform="none";
+    const r=stage.getBoundingClientRect(), s=sticky.getBoundingClientRect();
+    geo={wcx:r.left-s.left+r.width*.5, wcy:r.top-s.top+r.height*(55/150), winW:r.width*110/240, winH:r.height*64/150, vw:s.width, vh:s.height};
+  }
+  function apply(){
+    ticking=false; if(!geo) measure();
+    const {wcx,wcy,winW,winH,vw,vh}=geo;
+    const span=Math.max(1,room.offsetHeight-innerHeight);
+    const raw=reduce?0:Math.max(0,Math.min(1,(scrollY-room.offsetTop)/span));
+    const e=raw*raw*(3-2*raw), E=e*e;
+    const Rend=Math.max(vw/winW,vh/winH)*1.25, R=1+(Rend-1)*E;
+    const px_=wcx+(vw/2-wcx)*e, py_=wcy+(vh/2-wcy)*e;
+    stage.style.transform=`translate(${px_-wcx}px,${py_-wcy}px) scale(${R})`;
+    const base=Math.max(R*winW/vw,R*winH/vh)*1.04;
+    const wb=Math.min(py_+R*winH/2, vh);              // keep street level pinned to the bottom of the window, then of the screen
+    layers.forEach(([el,a])=>{const s=base*(1+a*e); el.style.transform=`translate(${px_-vw/2}px,${wb-s*vh/2-vh/2}px) scale(${s})`});
+    const o=Math.max(0,1-raw*6);
+    fades.forEach(f=>{f.style.opacity=o; f.style.pointerEvents=o<.1?"none":""});
+    hots.forEach(hh=>{hh.style.opacity=o; hh.style.pointerEvents=o<.1?"none":""; hh.tabIndex=o<.1?-1:0});
+    stage.style.visibility=raw>.995?"hidden":"";
+    if(arrive) arrive.style.opacity=Math.max(0,Math.min(1,(raw-.78)/.14));
+  }
+  addEventListener("scroll",()=>{if(!ticking){ticking=true;requestAnimationFrame(apply)}},{passive:true});
+  addEventListener("resize",()=>{measure();apply()});
+  measure(); apply();
+})();
+
+window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
+</body>
+</html>
