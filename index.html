@@ -6,7 +6,7 @@
 <title>Same Offer, Different City</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Exo+2:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* Layout idea: one hostel room at sunset; every glowing object in the room opens a part of the argument, then the page scrolls out through the window into the city. */
 :root{
@@ -21,7 +21,7 @@
   --muted:#6E4A33;
   --her:#E2557A;
   --him:#3C7FD0;
-  --display:"Pixelify Sans", "Courier New", monospace;
+  --display:"Chakra Petch", "Trebuchet MS", system-ui, sans-serif;
   --body:"Exo 2", "Trebuchet MS", system-ui, sans-serif;
   color-scheme: light;
 }
@@ -208,6 +208,77 @@ dialog::backdrop{background:rgba(42,23,12,.75)}
 .chapters button:hover{background:#246063}
 .chapters b{display:block;font-family:var(--display);font-weight:600}
 
+
+/* ---------- content components (model, policy) ---------- */
+.cards.four{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.big+.big{margin-top:-2px}
+.callout{background:var(--paper);border:2px solid var(--ink);border-left:8px solid var(--screen);padding:14px 18px;margin:20px 0;font-size:16px;max-width:none}
+.callout b{font-family:var(--display);font-size:18px}
+.callout.biz{border-left-color:var(--brick)}
+.tagline{display:inline-block;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brick);margin-bottom:4px}
+.card.fail{border-top:6px solid var(--her)}
+.card ul.ev{margin:10px 0 0;padding-left:18px;font-size:14px}
+.card ul.ev li{margin-bottom:4px}
+.pill{display:inline-block;font-family:var(--display);font-weight:600;font-size:12px;padding:1px 8px;border:2px solid var(--ink);white-space:nowrap;margin-right:4px}
+.pill.ok{background:#C9F0D3}.pill.no{background:#FFD3DD}.pill.mid{background:#FFE9B0}.pill.open{background:#E6E1F5}
+table.sym td.s{font-family:var(--display);font-weight:700;font-size:20px;width:64px;text-align:center}
+table tr.tot td{font-weight:700;border-top:2px solid var(--ink)}
+.illus{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:#E6E1F5;border:1px solid var(--ink);padding:0 5px;vertical-align:1px}
+.small{font-size:14px}
+ol.steps{counter-reset:st;list-style:none;padding:0;margin:0;display:grid;gap:12px;max-width:820px}
+ol.steps li{counter-increment:st;position:relative;background:var(--paper);border:2px solid var(--ink);padding:12px 16px 12px 58px;font-size:16px}
+ol.steps li::before{content:counter(st);position:absolute;left:12px;top:10px;width:32px;height:32px;display:grid;place-items:center;background:var(--ink);color:var(--sky);font-family:var(--display);font-weight:700;font-size:18px}
+ol.steps .eq{margin:10px 0 2px;font-size:clamp(15px,2vw,20px)}
+.thresh{margin:0;background:var(--paper);border:2px solid var(--ink);padding:12px 12px 6px}
+.thresh svg{width:100%;height:auto;display:block;font-family:var(--body)}
+.thresh .t-title{font-family:var(--display);font-weight:700;font-size:17px;fill:var(--ink)}
+.thresh .t-off{fill:#F3DDBF;stroke:var(--ink);stroke-width:2}
+.thresh .t-men{fill:var(--him);opacity:.85}
+.thresh .t-women{fill:var(--her);opacity:.9}
+.thresh .t-gap{fill:url(#none);fill:#F3DDBF;stroke:var(--ink);stroke-width:2;stroke-dasharray:6 4}
+.thresh .t-lab{font-family:var(--display);font-weight:700;font-size:16px;fill:var(--ink)}
+.thresh .t-in{font-family:var(--display);font-weight:700;font-size:16px;fill:#fff}
+.thresh .t-gaplab{font-family:var(--display);font-weight:700;font-size:15px;fill:var(--ink);text-anchor:middle}
+.thresh .t-cut{stroke-width:3}.thresh .t-cut.m{stroke:var(--him)}.thresh .t-cut.f{stroke:var(--her)}
+.thresh .t-axis{stroke:var(--ink);stroke-width:2}
+.thresh .t-tick{font-size:14px;fill:var(--muted);font-weight:600}.thresh .t-tick.m{fill:var(--him)}.thresh .t-tick.f{fill:var(--her)}
+.thresh .t-note{font-size:13px;fill:var(--muted)}
+.thresh figcaption{font-size:14px;margin:6px 4px 4px;color:var(--muted)}
+.tree{background:var(--paper);border:2px solid var(--ink);padding:16px;display:grid;gap:12px}
+.tree .root{justify-self:center;background:var(--ink);color:var(--sky);font-family:var(--display);font-weight:600}
+.tcols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.tcols{grid-template-columns:1fr}}
+.tcol{display:grid;gap:6px;justify-items:center;text-align:center}
+.tname{font-family:var(--display);font-weight:700;font-size:20px}
+.tnode{border:2px solid var(--ink);padding:8px 14px;background:#FBE3C2;font-size:15px;width:100%;max-width:340px}
+.tarrow{font-family:var(--display);font-weight:600;font-size:14px}
+.tarrow::before{content:"↓ ";}
+.tnode.out{font-family:var(--display);font-weight:700;font-size:19px}
+.tnode.out.yes{background:#C9F0D3}.tnode.out.no{background:#FFD3DD}
+.tcap{margin:0;font-size:14px;color:var(--muted);text-align:center}
+.split{display:flex;margin-top:12px;border:2px solid var(--ink);height:26px;font-family:var(--display);font-weight:700;font-size:13px}
+.split span{display:grid;place-items:center;color:#fff}
+.sp-s{background:var(--her)}.sp-n{background:var(--brick)}
+.sharp{background:var(--ink);color:var(--paper);padding:18px 20px;margin-top:20px;border:2px solid var(--ink)}
+.sharp h3{color:var(--sky);font-size:22px;margin-bottom:6px}
+.sharp p{margin:0 0 12px;max-width:70ch}
+.sharprow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:10px}
+.sharprow div{background:#123638;border:2px solid var(--screen);padding:10px 14px}
+.sharprow small{display:block;font-size:13px;opacity:.85}
+.sharprow b{display:block;font-family:var(--display);font-size:28px;margin:2px 0}
+.sharprow .m-col{color:#8EC1FF}.sharprow .f-col{color:#FF9CB6}
+.sharprow span{font-size:14px}
+.scen{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.scen button{text-align:left;background:var(--paper);border:2px solid var(--ink);box-shadow:0 4px 0 rgba(42,23,12,.5);padding:10px 12px;cursor:pointer;font-family:var(--body);font-size:13px;color:var(--ink)}
+.scen button b{display:block;font-family:var(--display);font-weight:700;font-size:15px;margin-bottom:4px}
+.scen button span{display:block;color:var(--muted)}
+.scen button .g{font-family:var(--display);font-weight:700;font-size:18px;color:var(--ink);margin-top:4px}
+.scen button[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:0 4px 0 var(--brick)}
+.scen button[aria-pressed="true"] span{color:#E8D5C4}.scen button[aria-pressed="true"] .g{color:var(--sky)}
+.gapband{position:absolute;top:30px;height:12px;background:repeating-linear-gradient(45deg,var(--her) 0 4px,transparent 4px 8px);opacity:.7;transition:left .25s,width .25s}
+.labnote{font-size:14px;margin:10px 0 0;color:var(--muted)}
+.note-page{background:var(--paper);border:2px solid var(--ink);padding:20px 24px;max-width:860px}
+.note-page p{margin:0 0 10px}
 /* ---------- notes ---------- */
 .refs{columns:2 300px;column-gap:28px;font-size:14px;padding-left:18px}
 .refs li{break-inside:avoid;margin-bottom:8px}
@@ -224,13 +295,13 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   <small>Menu</small>
   <a href="#gap">THE GAP</a>
   <a href="#textbook">TEXTBOOK</a>
-  <a href="#play">PLAY</a>
   <a href="#model">MODEL</a>
   <a href="#policy">POLICY LAB</a>
+  <a href="#play">PLAY</a>
   <a href="#voices">VOICES</a>
-  <a href="#notes">NOTES</a>
+  <a href="#notes">NOTE</a>
 </nav>
-<div class="toplinks"><a href="#notes">Model note</a><a href="#sources">Sources</a><a href="#play">Play</a></div>
+<div class="toplinks"><a href="#model">Model</a><a href="#policy">Policy Lab</a><a href="#play">Play</a></div>
 
 <!-- ================= ROOM ================= -->
 <section class="room" id="top" aria-label="Ananya's hostel room">
@@ -247,7 +318,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
     <button class="hot" style="left:24.5%;top:53%;width:6%;height:7%" data-go="textbook"><span class="tag">The textbook</span></button>
     <button class="hot" style="left:34%;top:57%;width:4.5%;height:6%" data-go="policy" id="phoneHot"><span class="tag below">Mummy calling… (policy lab)</span></button>
     <button class="hot" style="left:80%;top:32%;width:13%;height:56%" data-go="play"><span class="tag">Play: Pack Your Bags</span></button>
-    <button class="hot" style="left:63%;top:77%;width:10%;height:15%" data-go="notes"><span class="tag">Model note + sources</span></button>
+    <button class="hot" style="left:63%;top:77%;width:10%;height:15%" data-go="notes"><span class="tag">Model note</span></button>
     <button class="hot" style="left:77%;top:12%;width:6%;height:10%" data-clock="1"><span class="tag" id="clockTag">9:30 pm · PG curfew at 10</span></button>
   </div>
   <div class="hint fadeable">
@@ -260,9 +331,9 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 </section>
 
 <!-- ================= CITY BAND ================= -->
-<section class="city" aria-label="Bengaluru skyline">
+<section class="city" aria-label="The question">
   <div class="intro">
-    <p><strong>The question.</strong> Among undergraduates in Indian cities who get an in-office internship offer in another city, women accept less often than men with the same grades, course and offer. Here is the evidence, why the textbook can't explain it, and a model where everyone is rational and the gap still appears.</p>
+    <p><strong>The question.</strong> Indian women students enrol and perform at least as well as men, yet they are less likely to take internships outside their home city. This site shows the gap, why standard economic theory can't explain it, and a model in which everyone is rational and the gap still appears.</p>
   </div>
 </section>
 
@@ -270,160 +341,326 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 
 <!-- ================= 1. GAP ================= -->
 <section class="panel" id="gap">
-  <header><span class="chip">01 · The question · 20%</span><h2>The gap is real</h2></header>
-  <p class="lead">No national dataset records out-of-city internships by gender, so the case rests on four kinds of evidence that all point the same way. The survey in the notes measures the gap directly.</p>
+  <header><span class="chip">01 · The question</span><h2>The gap is real</h2></header>
+  <p class="lead">Women are as qualified as men and apply just as often. The gap opens when it's time to actually move to another city.</p>
+
   <div class="cards">
     <article class="card">
+      <div class="big"><span class="f">41%</span><small>of applicants</small></div>
+      <div class="big"><span class="f">~31%</span><small>of joinees</small></div>
+      <h3>PM Internship Scheme</h3>
+      <p>Women were 41% of Round 2 applicants but only about 5,000 of the roughly 16,000 interns who joined in Rounds 1–2. A parliamentary committee warned that mobility, safety and relocation problems may hit women harder.</p>
+    </article>
+    <article class="card">
+      <div class="big"><span class="f">56%</span><span class="m">68%</span><small>accepted</small></div>
+      <h3>DDU-GKY skills programme</h3>
+      <p>Among trainees offered jobs, 56% of women and 68% of men accepted. Women most often declined for family reasons, men for low pay. The gap widens for jobs farther from home.</p>
+    </article>
+    <article class="card">
       <div class="big"><span class="f">1.8%</span><span class="m">55.3%</span></div>
-      <h3>Who moves for work</h3>
-      <p>Share of migrants aged 15 to 59 who moved for a job: women vs men, PLFS 2020-21.</p>
-      <a class="src" href="https://www.theindiaforum.in/economy/women-work-not-move-what-do-data-say">The India Forum, using PLFS</a>
+      <h3>Moving for work</h3>
+      <p>Share of migrants aged 15–59 who moved for work, women vs men (PLFS 2020–21). Indian women move for marriage; Indian men move for work.</p>
     </article>
-    <article class="card">
-      <div class="big"><span class="f">Farther</span><small>= wider gap</small></div>
-      <h3>Offers turned down</h3>
-      <p>Young women trained for skilled jobs in 7 states accepted fewer offers than men, and the gap widened as jobs got farther from home, holding education, caste, age, trade and district constant.</p>
-      <a class="src" href="https://ie.yale.edu/news/180223/vocational-training-programs-india-are-leaving-women-behind-neednt-be-case">Moore and Pande, Yale, 2018</a>
-    </article>
-    <article class="card">
-      <div class="big"><span class="f">8.5</span><small>college ranks</small></div>
-      <h3>Paying for a safe route</h3>
-      <p>Delhi University women chose colleges about 8.5 ranks below what they qualified for, to get a safer commute. Men did not make this trade.</p>
-      <a class="src" href="https://www.cgdev.org/node/3136414">Borker, via CGD</a>
-    </article>
-    <article class="card">
-      <div class="big"><span class="f">50%</span><small>allowed to go alone</small></div>
-      <h3>Permission</h3>
-      <p>Only half of women aged 15 to 49 are allowed to go alone to places outside their village or community (NFHS-5, 2019-21).</p>
-      <a class="src" href="https://theprint.in/india/82-women-in-india-able-to-refuse-sex-to-their-husbands-finds-govts-family-health-survey/948810">ThePrint, NFHS-5</a>
-    </article>
+  </div>
+
+  <div class="callout">
+    <b>On our campus too.</b> In the SNIoE student survey (November 2026, 113 students), women and men applied for out-of-city internships at similar rates (<span class="f-col">66%</span> vs <span class="m-col">70%</span>) and got offers at similar rates (<span class="f-col">61%</span> vs <span class="m-col">59%</span>). But only <span class="f-col">45%</span> of women with an offer accepted it, against <span class="m-col">77%</span> of men.
+  </div>
+
+  <h3 class="sub">It isn't ability</h3>
+  <div class="cards">
+    <article class="card"><div class="big"><span class="f">28.5</span><span class="m">28.3</span></div><h3>Enrolment</h3><p>Gross enrolment ratio in higher education, women vs men (AISHE 2021–22). The gender parity index has been above 1 for five years running.</p></article>
+    <article class="card"><div class="big"><span class="f">51.44%</span><span class="m">46%</span></div><h3>Employability</h3><p>Share rated employable, women vs men (India Skills Report 2022).</p></article>
+  </div>
+
+  <h3 class="sub">Four costs of moving</h3>
+  <div class="cards four">
+    <article class="card"><h3>Rent</h3><p>Girls' PGs near Gurgaon list at ₹8,000–₹20,000 a month. Even the cheapest shared bed takes the whole ₹5,000 PMIS stipend, and traditional PGs set 10 or 11 PM curfews for women.</p></article>
+    <article class="card"><h3>Commute</h3><p>Indian women work closer to home and travel more slowly: 37% of urban women walk to work, against 27% of men.</p></article>
+    <article class="card"><h3>Safety</h3><p>Delhi University women accept colleges about 8.5 ranks lower to get a safer route, and would pay ₹7,500 a year more than men for one. Men barely trade at all.</p></article>
+    <article class="card"><h3>Family</h3><p>Only 42% of women aged 15–49 may go alone to the market, a health facility and outside their community (NFHS-5). Households spend about 21% less on daughters' education.</p></article>
   </div>
 
   <h3 class="sub">Why it matters</h3>
   <div class="cards">
-    <article class="card"><h3>Welfare</h3><p>In a randomised résumé test, internship experience raised interview requests by about 14%. A declined internship is a lost step up.</p><a class="src" href="https://www.hum.utah.edu/_resources/documents/internships/major%20internship%20and%20employment.pdf">Nunley et al., Labour Economics</a></article>
-    <article class="card"><h3>Efficiency</h3><p>Women are about 48% of students in higher education. If they can't follow the best match across cities, talent lands in the wrong jobs.</p><a class="src" href="https://rsdebate.nic.in/bitstream/123456789/750825/1/PQ_265_07082024_U1798_p211_p212.pdf">AISHE 2021-22, Rajya Sabha reply</a></article>
-    <article class="card"><h3>Business</h3><p>In the PM Internship Scheme pilot, location was a leading reason offers were turned down. The parliamentary committee flagged that relocation and safety problems may hit women harder.</p><a class="src" href="https://m.thewire.in/article/economy/only-1-5-of-funds-used-the-pm-internship-scheme-has-missed-its-targets-by-a-wide-margin">The Wire</a></article>
+    <article class="card"><h3>Internships pay off</h3><p>An internship raises early-career earnings by about 6% (Germany) and interview invitations by 12.6% (Belgium). A woman who can't take one starts her career behind.</p></article>
+    <article class="card"><h3>India's missing women workers</h3><p>Only 27.7% of urban women aged 15+ are in the labour force, against 76.2% of men; among urban 15–29-year-olds it's 23.2% vs 60.9%. A first internship is often the bridge to a first job.</p></article>
   </div>
 </section>
 
 <!-- ================= 2. TEXTBOOK ================= -->
 <section class="panel" id="textbook">
-  <header><span class="chip">02 · Standard theory · 25%</span><h2>What the textbook predicts</h2></header>
-  <div class="two">
-    <div class="prose">
-      <p><strong>Human capital theory, with a unitary household.</strong> An internship is an investment. Take it if the career gain is bigger than the extra cost:</p>
-      <div class="eq">Go to city O &nbsp;⇔&nbsp; <em>ΔR</em> ≥ <em>C</em> − <em>S</em></div>
-      <p>ΔR is the career gain, C the cost of living there, S the stipend. A unitary household pools its money and backs whichever child has the higher return.</p>
-      <p><strong>Prediction:</strong> same ability, same rents, same tastes, so the same take-up for women and men.</p>
-    </div>
-    <div class="prose">
-      <p><strong>Where the evidence breaks it.</strong></p>
-      <p>The gap shows up <em>after</em> an offer is made, and it grows with distance. The textbook can only explain that if moving costs rise faster with distance for women. That is a gendered cost, which it assumes away.</p>
-      <p>Women are not avoiding investing in themselves: female enrolment in higher education has been above male for five years in a row.</p>
-    </div>
+  <header><span class="chip">02 · Standard theory</span><h2>Why the textbook falls short</h2></header>
+  <p class="lead">Standard models say an internship is an investment: same payoff and same price, same decision. The evidence says otherwise.</p>
+
+  <div class="cards">
+    <article class="card"><span class="tagline">Model A</span><h3>Human capital theory</h3><p>Becker and Mincer. Take the internship if the future earnings gain plus the stipend beats rent, travel, setup and what you give up.</p></article>
+    <article class="card"><span class="tagline">Model B</span><h3>Job search and compensating differentials</h3><p>Rosen. Accept if the stipend minus location costs beats your best alternative. Distance is a price.</p></article>
+    <article class="card"><span class="tagline">Model C</span><h3>Unitary household</h3><p>Becker; Samuelson. The family pools income and funds whichever child has the higher net return, son or daughter.</p></article>
   </div>
+
+  <div class="eq">Same ability + same returns + same prices &nbsp;⇒&nbsp; <em>same uptake</em></div>
+  <p class="prose">All three models give the same prediction. Since women are at least as well qualified, human capital theory says they should take at least as many internships as men.</p>
+
+  <h3 class="sub">What contradicts it</h3>
+  <div class="cards">
+    <article class="card"><h3>The gap opens at joining</h3><p>PMIS: women's share falls from 41% of Round 2 applicants to about 31% of joinees. If women apply at 41%, the model says they should join at 41%.</p></article>
+    <article class="card"><h3>It widens with distance</h3><p>DDU-GKY women were even less likely to accept jobs that require migration. Once placed, they stayed as long as or longer than men, so they aren't less committed.</p></article>
+    <article class="card"><h3>Distance costs women more</h3><p>Women value commute about 20% more than men (France). Delhi women would pay ₹7,500 a year more than men for a safer route.</p></article>
+    <article class="card"><h3>When the price falls, women move</h3><p>Foxconn's state-built hostel houses 18,720 women workers. Tata Electronics' Hosur plant employs 15,000+ women with free lodging on campus. Odisha women recruited in groups had twice the placement success.</p></article>
+  </div>
+
   <h3 class="sub">Ruling out the easy answers</h3>
   <div class="table-wrap"><table>
-    <thead><tr><th>Easy explanation</th><th>Why it doesn't fit</th></tr></thead>
+    <thead><tr><th>Easy explanation</th><th>Verdict</th><th>Why</th></tr></thead>
     <tbody>
-      <tr><td>Women have less education or skill</td><td>Female gross enrolment is above male (gender parity index 1.01). The survey holds CGPA constant.</td></tr>
-      <tr><td>Women are less productive, so returns are lower</td><td>Once placed, women stayed in jobs as long as or longer than men.</td></tr>
-      <tr><td>Women don't want to work</td><td>The gap is about moving. Women take internships that need no move, such as remote ones.</td></tr>
-      <tr><td>Employers only hire men</td><td>The gap is in accepting an offer, after the employer has already said yes.</td></tr>
+      <tr><td>Lower ability or education</td><td><span class="pill no">Ruled out</span></td><td>Enrolment 28.5 vs 28.3; employability 51.44% vs 46%; equal or better school exams; women stay longer once placed</td></tr>
+      <tr><td>Women just prefer to stay home</td><td><span class="pill no">Largely ruled out</span></td><td>Stated willingness is far above actual moves, and behaviour shifts when costs or beliefs change</td></tr>
+      <tr><td>Employer discrimination</td><td><span class="pill mid">Not the main driver</span></td><td>Women and men DDU-GKY trainees were equally likely to get out-of-state offers; women decline offers they already have</td></tr>
+      <tr><td>Lower returns for women</td><td><span class="pill mid">Weak evidence</span></td><td>The internship effect on interviews doesn't differ by gender (Belgium), and can't explain why the gap grows with distance</td></tr>
+      <tr><td>Lower stipends for women</td><td><span class="pill no">No evidence</span></td><td>PMIS pays everyone the same</td></tr>
     </tbody>
   </table></div>
-  <p class="prose"><strong>What's left:</strong> the constraints and payoffs around moving differ by gender. Play it and see.</p>
+
+  <h3 class="sub">The two assumptions that fail</h3>
+  <div class="two">
+    <article class="card fail"><h3>1. Same prices</h3><p>A woman pays the same rent and travel as a man, plus a safety cost: a safer, dearer room, cabs after dark, curfews. In our survey, 84% of women vs 30% of men say they'd need extra money each month to feel safe.</p></article>
+    <article class="card fail"><h3>2. One neutral family</h3><p>Moving needs parents' permission and often their money, and families don't weigh sons and daughters the same. Only 36% of women vs 79% of men in our survey say their parents would let them live alone.</p></article>
+  </div>
+</section>
+
+<!-- ================= 3. MODEL ================= -->
+<section class="panel" id="model">
+  <header><span class="chip">03 · The model</span><h2>Same payoff, higher price</h2></header>
+  <p class="lead">Why rational families send fewer daughters to out-of-city internships.</p>
+  <div class="prose">
+    <p>A student, her parents and an employer each make the best choice they can. Women and men get the same payoff from an internship and face the same rent and stipend. Two things differ. A woman pays an extra <b>safety cost</b> to live and travel in an unfamiliar city, and her parents bear a <b>norm cost</b> (worry, reputation, what relatives will say) when a daughter lives alone.</p>
+    <p>Both raise the cutoff an internship must clear before the family says yes. With the same spread of payoffs, a higher cutoff means fewer women go. Nobody is irrational and no employer discriminates, yet a gap appears: in the worked example, 87.5% of men and 58.75% of women go. A safe employer hostel cuts the gap from 28.75 to about 10.6 points; a flat stipend rise doesn't shrink it at all.</p>
+  </div>
+
+  <h3 class="sub">1. Agents, choices and objectives</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Agent</th><th>Chooses</th><th>Maximises</th></tr></thead>
+    <tbody>
+      <tr><td><b>Student</b></td><td>Accept the out-of-city internship, or stay with the local or work-from-home option (valued at zero)</td><td>Her own net benefit: R + W − H − T − S</td></tr>
+      <tr><td><b>Parents</b></td><td>Permit or refuse, and whether to pay the shortfall</td><td>Family welfare: the child's net benefit minus their norm cost, R + W − H − T − S − N</td></tr>
+      <tr><td><b>Employer</b></td><td>Stipend, and whether to offer a safe hostel (cost k per intern housed)</td><td>Profit: (value of an intern v − W) × interns who join, minus k × interns housed</td></tr>
+    </tbody>
+  </table></div>
+  <div class="two">
+    <article class="card"><h3>Why parents hold the deciding vote</h3><p>Indian undergraduates usually need permission to live away, and parents often pay the gap between stipend and costs. So the family is not one neutral maximiser: the daughter's payoff counts, but parents also weigh a cost that falls only on them, and only for daughters.</p></article>
+    <article class="card"><h3>Why everyone is rational</h3><p>The student weighs real costs she faces. Parents weigh real worry and real social costs, which shape decisions even when partly misperceived (Bursztyn et al.). The employer pays for housing only when it raises profit.</p></article>
+  </div>
+
+  <h3 class="sub">The symbols</h3>
+  <div class="table-wrap"><table class="sym">
+    <thead><tr><th>Symbol</th><th>Meaning</th><th>Same for women and men?</th></tr></thead>
+    <tbody>
+      <tr><td class="s">R</td><td>Payoff from the internship: present value of the future earnings gain (CV, skills, network, pre-placement offer)</td><td><span class="pill ok">Yes, same spread</span></td></tr>
+      <tr><td class="s">W</td><td>Total stipend over the internship</td><td><span class="pill ok">Yes</span></td></tr>
+      <tr><td class="s">H</td><td>Rent in the internship city</td><td><span class="pill ok">Yes</span></td></tr>
+      <tr><td class="s">T</td><td>Travel and setup: trips home, deposit, daily commute</td><td><span class="pill ok">Yes</span></td></tr>
+      <tr><td class="s f-col">S</td><td>Safety cost: safer area or PG, cabs instead of metro after dark, time lost on safer routes</td><td><span class="pill no">No: positive for women, about zero for men</span></td></tr>
+      <tr><td class="s f-col">N</td><td>Parents' norm cost: worry, reputation, relatives' disapproval, in rupees</td><td><span class="pill no">No: positive for daughters, zero for sons</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 class="sub">2. The two features that differ by gender</h3>
+  <div class="two">
+    <article class="card fail"><span class="tagline">A safety tax on her</span><h3>Safety cost S</h3><p>For a woman, the same rent and distance buy less. She picks a PG in a safer area, takes a cab after dark instead of the metro, avoids cheaper but poorly lit routes, and accepts curfews that cut into work hours.</p>
+      <ul class="ev"><li>Delhi University women would pay about ₹7,500 a year more than men for a safer route, and pick a much lower-ranked college to get it (Borker, 2021).</li><li>Women value commute about 20% more than men (Le Barbanchon, Rathelot and Roulet).</li><li>Traditional women's PGs commonly set 10 or 11 PM curfews.</li></ul></article>
+    <article class="card fail"><span class="tagline">A norm tax on her parents</span><h3>Norm cost N</h3><p>Parents value a daughter's future earnings as much as a son's. But a daughter living alone brings worry about her safety, questions from relatives, and fears for her reputation and marriage prospects.</p>
+      <ul class="ev"><li>Only 42% of women aged 15–49 may go alone to the market, a health facility and outside their community (NFHS-5).</li><li>DDU-GKY women most often turn down offers for personal, family and migration reasons; men for low pay.</li><li>Households spend about 21% less on daughters' education (NSS 75th round).</li><li>Mobility restrictions and concern for female "purity" persist as incomes rise (Jayachandran).</li></ul></article>
+  </div>
+  <p class="prose"><b>Why only these two?</b> They match the two assumptions that failed, and each has its own evidence and its own policy lever: S responds to safe housing and transport; N responds to information, cohort placements and trusted institutions.</p>
+
+  <h3 class="sub">3. Step by step: how rational choices create the gap</h3>
+  <ol class="steps">
+    <li><b>The student's choice.</b> She wants to go if her net benefit beats the local option.<div class="eq">R + W − H − T − S &gt; 0</div></li>
+    <li><b>The parents' choice.</b> They permit, and fund any shortfall, only if the family's net benefit is positive. That adds their norm cost.<div class="eq">R + W − H − T − S − N &gt; 0</div></li>
+    <li><b>The cutoff.</b> Rearranging, the internship happens only if its payoff R beats a cutoff C. For a son, S and N are about zero; for a daughter the cutoff is higher by S + N.<div class="eq">C = (H + T − W) + <em>S + N</em></div></li>
+    <li><b>From cutoffs to shares.</b> Payoffs vary across students, but the spread is the same for women and men. The share who go is the share whose payoff lies above their cutoff, so a higher cutoff means a smaller share of women.</li>
+    <li><b>The gap.</b> With equal payoffs, the gap comes entirely from S + N. Remove both and it disappears, which is exactly the standard model's prediction.</li>
+    <li><b>Why applications look fine but joining doesn't.</b> Applying costs a few minutes, and parents usually weigh in only once there's a concrete offer in a named city. So the gap is small at application and opens at acceptance.</li>
+    <li><b>The employer.</b> A firm offers a safe hostel if the extra interns it attracts are worth more than the hostel costs. A hostel also has a fixed setup cost, so only firms hiring many women at one site find it pays. Each firm is rational, but most women interns are left facing the full S + N.<div class="eq">extra joiners × (v − W) &gt; k × interns housed</div></li>
+  </ol>
+
+  <h3 class="sub">Same payoff, two cutoffs</h3>
+  <figure class="thresh" aria-label="Threshold diagram: payoffs spread evenly from 0 to 80,000 rupees; men's cutoff at 10,000, women's at 33,000; the band between them is the gap">
+    <svg viewBox="0 0 760 250" role="img" aria-hidden="true">
+      <text x="24" y="26" class="t-title">Payoff R, spread evenly from ₹0 to ₹80,000 for both</text>
+      <!-- scale: x = 80 + R/80000*640 -->
+      <rect x="80" y="54" width="640" height="46" class="t-off"/>
+      <rect x="160" y="54" width="560" height="46" class="t-men"/>
+      <text x="24" y="83" class="t-lab">Men</text>
+      <text x="440" y="83" class="t-in">87.5% go</text>
+      <rect x="80" y="122" width="640" height="46" class="t-off"/>
+      <rect x="344" y="122" width="376" height="46" class="t-women"/>
+      <text x="24" y="151" class="t-lab">Women</text>
+      <text x="532" y="151" class="t-in">58.75% go</text>
+      <rect x="160" y="122" width="184" height="46" class="t-gap"/>
+      <text x="252" y="151" class="t-gaplab">the gap</text>
+      <line x1="160" y1="44" x2="160" y2="178" class="t-cut m"/>
+      <line x1="344" y1="44" x2="344" y2="178" class="t-cut f"/>
+      <line x1="80" y1="186" x2="720" y2="186" class="t-axis"/>
+      <text x="80" y="206" class="t-tick" text-anchor="middle">₹0</text>
+      <text x="160" y="206" class="t-tick m" text-anchor="middle">₹10,000</text>
+      <text x="344" y="206" class="t-tick f" text-anchor="middle">₹33,000</text>
+      <text x="720" y="206" class="t-tick" text-anchor="middle">₹80,000</text>
+      <text x="160" y="232" class="t-note" text-anchor="middle">his cutoff</text>
+      <text x="344" y="232" class="t-note" text-anchor="middle">her cutoff</text>
+    </svg>
+    <figcaption>Shaded: the share who go. The striped band between the two cutoffs is the gap: women whose internships would be worth taking for a man, but not for them.</figcaption>
+  </figure>
+
+  <h3 class="sub">4. A worked example in rupees</h3>
+  <p class="prose">A two-month internship in Gurgaon.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Item</th><th class="n m-col">Man</th><th class="n f-col">Woman</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Stipend W (2 months)</td><td class="n">₹16,000</td><td class="n">₹16,000</td><td>₹8,000 a month, the Internshala 2024 average</td></tr>
+      <tr><td>Rent H (2 months, shared PG)</td><td class="n">₹20,000</td><td class="n">₹20,000</td><td>Within listed Gurgaon PG prices; no evidence that women pay more per bed</td></tr>
+      <tr><td>Travel and setup T</td><td class="n">₹6,000</td><td class="n">₹6,000</td><td>Trips home and setup, plus metro</td></tr>
+      <tr><td>Safety cost S</td><td class="n">₹0</td><td class="n">₹8,000</td><td>Borker's safety premium scaled to 2 months, plus evening cabs and a PG in a safer area <span class="illus">illustrative</span></td></tr>
+      <tr><td>Parents' norm cost N</td><td class="n">₹0</td><td class="n">₹15,000</td><td>Not directly observable; set to give a gap in line with PMIS and DDU-GKY <span class="illus">illustrative</span></td></tr>
+      <tr class="tot"><td>Cutoff C = H + T − W + S + N</td><td class="n m-col">₹10,000</td><td class="n f-col">₹33,000</td><td>Calculated</td></tr>
+    </tbody>
+  </table></div>
+  <p class="prose small">Payoffs R are spread evenly from ₹0 to ₹80,000 for both, average ₹40,000 <span class="illus">illustrative</span>. Anchor: Delhi freshers average ₹4.05 lakh a year, and an internship raises earnings by about 6%, about ₹24,000 a year.</p>
+
+  <h3 class="sub">One student each, both with R = ₹25,000</h3>
+  <div class="tree" aria-label="Decision tree for two students with the same payoff">
+    <div class="tnode root">Offer arrives · payoff R = ₹25,000 for both</div>
+    <div class="tcols">
+      <div class="tcol him">
+        <div class="tname m-col">Arjun</div>
+        <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹10,000 = +₹15,000</b></div>
+        <div class="tarrow">wants to go ✓</div>
+        <div class="tnode">Parents: subtract N = ₹0<br><b>+₹15,000</b></div>
+        <div class="tarrow">family permits ✓</div>
+        <div class="tnode out yes">He goes</div>
+      </div>
+      <div class="tcol her">
+        <div class="tname f-col">Ananya</div>
+        <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹18,000 = +₹7,000</b></div>
+        <div class="tarrow">wants to go ✓</div>
+        <div class="tnode">Parents: subtract N = ₹15,000<br><b>₹7,000 − ₹15,000 = −₹8,000</b></div>
+        <div class="tarrow">family refuses ✗</div>
+        <div class="tnode out no">She stays</div>
+      </div>
+    </div>
+    <p class="tcap">She wants to go, but her family rationally says no, which matches DDU-GKY women citing family reasons for declining.</p>
+  </div>
+
+  <h3 class="sub">Shares who go</h3>
+  <div class="cards">
+    <article class="card"><div class="big"><span class="m">87.5%</span></div><h3>Men</h3><p>(₹80,000 − ₹10,000) ÷ ₹80,000</p></article>
+    <article class="card"><div class="big"><span class="f">58.75%</span></div><h3>Women</h3><p>(₹80,000 − ₹33,000) ÷ ₹80,000</p></article>
+    <article class="card"><div class="big"><span>28.75</span><small>points</small></div><h3>The gap</h3><p>With identical ability and payoffs.</p></article>
+  </div>
+  <div class="two">
+    <article class="card"><h3>Safety or family?</h3><p>Of women's extra ₹23,000 cutoff, ₹8,000 (35%) is safety and ₹15,000 (65%) is the parents' norm cost. Without N, women's share would be 77.5%: safety alone produces a 10-point gap.</p><div class="split"><span style="width:35%" class="sp-s">S 35%</span><span style="width:65%" class="sp-n">N 65%</span></div></article>
+    <article class="card"><h3>Who goes: selection</h3><p>Average payoff of those who go = (cutoff + ₹80,000) ÷ 2: <b class="m-col">₹45,000</b> for men, <b class="f-col">₹56,500</b> for women. The women who go hold internships worth about 26% more. They cleared a higher bar, so they should perform as well or better, and stay as long or longer.</p></article>
+  </div>
+
+  <h3 class="sub">5. Predictions beyond the original gap</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Prediction</th><th>Why the model implies it</th><th>Evidence so far</th></tr></thead>
+    <tbody>
+      <tr><td>The gap opens at acceptance, not application</td><td>Applying is cheap; S and N bind once a real offer arrives</td><td><span class="pill ok">Supported</span> PMIS: women 41% of Round 2 applicants, ~31% of joinees; DDU-GKY acceptance 56% vs 68%; our survey: 45% vs 77% accept</td></tr>
+      <tr><td>Women who go stay as long or longer and perform as well</td><td>They cleared a higher cutoff</td><td><span class="pill ok">Supported</span> DDU-GKY women stayed as long as or longer than men once placed</td></tr>
+      <tr><td>The gap widens with distance and unfamiliar cities</td><td>S and N rise with distance from home</td><td><span class="pill ok">Supported</span> DDU-GKY gap widens for jobs farther from home</td></tr>
+      <tr><td>Women choose work-from-home internships more</td><td>WFH delivers part of R with no H, S or N</td><td><span class="pill mid">Partly</span> 55% of women on Internshala's women-returners programme (ages 26–50) applied to WFH internships; no gender split for students</td></tr>
+      <tr><td>Going with a group, or having relatives in the city, closes much of the gap</td><td>Company and a local contact cut both S and N</td><td><span class="pill mid">Partly</span> Odisha DDU-GKY women recruited in village groups migrated and had twice the placement success</td></tr>
+      <tr><td>Big employers provide hostels; small ones don't</td><td>Hostels have fixed costs, so they pay only at scale</td><td><span class="pill ok">Supported</span> Foxconn (18,720-bed hostel), Tata Electronics Hosur (15,000+ women, free on-campus lodging)</td></tr>
+      <tr><td>A flat stipend rise doesn't close the gap much</td><td>Extra cash lowers both cutoffs equally</td><td><span class="pill ok">Supported in our survey</span> see the sharp test below; PMIS Round 3 (higher stipend) has no gender breakdown yet</td></tr>
+      <tr><td>The gap is smaller where parents' norm costs are lower (urban, educated, an older sibling already moved)</td><td>Lower N</td><td><span class="pill open">Untested</span></td></tr>
+      <tr><td>Correcting parents' beliefs about what others think raises uptake</td><td>Part of N is misperceived</td><td><span class="pill mid">Analogue</span> Saudi wives' job applications rose from 5.8% to 16.2% after husbands learned others' views</td></tr>
+      <tr><td>The gap is smaller in cities seen as safer</td><td>Lower S</td><td><span class="pill open">Untested</span> for internships</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="sharp">
+    <h3>The sharp test</h3>
+    <p>A stipend rise should help women and men by about the same amount, while safety and family-cost fixes help women only. If a stipend rise closed the gap as much as a hostel did, the model would be wrong.</p>
+    <div class="sharprow">
+      <div><small>With ₹4,000 more stipend, would accept</small><b><span class="m-col">86%</span> vs <span class="f-col">56%</span></b><span>gap 30 points: cash doesn't close it</span></div>
+      <div><small>With a safe hostel, would accept</small><b><span class="m-col">78%</span> vs <span class="f-col">68%</span></b><span>gap 10 points: the safety fix does</span></div>
+    </div>
+    <p class="small">Stated intentions, SNIoE student survey. Try both in the Policy Lab below.</p>
+  </div>
+
+  <h3 class="sub">Extensions</h3>
+  <div class="cards">
+    <article class="card"><h3>Bargaining power</h3><p>Give the daughter a smaller say in the family decision than a son. This works like a higher N.</p></article>
+    <article class="card"><h3>Patrilocality</h3><p>If parents expect a daughter's later earnings to go to her marital household, they weight her R less, lowering the family's value of her internship.</p></article>
+    <article class="card"><h3>Misperceived norms</h3><p>Split N into a real part and a misperceived part. Information campaigns remove only the misperceived part.</p></article>
+  </div>
+</section>
+
+<!-- ================= 4. POLICY LAB ================= -->
+<section class="panel" id="policy">
+  <header><span class="chip">04 · Policy</span><h2>Policy Lab</h2></header>
+  <p class="lead">Target the price she pays and the cost her parents feel, not just the stipend. Pick a policy, or move the sliders yourself.</p>
+
+  <div class="scen" role="group" aria-label="Policy scenarios" id="scen"></div>
+
+  <div class="lab">
+    <div class="ctrl card">
+      <div><label for="sW">Stipend W, 2 months <output id="oW"></output></label><input type="range" id="sW" min="0" max="40000" step="1000" value="16000"><span class="note">Same for women and men.</span></div>
+      <div><label for="sH">Rent H, 2 months <output id="oH"></output></label><input type="range" id="sH" min="0" max="40000" step="1000" value="20000"><span class="note">Same for women and men.</span></div>
+      <div><label for="sS">Safety cost S, women <output id="oS"></output></label><input type="range" id="sS" min="0" max="20000" step="500" value="8000"><span class="note">Safer PG, cabs after dark. About zero for men.</span></div>
+      <div><label for="sN">Parents' norm cost N, daughters <output id="oN"></output></label><input type="range" id="sN" min="0" max="30000" step="500" value="15000"><span class="note">Worry, reputation, relatives. Zero for sons. Illustrative.</span></div>
+      <p class="note" style="margin:0">Travel and setup T is fixed at ₹6,000. Payoffs are spread evenly from ₹0 to ₹80,000.</p>
+    </div>
+    <div class="card">
+      <h3>Share who take the internship</h3>
+      <div class="bars" style="margin-top:12px">
+        <div class="bar"><span class="m-col">Men</span><div class="track"><div class="fill" id="bM" style="background:var(--him)"></div></div><span class="val m-col" id="vM"></span></div>
+        <div class="bar"><span class="f-col">Women</span><div class="track"><div class="fill" id="bF" style="background:var(--her)"></div></div><span class="val f-col" id="vF"></span></div>
+      </div>
+      <p style="margin:18px 0 0;font-size:15px">Gap</p>
+      <div class="gapbig" id="vGap"></div>
+      <p style="margin:14px 0 0;font-size:15px">Cutoffs on the payoff scale, ₹0 to ₹80,000</p>
+      <div class="line" id="tline">
+        <div class="axis"></div>
+        <div class="gapband" id="gband"></div>
+        <div class="mark" id="mkM"><span class="m-col">Men <b id="tM"></b></span><i style="background:var(--him)"></i></div>
+        <div class="mark" id="mkF"><span class="f-col">Women <b id="tF"></b></span><i style="background:var(--her)"></i></div>
+        <span class="ends" style="left:0">₹0</span><span class="ends" style="right:0">₹80,000</span>
+      </div>
+      <p id="labNote" class="labnote"></p>
+    </div>
+  </div>
+  <p class="prose small">The size of each change to S and N is illustrative; the direction comes from the evidence below. A stipend rise lifts both groups by the same amount here because payoffs are spread evenly. If payoffs bunched near the women's cutoff, cash would help women a little more, but it still couldn't remove S + N.</p>
+
+  <h3 class="sub">Policy levers in the real world</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Policy</th><th>Changes</th><th>Real example</th></tr></thead>
+    <tbody>
+      <tr><td>Employer or partner hostels with security</td><td>S, N (and H if subsidised)</td><td>Foxconn's 18,720-bed SIPCOT hostel in Tamil Nadu; Tata Electronics Hosur gives its mostly women workforce free food and lodging on campus</td></tr>
+      <tr><td>Government working women's hostels open to interns</td><td>S, N, H</td><td>Sakhi Niwas (Mission Shakti): 463 functional hostels; Odisha's version also covers women in higher education or training</td></tr>
+      <tr><td>Relocation and accommodation allowance for women interns</td><td>Offsets S</td><td>Recommended for PMIS by the Parliamentary Standing Committee on Finance (March 2026)</td></tr>
+      <tr><td>Safe, cheap transport</td><td>S and T</td><td>Delhi's free bus travel for women raised employment among economically marginalised women by 24 percentage points; women's BMTC ridership rose 150%+ under Karnataka's Shakti scheme</td></tr>
+      <tr><td>Cohort placements and college-verified housing</td><td>S and N</td><td>Odisha DDU-GKY women migrated successfully when recruited in groups</td></tr>
+      <tr><td>Parent information sessions</td><td>N, where it's misperceived</td><td>Correcting beliefs about others' views nearly tripled Saudi wives' job applications</td></tr>
+      <tr><td>Hybrid internships</td><td>Part of R without full S and N</td><td>49% of internships on Internshala in 2024 were work-from-home</td></tr>
+      <tr><td>Higher stipend alone</td><td>W</td><td>Helps everyone, but doesn't close the gap on its own</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout biz">
+    <b>The business case for hostels.</b> If a firm values an intern at ₹30,000 over two months <span class="illus">illustrative</span> and pays a ₹16,000 stipend, each extra joiner is worth ₹14,000. Per 100 women offered, a safe hostel at the same rent raises joiners from about 59 to 77: 18 more, worth about ₹2.5 lakh. At ₹3,000 per intern housed <span class="illus">illustrative</span>, housing 77 interns costs about ₹2.3 lakh. It just about pays per intern, so the fixed setup cost decides it: big employers and industrial clusters can make it pay, small firms can't. That's the case for shared or public hostels.
+  </div>
 </section>
 
 <!-- ================= 3. GAME ================= -->
 <section class="panel" id="play">
   <header><span class="chip">Bridge to the model</span><h2>Pack Your Bags</h2></header>
-  <p class="lead">Same offer, two players, this year's Bengaluru prices. Choose a flight or train, a PG in Koramangala, HSR Layout, BTM Layout, Electronic City or near Silk Board (or a relative's place in Whitefield), a commute, a way home after launch nights, and whether to join the Friday outings. Rents, fares and passes come from listings and official fare charts (see Sources). Every choice is sensible for the person making it. Play as Ananya, then as Arjun, and the game checks every possible plan for both.</p>
+  <p class="lead">Same offer, two players, this year's Bengaluru prices. Choose a flight or train, a PG in Koramangala, HSR Layout, BTM Layout, Electronic City or near Silk Board (or a relative's place in Whitefield), a commute, a way home after launch nights, and whether to join the Friday outings. Rents, fares and passes come from listings and official fare charts. Every choice is sensible for the person making it. Play as Ananya, then as Arjun, and the game checks every possible plan for both.</p>
   <div class="arcade"><div class="screen" id="game" aria-live="polite"></div></div>
 </section>
 
-<!-- ================= 4. MODEL ================= -->
-<section class="panel" id="model">
-  <header><span class="chip">03 · Rational-choice model · 35%</span><h2>The game, written out</h2></header>
-  <p class="lead">Moving costs a daughter more, and the parents who have to cover the shortfall get back less from her career. Everyone optimises, and nobody's ability or preferences differ.</p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Agent</th><th>Chooses</th><th>Maximises</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Student</strong> (woman or man)</td><td>Accept the out-of-city offer O, or stay with the local option L</td><td>Career gain ΔR minus own costs, including harassment risk h</td></tr>
-      <tr><td><strong>Parents</strong></td><td>Pay the shortfall and give permission (both needed)</td><td>Their share θ of the child's gain, minus the money they pay, minus reputational cost σ</td></tr>
-      <tr><td><strong>Employer</strong> (extension)</td><td>Whom to make out-of-city offers to</td><td>Value of the hire minus recruiting cost, given the chance the offer is accepted</td></tr>
-    </tbody>
-  </table></div>
-  <div class="cards">
-    <article class="card"><h3>Same for both</h3><p>Career gain ΔR is spread evenly from ₹0 to ₹1,00,000. Stipend S = ₹16,000 for two months, matching the 2024 average of about ₹8,000 a month. A 20-year-old can't borrow, so any shortfall D = C − S must come from the parents.</p></article>
-    <article class="card"><h3>Feature 1: the price of being safe</h3><p>The same level of safety costs a woman more: a women's PG, a bigger deposit, a cab instead of the metro after dark. So her cost is the man's cost plus a premium π, and she also bears a harassment-risk cost h.</p></article>
-    <article class="card"><h3>Feature 2: what parents get back</h3><p>Under patrilocal marriage, a daughter's later earnings mostly go to her husband's household, so θ is lower for daughters. Parents of a daughter living alone also face "log kya kahenge", a reputational cost σ.</p></article>
-  </div>
-  <h3 class="sub">Decision rules</h3>
-  <div class="eq">Student wants to go: &nbsp;<em>ΔR</em> ≥ <em>D</em> + <em>h</em></div>
-  <div class="eq">Parents agree: &nbsp;<em>θ</em>·<em>ΔR</em> − <em>σ</em> ≥ <em>D</em> &nbsp;⇔&nbsp; <em>ΔR</em> ≥ (<em>D</em> + <em>σ</em>) / <em>θ</em></div>
-  <p class="prose">She goes only if both hold. Because θ is below 1, the parents' threshold is the one that binds, so take-up = 1 − threshold / 100 (in ₹ thousand).</p>
-  <h3 class="sub">Numerical example (₹ thousand, two months)</h3>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Parameter</th><th class="n m-col">Arjun</th><th class="n f-col">Ananya</th></tr></thead>
-    <tbody>
-      <tr><td>Living cost C</td><td class="n">24 (room 20 + travel 4)</td><td class="n">34 (safe PG 25 + safe travel 9)</td></tr>
-      <tr><td>Stipend S</td><td class="n">16</td><td class="n">16</td></tr>
-      <tr><td>Shortfall D = C − S</td><td class="n">8</td><td class="n">18</td></tr>
-      <tr><td>Harassment-risk cost h</td><td class="n">0</td><td class="n">6</td></tr>
-      <tr><td>Parents' share θ</td><td class="n">0.5</td><td class="n">0.4</td></tr>
-      <tr><td>Reputational cost σ</td><td class="n">0</td><td class="n">4</td></tr>
-      <tr><td>Parents' threshold (D + σ)/θ</td><td class="n">16</td><td class="n">55</td></tr>
-      <tr><th>Take-up</th><th class="n m-col">84%</th><th class="n f-col">45%</th></tr>
-    </tbody>
-  </table></div>
-  <div class="two">
-    <article class="card"><h3>The two features multiply</h3><p>The safety cost alone opens a 20-point gap, and the family effect alone opens 14. Together they open 39, because every rupee of extra cost is divided by a smaller θ.</p></article>
-    <article class="card"><h3>Employers make it stick</h3><p>Recruiters who see women accepting less often rationally make them fewer out-of-city offers. That is statistical discrimination, and it keeps families from ever seeing a daughter go.</p></article>
-  </div>
-  <h3 class="sub">What the model predicts beyond the gap</h3>
-  <div class="cards">
-    <article class="card"><h3>Relatives nearby</h3><p>A relative in the internship city cuts rent and σ, so the gap shrinks.</p></article>
-    <article class="card"><h3>No gap if remote</h3><p>With no move, D, h and σ are zero, so women take remote internships as often as men.</p></article>
-    <article class="card"><h3>Women who go are stronger</h3><p>Only women with ΔR above 55 go, against 16 for men, so women who do move should outperform and convert more pre-placement offers.</p></article>
-    <article class="card"><h3>Longer means wider</h3><p>Rent grows every month and the gain grows more slowly, so 12-month placements show the biggest gaps.</p></article>
-  </div>
-</section>
-
-<!-- ================= 5. POLICY LAB ================= -->
-<section class="panel" id="policy">
-  <header><span class="chip">03 · Policy</span><h2>Policy Lab</h2></header>
-  <p class="lead">Move the sliders and the model recalculates take-up for 100 identical students of each gender. Defaults are the numerical example. Numbers are illustrative until the survey replaces them.</p>
-  <div class="lab">
-    <div class="ctrl card">
-      <div><label for="sStip">Monthly stipend <output id="oStip"></output></label><input type="range" id="sStip" min="0" max="20" step="1" value="8"><span class="note">Same for both. Two-month internship.</span></div>
-      <div><label for="sPrem">Safety premium for women <output id="oPrem"></output></label><input type="range" id="sPrem" min="0" max="16" step="1" value="10"><span class="note">Extra paid over two months for a safe PG and cabs after dark.</span></div>
-      <div><label for="sSig">Parents' reputational worry, σ <output id="oSig"></output></label><input type="range" id="sSig" min="0" max="12" step="1" value="4"><span class="note">What "log kya kahenge" costs the family, in ₹ thousand. Cohort placements and parent sessions lower it.</span></div>
-      <div><label for="sTh">Parents' share of a daughter's gain, θ <output id="oTh"></output></label><input type="range" id="sTh" min="0.2" max="0.5" step="0.05" value="0.4"><span class="note">0.5 for sons. Shifts slowly with norms about where a daughter's income goes.</span></div>
-      <label class="check" for="cHouse"><input type="checkbox" id="cHouse"> Company provides safe housing for all interns<br><span class="note">Removes rent and the safety premium; travel stays.</span></label>
-      <label class="check" for="cRemote"><input type="checkbox" id="cRemote"> Offer a remote option</label>
-      <button class="btn" id="labReset" type="button">Reset to the example</button>
-    </div>
-    <div class="card">
-      <h3>Take-up of the out-of-city internship</h3>
-      <div class="bars" style="margin-top:12px">
-        <div class="bar"><span class="m-col">Men</span><div class="track"><div class="fill" id="bM" style="background:var(--him)"></div></div><span class="val m-col" id="vM"></span></div>
-        <div class="bar"><span class="f-col">Women</span><div class="track"><div class="fill" id="bF" style="background:var(--her)"></div></div><span class="val f-col" id="vF"></span></div>
-      </div>
-      <p style="margin:18px 0 0;font-size:15px">Gap in take-up</p>
-      <div class="gapbig" id="vGap"></div>
-      <p style="margin:14px 0 0;font-size:15px">Career gain needed before parents agree (₹ thousand)</p>
-      <div class="line" id="tline">
-        <div class="axis"></div>
-        <div class="mark" id="mkM"><span class="m-col">Men <b id="tM"></b></span><i style="background:var(--him)"></i></div>
-        <div class="mark" id="mkF"><span class="f-col">Women <b id="tF"></b></span><i style="background:var(--her)"></i></div>
-        <span class="ends" style="left:0">0</span><span class="ends" style="right:0">100</span>
-      </div>
-      <p id="labNote" style="font-size:14px;margin:10px 0 0;color:var(--muted)"></p>
-    </div>
-  </div>
-</section>
 
 <!-- ================= 6. VOICES ================= -->
 <section class="panel" id="voices">
@@ -437,40 +674,32 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   </div>
 </section>
 
-<!-- ================= 7. NOTES ================= -->
+
+<!-- ================= 7. MODEL NOTE ================= -->
 <section class="panel" id="notes">
-  <header><span class="chip">Companion note</span><h2>Model note, survey and sources</h2></header>
-  <div class="two">
-    <article class="card">
-      <h3>The model on one card</h3>
-      <p>Student g goes iff ΔR ≥ D<sub>g</sub> + h<sub>g</sub> and θ<sub>g</sub>ΔR − σ<sub>g</sub> ≥ D<sub>g</sub>, with D<sub>g</sub> = C<sub>g</sub> − S. Gendered features: C<sub>F</sub> = C<sub>M</sub> + π, h<sub>F</sub> &gt; 0 (safety); θ<sub>F</sub> &lt; θ<sub>M</sub>, σ<sub>F</sub> &gt; 0 (family). With ΔR ~ U[0, 100], take-up = 1 − (D<sub>g</sub> + σ<sub>g</sub>)/(100·θ<sub>g</sub>). Example: men 84%, women 45%.</p>
-    </article>
-    <article class="card">
-      <h3>The survey</h3>
-      <p>60 to 100 second- and third-year students, about half women, anonymous. It asks about offers, acceptance and reasons for declining, the monthly cost of a place they'd feel safe in, what family would pay, whether they'd need permission, parents' worry about relatives (1 to 5), and CGPA and course. The analysis compares acceptance by gender within the same CGPA band and course.</p>
-    </article>
+  <header><span class="chip">Companion note</span><h2>The model on one page</h2></header>
+  <div class="note-page">
+    <p><b>Question.</b> Why do women undergraduates in India take out-of-city internships less often than men with the same ability?</p>
+    <p><b>Agents and objectives.</b> A student chooses between an out-of-city internship and a local or work-from-home option (valued at zero) to maximise her net benefit R + W − H − T − S. Her parents, who must permit the move and often fund it, maximise family welfare: her net benefit minus their norm cost N. An employer chooses whether to provide a safe hostel to maximise profit: (v − W) × joiners − k × interns housed.</p>
+    <p><b>Symbols.</b> R = payoff from the internship (same spread for women and men); W = stipend; H = rent; T = travel and setup; S = safety cost (positive for women, about zero for men); N = parents' norm cost (positive for daughters, zero for sons).</p>
+    <p><b>Decision rule.</b> The internship happens if R &gt; C, where C = (H + T − W) + S + N.</p>
+    <p><b>Result.</b> Since S + N is positive for women and about zero for men, women face a higher cutoff. With the same spread of R, a smaller share of women clear it. Ability, returns, rent and stipend are identical, so the gap comes only from S + N.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Two months, Gurgaon; R from ₹0 to ₹80,000</th><th class="n m-col">Men</th><th class="n f-col">Women</th></tr></thead>
+      <tbody>
+        <tr><td>W, H, T</td><td class="n">₹16,000, ₹20,000, ₹6,000</td><td class="n">Same</td></tr>
+        <tr><td>S, N</td><td class="n">₹0, ₹0</td><td class="n">₹8,000, ₹15,000</td></tr>
+        <tr><td>Cutoff C</td><td class="n">₹10,000</td><td class="n">₹33,000</td></tr>
+        <tr><td>Share who go</td><td class="n">87.5%</td><td class="n">58.75%</td></tr>
+      </tbody>
+    </table></div>
+    <p><b>Predictions.</b> The gap opens at acceptance, not application; women who go are positively selected and stay as long or longer; the gap widens with distance; women choose work-from-home more; group moves and relatives in the city shrink the gap; only large employers provide hostels; a flat stipend rise leaves the gap roughly unchanged.</p>
+    <p><b>Policy.</b> Lower S (safe hostels, transport, relocation allowances) and N (cohort placements, parent information, trusted institutions). A safe hostel alone cuts the example gap from 28.75 to 10.6 points; a ₹4,000-a-month stipend rise leaves it at 28.75.</p>
+    <p class="small"><b>Illustrative assumptions:</b> the norm cost N, the evening-cab part of S, and the payoff spread are illustrative, not measured.</p>
   </div>
-  <h3 class="sub" id="sources">Sources</h3>
-  <ul class="refs">
-    <li>Borker, G. (2018). Safety First: Perceived Risk of Street Harassment and Educational Choices of Women. <a href="https://data2x.org/wp-content/uploads/2019/11/PerceivedRiskStreetHarassmentandEdChoicesofWomen_Borker.pdf">PDF</a> · <a href="https://voxdev.org/topic/education/perceived-risk-street-harassment-and-college-choice-women-delhi">VoxDev</a></li>
-    <li>Bursztyn, González and Yanagizawa-Drott (2020). Misperceived Social Norms. American Economic Review 110(10). <a href="https://www.aeaweb.org/doi/10.1257/aer.20180975">AEA</a></li>
-    <li>Chakraborty, Mukherjee, Rachapalli and Saha (2018). Stigma of Sexual Violence and Women's Decision to Work. World Development 103. <a href="https://docs.iza.org/dp10934.pdf">IZA</a></li>
-    <li>Moore and Pande (2018). Vocational training programs in India are leaving women behind. <a href="https://ie.yale.edu/news/180223/vocational-training-programs-india-are-leaving-women-behind-neednt-be-case">Yale</a></li>
-    <li>Nunley, Pugh, Romero and Seals (2016). College Major, Internship Experience, and Employment Opportunities. <a href="https://www.hum.utah.edu/_resources/documents/internships/major%20internship%20and%20employment.pdf">PDF</a></li>
-    <li>Siddique (2020). Does a fear of violence reduce female labour supply? <a href="https://www.voxdev.org/topic/labour-markets/does-fear-violence-reduce-female-labour-supply-evidence-india">VoxDev</a></li>
-    <li>AISHE 2021-22, Rajya Sabha Unstarred Question 1798. <a href="https://rsdebate.nic.in/bitstream/123456789/750825/1/PQ_265_07082024_U1798_p211_p212.pdf">PDF</a></li>
-    <li>PLFS 2020-21 migration: Women at Work, But Not on the Move. <a href="https://www.theindiaforum.in/economy/women-work-not-move-what-do-data-say">The India Forum</a></li>
-    <li>NFHS-5 mobility figures. <a href="https://theprint.in/india/82-women-in-india-able-to-refuse-sex-to-their-husbands-finds-govts-family-health-survey/948810">ThePrint</a></li>
-    <li>PM Internship Scheme. <a href="https://theprint.in/economy/modi-govts-pm-internship-scheme-saw-high-attrition-in-year-1-just-30-joined-41-quit-midway/2795773">ThePrint</a> · <a href="https://m.thewire.in/article/economy/only-1-5-of-funds-used-the-pm-internship-scheme-has-missed-its-targets-by-a-wide-margin">The Wire</a></li>
-    <li>Internshala Internship Trends 2024 (average stipend). <a href="https://www.storyboard18.com/how-it-works/internship-opportunities-surge-by-25-in-2024-report-50595.htm">Storyboard18</a></li>
-    <li>Women's housing costs. <a href="https://community.verified.realestate/article/why-single-women-still-struggle-to-find-rental-homes-in-india-challenges-trends-and-safer-housing-options/">Verified Real Estate</a> · <a href="https://thesoftcopy.in/?p=34684">The Softcopy</a></li>
-    <li>Game prices, rent and deposits: <a href="https://stanzaliving.com/bengaluru/pg-hostel-in-koramangala">Stanza Living, Koramangala (double sharing ₹11,000–18,000)</a> · <a href="https://www.stanzaliving.com/pg-in-btm-layout">Stanza Living, BTM Layout (₹8,500–18,000)</a> · <a href="https://www.colive.com/blog/?p=6679">Colive, HSR Layout (from ₹11,999)</a> · <a href="https://www.colive.com/bangalore/pg-in-btm-layout/">Colive, BTM Layout (from ₹7,000)</a> · <a href="https://zolostays.com/blog/understanding-the-price-of-pg-accommodation-in-bangalore">Zolo, PG rent by area (Electronic City ₹8,000–13,000)</a> · <a href="https://zolostays.com/bangalore/">Zolo, food add-on ₹2,500–5,000</a> · <a href="https://thesoftcopy.in/?p=34684">women's hostels charge 62% higher deposits</a> · <a href="https://newskarnataka.com/bengaluru/interns-%e2%82%b926000-monthly-budget-in-bengaluru-sparks-online-debate/17032026/">an intern's ₹26,000-a-month Bengaluru budget</a></li>
-    <li>Game prices, getting there: <a href="https://flights.airindiaexpress.com/en/delhi-to-bengaluru-flights">Delhi–Bengaluru economy fares from about ₹5,700–6,300</a> · <a href="https://ixigo.com/by-train-rail/new-delhi-to-bengaluru-by-train">Rajdhani 3AC and Karnataka Express fares</a> · <a href="https://www.rome2rio.com/s/Bengaluru-Airport-BLR/HSR-Layout">airport cab ₹1,200–1,500 and Vayu Vajra ₹260–300</a></li>
-    <li>Game prices, getting around: <a href="https://thesouthfirst.com/karnataka/auto-fares-revised-in-bengaluru-effective-from-august-1/">auto meter fares and 1.5× night rate</a> · <a href="https://www.siasat.com/uber-ola-to-fall-in-line-as-karnataka-govt-fixes-uniform-fare-2971440/amp/">uniform cab fare</a> · <a href="https://www.deccanherald.com/india/karnataka/bengaluru/cab-drivers-unions-seek-uniform-fares-across-apps-3102276">10% night charge</a> · <a href="https://thesouthfirst.com/karnataka/karnataka-a-day-after-fare-hike-bmtc-bus-pass-rates-raised-by-up-to-25-bjp-stages-protest-at-majestic/">BMTC passes (non-AC ₹1,500, Volvo ₹2,500)</a> · <a href="https://www.91mobiles.com/hub/?p=529286">Shakti free bus rides limited to Karnataka residents</a> · <a href="https://www.thenewsminute.com/amp/story/karnataka/karnataka-hc-lifts-bike-taxi-ban-directs-state-govt-to-grant-permits">bike taxis legal again, January 2026</a> · <a href="https://www.tomtom.com/traffic-index/bengaluru-traffic">TomTom: 10 km took about 45 minutes in 2025</a>. Bike-taxi fares, the ₹600 outing, career value, risk and worry are estimates.</li>
-  </ul>
-  <p style="font-size:13px;margin:10px 0 0">Model parameters (θ, σ, h, the safety premium) are illustrative and consistent with the evidence above; survey results will replace them.</p>
 </section>
 </main>
+
 
 <footer>Same Offer, Different City · UG Economics project on gendered outcomes · Pixel room drawn in code</footer>
 
@@ -664,8 +893,8 @@ CHAPTERS.forEach(ch=>{const b=document.createElement("button"); b.type="button";
 
 // ---------------- game ----------------
 const G=document.getElementById("game");
-// All money in rupees. Each price is noted with its source in the Sources section ("Game prices").
-const STIPEND=8000, MONTHS=2, DAYS=42, LATE=8, OUTINGS=4, BASE_DR=100000, MISC=1500;
+// All money in rupees. Prices from Bengaluru listings and fare charts.
+const STIPEND=15000, MONTHS=2, DAYS=42, LATE=8, OUTINGS=4, BASE_DR=100000, MISC=1500;
 const OFFICE="a startup on 80 Feet Road, Koramangala";
 const autoFare=(km,night)=>Math.round((36+Math.max(0,km-2)*18)*(night?1.5:1));   // RTA Bengaluru meter fare from Aug 2025; 1.5x from 10 pm to 5 am
 const cabFare=(km,night)=>Math.round((100+Math.max(0,km-4)*24)*(night?1.1:1));   // Karnataka uniform cab fare (non-AC, first 4 km Rs 100, then Rs 24/km); 10% night charge
@@ -805,7 +1034,7 @@ function faceCanvas(girl){const c=document.createElement("canvas");c.width=16;c.
 function flagHTML(o){return (o.flags||[]).map(f=>{const i=f.indexOf(":");return `<span class="flag ${f.slice(0,i)}">${f.slice(i+1)}</span>`}).join("")}
 function receipt(t){
   return `<div class="receipt"><table><tbody>${t.lines.map(l=>`<tr><td>${l.label}<small>${l.what}</small></td><td class="n">${rs(l.cost)}</td></tr>`).join("")}
-    <tr><td>Stipend, 2 months at ₹8,000</td><td class="n">−${rs(t.S)}</td></tr>
+    <tr><td>Stipend, 2 months at ₹15,000</td><td class="n">−${rs(t.S)}</td></tr>
     <tr class="tot"><td>Shortfall the family must cover, D</td><td class="n">${rs(t.D)}</td></tr></tbody></table>
     <small>Cash needed in week one (one-way ticket, first month, deposit): <b>${rs(t.upfront)}</b>.${t.deposit?` The ${rs(t.deposit)} deposit comes back at the end, but someone has to find it now.`:""}</small></div>`;
 }
@@ -817,8 +1046,8 @@ function meter(t){
 function render(){
   G.innerHTML="";
   if(gs.view==="start"){
-    G.innerHTML=`<div class="hud"><span>PACK YOUR BAGS</span><span>Bengaluru · 2 months · ₹8,000 a month</span></div>
-      <h3>The offer</h3><p>A two-month product internship at ${OFFICE}, in Bengaluru's startup belt. The stipend is <b>₹8,000 a month</b>, India's 2024 average. Doing it is worth about <b>₹1,00,000</b> in career value: a shot at a pre-placement offer, references, a line on the CV.</p>
+    G.innerHTML=`<div class="hud"><span>PACK YOUR BAGS</span><span>Bengaluru · 2 months · ₹15,000 a month</span></div>
+      <h3>The offer</h3><p>A two-month product internship at ${OFFICE}, in Bengaluru's startup belt. The stipend is <b>₹15,000 a month</b>. Doing it is worth about <b>₹1,00,000</b> in career value: a shot at a pre-placement offer, references, a line on the CV.</p>
       <p>Five rounds of real choices, priced at this year's Bengaluru rates: the journey, where to live, the commute, late nights, and the Friday outings. Then you call home.</p>
       <p>Pick who you play. Same CGPA, same offer, both from Delhi, same prices.</p><div class="who"></div>`;
     const w=G.querySelector(".who");
@@ -889,31 +1118,49 @@ function render(){
 function start(data){ if(data&&data.gs) gs=data.gs; render(); labInit(data&&data.lab); }
 window.claude?.hot?.snapshot?.(()=>({gs, lab:labState()}));
 
-// ---------------- policy lab ----------------
+// ---------------- policy lab: the model's cutoffs, live ----------------
 const $=id=>document.getElementById(id);
-const DEF={stip:8,prem:10,sig:4,th:0.4,house:false,remote:false};
-function labState(){return{stip:+$("sStip").value,prem:+$("sPrem").value,sig:+$("sSig").value,th:+$("sTh").value,house:$("cHouse").checked,remote:$("cRemote").checked}}
-function setLab(s){$("sStip").value=s.stip;$("sPrem").value=s.prem;$("sSig").value=s.sig;$("sTh").value=s.th;$("cHouse").checked=s.house;$("cRemote").checked=s.remote;lab()}
-function takeup(D,h,sigma,theta){const par=(Math.max(D,0)+sigma)/theta, stu=Math.max(D,0)+h, th=Math.max(par,stu); return {th, rate:Math.max(0,Math.min(1,1-th/100))}}
+const T_FIXED=6000, RMAX=80000;
+const SCEN=[
+  {k:"base",b:"Baseline",d:"Nothing changes",W:16000,H:20000,S:8000,N:15000},
+  {k:"stip",b:"Stipend +₹4,000 a month",d:"W rises by ₹8,000 for everyone",W:24000,H:20000,S:8000,N:15000},
+  {k:"info",b:"Information for parents",d:"N falls by a third, to ₹10,000",W:16000,H:20000,S:8000,N:10000},
+  {k:"cohort",b:"Cohort placement",d:"3+ women from one college together: S halves to ₹4,000, N halves to ₹7,500",W:16000,H:20000,S:4000,N:7500},
+  {k:"hostel",b:"Safe hostel, same rent",d:"S falls to ₹1,000, N halves to ₹7,500",W:16000,H:20000,S:1000,N:7500},
+  {k:"both",b:"Hostel + parent information",d:"S ₹1,000, N ₹5,000",W:16000,H:20000,S:1000,N:5000}
+];
+const DEF=SCEN[0];
+const inr=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+const share=c=>Math.max(0,Math.min(1,(RMAX-c)/RMAX));
+const fmt=v=>{const r2=Math.round(v*100)/100; return Math.abs(v-r2)<1e-9? String(r2) : v.toFixed(1)};
+const pct=p=>fmt(p*100);
+function model(s){const cM=s.H+T_FIXED-s.W, cF=cM+s.S+s.N; const m=share(cM), f=share(cF); return {cM,cF,m,f,gap:(m-f)*100}}
+function labState(){return{W:+$("sW").value,H:+$("sH").value,S:+$("sS").value,N:+$("sN").value}}
+function setLab(s){["W","H","S","N"].forEach(k=>$("s"+k).value=s[k]); lab()}
 function lab(){
-  const s=labState(), Sx=2*s.stip;
-  $("oStip").textContent=`₹${s.stip},000`; $("oPrem").textContent=`₹${s.prem},000`; $("oSig").textContent=`₹${s.sig},000`; $("oTh").textContent=s.th.toFixed(2);
-  let m,f;
-  if(s.remote){m={th:0,rate:1};f={th:0,rate:1}}
-  else{
-    const CM = s.house?4:24, CF = s.house?4:24+s.prem, hF = s.house?3:6;
-    m=takeup(CM-Sx,0,0,.5); f=takeup(CF-Sx,hF,s.sig,s.th);
-  }
-  const pm=Math.round(m.rate*100), pf=Math.round(f.rate*100);
-  $("bM").style.width=pm+"%"; $("bF").style.width=pf+"%"; $("vM").textContent=pm+"%"; $("vF").textContent=pf+"%";
-  $("vGap").textContent=(pm-pf)+" points";
-  const cl=v=>Math.max(0,Math.min(100,v));
-  $("mkM").style.left=cl(m.th)+"%"; $("mkF").style.left=cl(f.th)+"%";
-  $("tM").textContent=m.th>100?">100":Math.round(m.th); $("tF").textContent=f.th>100?">100":Math.round(f.th);
-  $("labNote").textContent = s.remote ? "With a remote option nobody moves, so cost, risk and worry drop out and the gap closes."
-    : `A student goes only if her career gain is to the right of her marker. Women's marker = (shortfall ${Math.max(0,(s.house?4:24+s.prem)-Sx)} + worry ${s.sig}) ÷ θ ${s.th.toFixed(2)}.`;
+  const s=labState(), r=model(s);
+  $("oW").textContent=inr(s.W); $("oH").textContent=inr(s.H); $("oS").textContent=inr(s.S); $("oN").textContent=inr(s.N);
+  $("bM").style.width=r.m*100+"%"; $("bF").style.width=r.f*100+"%";
+  $("vM").textContent=pct(r.m)+"%"; $("vF").textContent=pct(r.f)+"%";
+  $("vGap").textContent=fmt(Math.abs(r.gap)<1e-9?0:r.gap)+" points";
+  const x=c=>Math.max(0,Math.min(100,c/RMAX*100));
+  $("mkM").style.left=x(r.cM)+"%"; $("mkF").style.left=x(r.cF)+"%";
+  $("gband").style.left=x(r.cM)+"%"; $("gband").style.width=Math.max(0,x(r.cF)-x(r.cM))+"%";
+  $("tM").textContent=inr(r.cM); $("tF").textContent=inr(r.cF);
+  const extra=s.S+s.N;
+  $("labNote").textContent= extra>0
+    ? `Men's cutoff = H + T − W = ${inr(r.cM)}. Women's cutoff adds S + N = ${inr(extra)}: ${Math.round(s.S/extra*100)}% safety, ${Math.round(s.N/extra*100)}% norm cost. Only S and N move the gap; W and H shift both cutoffs equally.`
+    : "With no safety cost and no norm cost, women and men face the same cutoff, so the gap disappears: the textbook prediction.";
+  document.querySelectorAll("#scen button").forEach(b=>{const sc=SCEN.find(z=>z.k===b.dataset.k); b.setAttribute("aria-pressed", String(["W","H","S","N"].every(k=>sc[k]===s[k])))});
 }
-function labInit(saved){["sStip","sPrem","sSig","sTh","cHouse","cRemote"].forEach(id=>$(id).addEventListener("input",lab)); $("labReset").addEventListener("click",()=>setLab(DEF)); setLab(saved||DEF)}
+function labInit(saved){
+  const box=$("scen");
+  SCEN.forEach(sc=>{const r=model(sc), b=document.createElement("button"); b.type="button"; b.dataset.k=sc.k;
+    b.innerHTML=`<b>${sc.b}</b><span>${sc.d}</span><span class="g">${pct(r.m)}% · ${pct(r.f)}%</span><span>gap ${fmt(r.gap)} points</span>`;
+    b.addEventListener("click",()=>setLab(sc)); box.appendChild(b)});
+  ["sW","sH","sS","sN"].forEach(id=>$(id).addEventListener("input",lab));
+  setLab(saved&&saved.W!==undefined?saved:DEF);
+}
 
 // ---------------- scroll zoom: fly through the window into the city ----------------
 (function zoom(){
