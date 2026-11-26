@@ -283,6 +283,15 @@ ol.steps .eq{margin:10px 0 2px;font-size:clamp(15px,2vw,20px)}
 #mkF{top:36px;display:flex;flex-direction:column-reverse;align-items:center}
 #mkF i{margin:0 auto 2px}
 .line .ends{top:86px}
+.combo{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch;margin:-4px 0 16px}
+.combo-lab{align-self:center;font-family:var(--display);font-weight:700}
+.tog{text-align:left;background:var(--paper);border:2px dashed var(--ink);padding:8px 12px;cursor:pointer;font-family:var(--body);font-size:13px;color:var(--ink);max-width:300px}
+.tog b{display:block;font-family:var(--display);font-weight:700;font-size:15px}
+.tog span{color:var(--muted)}
+.tog i.illus{font-style:normal}
+.tog[aria-pressed="true"]{background:var(--screen);border-style:solid}
+.tog[aria-pressed="true"] span{color:var(--ink)}
+.combo .btn{align-self:center}
 /* ---------- notes ---------- */
 .refs{columns:2 300px;column-gap:28px;font-size:14px;padding-left:18px}
 .refs li{break-inside:avoid;margin-bottom:8px}
@@ -302,13 +311,12 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   <a href="#model">MODEL</a>
   <a href="#policy">POLICY LAB</a>
   <a href="#play">PLAY</a>
-  <a href="#voices">VOICES</a>
   <a href="#notes">NOTE</a>
 </nav>
 <div class="toplinks"><a href="#model">Model</a><a href="#policy">Policy Lab</a><a href="#play">Play</a></div>
 
 <!-- ================= ROOM ================= -->
-<section class="room" id="top" aria-label="Priya's room">
+<section class="room" id="top" aria-label="Aditi's room">
  <div class="sticky">
   <canvas class="layer" id="cFar" width="384" height="216" aria-hidden="true"></canvas>
   <canvas class="layer" id="cMid" width="384" height="216" aria-hidden="true"></canvas>
@@ -317,7 +325,6 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
     <canvas id="roomc" width="240" height="150" aria-hidden="true"></canvas>
     <!-- hotspots placed in % of the 240x150 room grid -->
     <button class="hot" style="left:5%;top:11%;width:15%;height:27%" data-go="model"><span class="tag">The model</span></button>
-    <button class="hot" style="left:5.8%;top:46%;width:13.4%;height:22%" data-video="1"><span class="tag">▶ Voices: interviews</span></button>
     <button class="hot" style="left:49%;top:51%;width:10%;height:12%" data-go="gap"><span class="tag">The gap</span></button>
     <button class="hot" style="left:24.5%;top:53%;width:6%;height:7%" data-go="textbook"><span class="tag">The textbook</span></button>
     <button class="hot" style="left:34%;top:57%;width:4.5%;height:6%" data-go="policy" id="phoneHot"><span class="tag below">Mummy calling… (policy lab)</span></button>
@@ -327,10 +334,10 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   </div>
   <div class="hint fadeable">
     <h1>Same ability. Same offer. Only one of them goes.</h1>
-    <p>Priya and Rahul both get a two-month internship offer in Gurgaon. This site asks why women students are less likely than men to take internships in another city. Click the glowing things in the room, or scroll to fly out of the window.</p>
+    <p>Aditi and Aryan both get a two-month internship offer in Gurgaon. This site asks why women students are less likely than men to take internships in another city. Click the glowing things in the room, or scroll to fly out of the window.</p>
   </div>
   <div class="scrollcue fadeable">Scroll ↓ to fly out of the window</div>
-  <div class="arrive" id="arrive" aria-hidden="true"><b>Gurgaon</b><span>Girls' PGs here list at ₹8,000–₹20,000 a month.</span></div>
+  <div class="arrive" id="arrive" aria-hidden="true"><b>Gurgaon</b><span>Same Offer, Different City</span></div>
  </div>
 </section>
 
@@ -387,7 +394,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 
   <h3 class="sub">Why it matters</h3>
   <div class="cards">
-    <article class="card"><h3>Internships pay off</h3><p>An internship raises early-career earnings by about 6% (Germany) and interview invitations by 12.6% (Belgium). A woman who can't take one starts her career behind.</p></article>
+    <article class="card"><h3>Internships pay off</h3><p>An internship raises early-career earnings by about 6% and interview invitations by 12.6%. A woman who can't take one starts her career behind.</p></article>
     <article class="card"><h3>India's missing women workers</h3><p>Only 27.7% of urban women aged 15+ are in the labour force, against 76.2% of men; among urban 15–29-year-olds it's 23.2% vs 60.9%. A first internship is often the bridge to a first job.</p></article>
   </div>
 </section>
@@ -410,7 +417,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   <div class="cards">
     <article class="card"><h3>The gap opens at joining</h3><p>PMIS: women's share falls from 41% of Round 2 applicants to about 31% of joinees. If women apply at 41%, the model says they should join at 41%.</p></article>
     <article class="card"><h3>It widens with distance</h3><p>DDU-GKY women were even less likely to accept jobs that require migration. Once placed, they stayed as long as or longer than men, so they aren't less committed.</p></article>
-    <article class="card"><h3>Distance costs women more</h3><p>Women value commute about 20% more than men (France). Delhi women would pay ₹7,500 a year more than men for a safer route.</p></article>
+    <article class="card"><h3>Distance costs women more</h3><p>Women value commute about 20% more than men. Delhi women would pay ₹7,500 a year more than men for a safer route.</p></article>
     <article class="card"><h3>When the price falls, women move</h3><p>Foxconn's state-built hostel houses 18,720 women workers. Tata Electronics' Hosur plant employs 15,000+ women with free lodging on campus. Odisha women recruited in groups had twice the placement success.</p></article>
   </div>
 
@@ -537,7 +544,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
     <div class="tnode root">Offer arrives · payoff R = ₹25,000 for both</div>
     <div class="tcols">
       <div class="tcol him">
-        <div class="tname m-col">Rahul</div>
+        <div class="tname m-col">Aryan</div>
         <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹10,000 = +₹15,000</b></div>
         <div class="tarrow">wants to go ✓</div>
         <div class="tnode">Parents: subtract N = ₹0<br><b>+₹15,000</b></div>
@@ -545,7 +552,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
         <div class="tnode out yes">He goes</div>
       </div>
       <div class="tcol her">
-        <div class="tname f-col">Priya</div>
+        <div class="tname f-col">Aditi</div>
         <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹18,000 = +₹7,000</b></div>
         <div class="tarrow">wants to go ✓</div>
         <div class="tnode">Parents: subtract N = ₹15,000<br><b>₹7,000 − ₹15,000 = −₹8,000</b></div>
@@ -608,6 +615,12 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   <p class="lead">Target the price she pays and the cost her parents feel, not just the stipend. Pick a policy, or move the sliders yourself.</p>
 
   <div class="scen" role="group" aria-label="Policy scenarios" id="scen"></div>
+  <div class="combo" role="group" aria-label="Combine policies">
+    <span class="combo-lab">Add to the example:</span>
+    <button type="button" class="tog" id="tHostel" aria-pressed="false"><b>Employer or partner hostel with security</b><span>S falls to ₹1,000, N halves</span></button>
+    <button type="button" class="tog" id="tHybrid" aria-pressed="false"><b>Hybrid internship</b><span>Half on-site: S and N halve <i class="illus">illustrative</i></span></button>
+    <button type="button" class="btn" id="labReset">Reset to the example</button>
+  </div>
 
   <div class="lab">
     <div class="ctrl card">
@@ -661,21 +674,8 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 <!-- ================= 3. GAME ================= -->
 <section class="panel" id="play">
   <header><span class="chip">Bridge to the model</span><h2>Pack Your Bags</h2></header>
-  <p class="lead">The model as a game. Same offer, same rent, same stipend: play it as Priya, then as Rahul. Each step adds one part of the model, then the family decides. At the end, try a policy and see what changes.</p>
+  <p class="lead">The model as a game. Same offer, same rent, same stipend: play it as Aditi, then as Aryan. Each step adds one part of the model, then the family decides. At the end, try a policy and see what changes.</p>
   <div class="arcade"><div class="screen" id="game" aria-live="polite"></div></div>
-</section>
-
-
-<!-- ================= 6. VOICES ================= -->
-<section class="panel" id="voices">
-  <header><span class="chip">Evidence in their words</span><h2>Voices</h2></header>
-  <div class="tv">
-    <button class="tvbtn" type="button" data-video="1" aria-label="Play the interviews video"><canvas id="tvc" width="38" height="30"></canvas></button>
-    <div class="prose" style="flex:1;min-width:260px">
-      <p><strong>Interviews with SNIoE students.</strong> Click the TV to watch.</p>
-      <div class="tags"><span>Rent</span><span>Commute</span><span>Safety</span><span>Family</span></div>
-    </div>
-  </div>
 </section>
 
 
@@ -707,27 +707,11 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 
 <footer>Same Offer, Different City · UG Economics project on gendered outcomes · Pixel room drawn in code</footer>
 
-<dialog id="vid" aria-labelledby="vidTitle">
-  <div class="dlg-head"><h3 id="vidTitle">Voices: six interviews</h3><button type="button" id="vidClose">Close ✕</button></div>
-  <div class="player" id="player">
-    <video id="video" controls preload="metadata" playsinline hidden></video>
-    <div class="soon" id="soon"><b>Tape loading…</b>The interview video goes here. It will play on this screen with chapters for each student.</div>
-  </div>
-  <div class="chapters" id="chapters"></div>
-</dialog>
+
 
 <script>
 (() => {
 // ---------------- config ----------------
-const VIDEO_SRC = "voices.mp4"; // the interview video, published beside this page
-const CHAPTERS = [ // set start times (seconds) once the video is in
-  {t:0, who:"Interview 1", tag:"Rent"},
-  {t:0, who:"Interview 2", tag:"Safety"},
-  {t:0, who:"Interview 3", tag:"Family"},
-  {t:0, who:"Interview 4", tag:"Commute"},
-  {t:0, who:"Interview 5", tag:"Family"},
-  {t:0, who:"Interview 6", tag:"Rent"}
-];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------------- pixel helpers ----------------
@@ -867,33 +851,6 @@ loop();
 
 // ---------------- hotspots ----------------
 document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.go).scrollIntoView({behavior:reduce?"auto":"smooth"})));
-document.querySelectorAll("[data-video]").forEach(b=>b.addEventListener("click",openVideo));
-
-// ---------------- TV icon in Voices ----------------
-(function tv(){
-  const c=document.getElementById("tvc"), g=c.getContext("2d");
-  px(g,"#2A170C",0,0,38,26); px(g,"#5E5A62",1,1,36,24); px(g,"#123638",3,3,26,20); px(g,"#39C6C0",4,4,24,18);
-  for(let i=0;i<9;i++) px(g,"#FFF8EE",13,8+i,1+(i<5?i:8-i),1);
-  px(g,"#2A170C",31,5,3,3); px(g,"#2A170C",31,10,3,3); px(g,"#C04A2A",31,18,3,3);
-  px(g,"#4F2610",5,26,4,4); px(g,"#4F2610",29,26,4,4);
-})();
-
-// ---------------- video dialog ----------------
-const dlg=document.getElementById("vid"), video=document.getElementById("video"), soon=document.getElementById("soon");
-let videoReady=null;
-function openVideo(){
-  if(videoReady===null){
-    video.src=VIDEO_SRC;
-    video.addEventListener("loadedmetadata",()=>{videoReady=true; video.hidden=false; soon.hidden=true},{once:true});
-    video.addEventListener("error",()=>{videoReady=false; video.hidden=true; soon.hidden=false},{once:true});
-  }
-  try{dlg.showModal()}catch(e){dlg.setAttribute("open","")}
-}
-document.getElementById("vidClose").addEventListener("click",()=>{video.pause(); dlg.close()});
-dlg.addEventListener("close",()=>video.pause());
-const chapEl=document.getElementById("chapters");
-CHAPTERS.forEach(ch=>{const b=document.createElement("button"); b.type="button"; b.innerHTML=`<b>${ch.who}</b>${ch.tag}`;
-  b.addEventListener("click",()=>{if(videoReady){video.currentTime=ch.t; video.play().catch(()=>{})}}); chapEl.appendChild(b)});
 
 // ---------------- game: Component 3's model, played one step at a time ----------------
 const G=document.getElementById("game");
@@ -901,8 +858,8 @@ const G=document.getElementById("game");
 const W0=16000, RMAX_G=80000;
 const rs=n=>(n<0?"−":"")+"₹"+Math.abs(Math.round(n)).toLocaleString("en-IN");
 const CHARS={
-  priya:{name:"Priya",girl:true,obj:"her",subj:"she",poss:"Her"},
-  rahul:{name:"Rahul",girl:false,obj:"him",subj:"he",poss:"His"}
+  aditi:{name:"Aditi",girl:true,obj:"her",subj:"she",poss:"Her"},
+  aryan:{name:"Aryan",girl:false,obj:"him",subj:"he",poss:"His"}
 };
 const OFFERS=[
   {k:"typ",b:"A typical internship",s:"Payoff R = ₹25,000: the typical student in the worked example",R:25000},
@@ -955,10 +912,10 @@ function render(){
   G.innerHTML="";
   if(gs.view==="start"){
     G.innerHTML=`${hud("PACK YOUR BAGS","Gurgaon · 2 months · ₹8,000 a month")}
-      <h3>The offer</h3><p>A two-month internship in Gurgaon. The stipend is <b>₹8,000 a month</b>, the Internshala 2024 average, so W = ₹16,000. Play the same offer as Priya and as Rahul: same payoff, same rent, same stipend.</p>
+      <h3>The offer</h3><p>A two-month internship in Gurgaon. The stipend is <b>₹8,000 a month</b>, the Internshala 2024 average, so W = ₹16,000. Play the same offer as Aditi and as Aryan: same payoff, same rent, same stipend.</p>
       <p>Each step adds one part of the model. At the end the family decides, using the cutoff C = (H + T − W) + S + N.</p><div class="who"></div>`;
     const w=G.querySelector(".who");
-    ["priya","rahul"].forEach(key=>{const b=document.createElement("button");b.type="button";b.appendChild(faceCanvas(CHARS[key].girl));
+    ["aditi","aryan"].forEach(key=>{const b=document.createElement("button");b.type="button";b.appendChild(faceCanvas(CHARS[key].girl));
       const p=gs.played[key];
       b.insertAdjacentHTML("beforeend",`<b>${CHARS[key].name}</b><span>${p?`Played: ${p.go?"goes":"stays"} · cutoff ${rs(p.cutoff)}`:"Undergraduate · same ability"}</span>`);
       b.addEventListener("click",()=>{gs={...gs,view:"offer",who:key,picks:[],policy:"none"};render()});w.appendChild(b)});
@@ -980,14 +937,14 @@ function render(){
   if(gs.view==="around"){
     G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 3 OF 5 · SAFETY COST S`,ch.girl?"S = ₹8,000":"S ≈ ₹0")}
       <h3>Getting around after dark</h3>
-      ${ch.girl?`<p>For a woman, the same rent and the same distance buy less. Priya's safety cost for two months:</p>
+      ${ch.girl?`<p>For a woman, the same rent and the same distance buy less. Aditi's safety cost for two months:</p>
         <div class="receipt"><table><tbody>
           <tr><td>Safer route<small>Delhi University women pay ₹7,500 a year more than men for a safer route (Borker), scaled to 2 months</small></td><td class="n">₹1,250</td></tr>
           <tr><td>Evening cabs instead of the metro<small>₹2,500 a month (illustrative)</small></td><td class="n">₹5,000</td></tr>
           <tr><td>A PG in a safer area<small>About ₹1,750 extra (illustrative)</small></td><td class="n">₹1,750</td></tr>
           <tr class="tot"><td>Safety cost S</td><td class="n">₹8,000</td></tr></tbody></table></div>
         <p>Women value commute about 20% more than men (Le Barbanchon, Rathelot and Roulet).</p>`
-      :`<p>A man faces almost none of these costs: no safer-area premium, no evening cabs. Rahul's safety cost S is about zero.</p>`}
+      :`<p>A man faces almost none of these costs: no safer-area premium, no evening cabs. Aryan's safety cost S is about zero.</p>`}
       <div class="row"><button class="btn" type="button" id="go">Continue</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
     G.querySelector("#go").addEventListener("click",next); wireBack(); return;
   }
@@ -1007,7 +964,7 @@ function render(){
     G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 5 OF 5 · THE FAMILY CALL`,ch.girl?"N = ₹15,000":"N = ₹0")}
       <h3>The family call</h3>
       <p>Indian undergraduates usually need permission to live away, and parents often pay the rent gap. They permit only if the family's net benefit is positive: the student's net benefit minus their norm cost N.</p>
-      ${ch.girl?`<p>Priya's parents value her future earnings as much as a son's. But a daughter living alone in another city brings worry about her safety, questions from relatives, and fear for her reputation and marriage prospects. Only 42% of women aged 15–49 may go alone to the market, a health facility and outside their community (NFHS-5). Their norm cost: <b>₹15,000</b> (illustrative).</p>`
+      ${ch.girl?`<p>Aditi's parents value her future earnings as much as a son's. But a daughter living alone in another city brings worry about her safety, questions from relatives, and fear for her reputation and marriage prospects. Only 42% of women aged 15–49 may go alone to the market, a health facility and outside their community (NFHS-5). Their norm cost: <b>₹15,000</b> (illustrative).</p>`
       :`<p>A son's move brings none of these costs, so N = ₹0.</p>`}
       <div class="row"><button class="btn" type="button" id="go">Hear the answer</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
     G.querySelector("#go").addEventListener("click",next); wireBack(); return;
@@ -1015,7 +972,7 @@ function render(){
   if(gs.view==="end"){
     const pol=POLICIES.find(p=>p.k===gs.policy), y=evalx(pol.f(base(gs.who,gs.picks)));
     if(gs.policy==="none") gs.played[gs.who]=y;
-    const other=gs.who==="priya"?"rahul":"priya", o=gs.played[other];
+    const other=gs.who==="aditi"?"aryan":"aditi", o=gs.played[other];
     const why=!(y.student>0)?`It isn't worth it to ${ch.obj}: R + W − H − T − S = ${rs(y.student)}.`
       :!(y.family>0)?`${ch.subj[0].toUpperCase()+ch.subj.slice(1)} wants to go (${rs(y.student)}), but once the parents subtract N = ${rs(y.N)}, the family's net benefit is ${rs(y.family)}. ${ch.poss} family rationally says no, which matches DDU-GKY women citing family reasons for declining.`
       :`The family's net benefit is ${rs(y.family)}, so ${ch.poss.toLowerCase()} family says yes.`;
@@ -1027,8 +984,8 @@ function render(){
       <p>With this rent, the internship has to be worth more than <b>${rs(y.cutoff)}</b> before ${ch.poss.toLowerCase()} family says yes. Of internships spread evenly from ₹0 to ₹80,000, <b>${Math.round(y.share*1000)/10}%</b> clear that bar for ${ch.obj}.</p>
       <h3 style="margin-top:16px">Change one thing</h3><p>Pick a policy from the model and see if ${ch.name} goes.</p>
       <div class="scen gscen"></div>
-      ${o?`<div class="vs"><div><b>${CHARS.priya.name}</b>${gs.played.priya.go?"Goes":"Stays"} · cutoff ${rs(gs.played.priya.cutoff)} · ${Math.round(gs.played.priya.share*1000)/10}% of internships clear it</div><div><b>${CHARS.rahul.name}</b>${gs.played.rahul.go?"Goes":"Stays"} · cutoff ${rs(gs.played.rahul.cutoff)} · ${Math.round(gs.played.rahul.share*1000)/10}% of internships clear it</div></div>
-        <p>Same payoff spread, same rent, same stipend. ${gs.played.priya.cutoff>gs.played.rahul.cutoff?`Priya's cutoff is higher by S + N, and that's where the gap comes from.`:""}</p>`:`<p>Now play the same offer as ${CHARS[other].name}.</p>`}
+      ${o?`<div class="vs"><div><b>${CHARS.aditi.name}</b>${gs.played.aditi.go?"Goes":"Stays"} · cutoff ${rs(gs.played.aditi.cutoff)} · ${Math.round(gs.played.aditi.share*1000)/10}% of internships clear it</div><div><b>${CHARS.aryan.name}</b>${gs.played.aryan.go?"Goes":"Stays"} · cutoff ${rs(gs.played.aryan.cutoff)} · ${Math.round(gs.played.aryan.share*1000)/10}% of internships clear it</div></div>
+        <p>Same payoff spread, same rent, same stipend. ${gs.played.aditi.cutoff>gs.played.aryan.cutoff?`Aditi's cutoff is higher by S + N, and that's where the gap comes from.`:""}</p>`:`<p>Now play the same offer as ${CHARS[other].name}.</p>`}
       <div class="row"><button class="btn" type="button" id="again">Play as ${CHARS[other].name}</button><button class="btn ghost" type="button" id="retry">Try ${ch.name} again</button><a class="btn ghost" href="#model">See the model</a></div>`;
     const sb=G.querySelector(".gscen");
     POLICIES.forEach(p=>{const b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",String(p.k===gs.policy));
@@ -1041,7 +998,7 @@ function render(){
 }
 
 function start(data){ if(data&&data.gs) gs=data.gs; render(); labInit(data&&data.lab); }
-window.claude?.hot?.snapshot?.(()=>({gs, lab:labState()}));
+window.claude?.hot?.snapshot?.(()=>({gs, lab:sliders()}));
 
 // ---------------- policy lab: the model's cutoffs, live ----------------
 const $=id=>document.getElementById(id);
@@ -1060,11 +1017,17 @@ const share=c=>Math.max(0,Math.min(1,(RMAX-c)/RMAX));
 const fmt=v=>{const r2=Math.round(v*100)/100; return Math.abs(v-r2)<1e-9? String(r2) : v.toFixed(1)};
 const pct=p=>fmt(p*100);
 function model(s){const cM=s.H+T_FIXED-s.W, cF=cM+s.S+s.N; const m=share(cM), f=share(cF); return {cM,cF,m,f,gap:(m-f)*100}}
-function labState(){return{W:+$("sW").value,H:+$("sH").value,S:+$("sS").value,N:+$("sN").value}}
-function setLab(s){["W","H","S","N"].forEach(k=>$("s"+k).value=s[k]); lab()}
+let TOG={hostel:false,hybrid:false};
+function sliders(){return{W:+$("sW").value,H:+$("sH").value,S:+$("sS").value,N:+$("sN").value}}
+function applyTog(s){let x={...s}; if(TOG.hostel){x.S=Math.min(x.S,1000); x.N=x.N/2} if(TOG.hybrid){x.S=x.S/2; x.N=x.N/2} return x}
+function labState(){return applyTog(sliders())}
+function setLab(s,keepTog){["W","H","S","N"].forEach(k=>$("s"+k).value=s[k]); if(!keepTog) TOG={hostel:false,hybrid:false}; lab()}
 function lab(){
-  const s=labState(), r=model(s);
-  $("oW").textContent=inr(s.W); $("oH").textContent=inr(s.H); $("oS").textContent=inr(s.S); $("oN").textContent=inr(s.N);
+  const raw=sliders(), s=labState(), r=model(s), on=TOG.hostel||TOG.hybrid;
+  $("oW").textContent=inr(raw.W); $("oH").textContent=inr(raw.H);
+  $("oS").textContent=on&&s.S!==raw.S?`${inr(raw.S)} → ${inr(s.S)}`:inr(raw.S);
+  $("oN").textContent=on&&s.N!==raw.N?`${inr(raw.N)} → ${inr(s.N)}`:inr(raw.N);
+  $("tHostel").setAttribute("aria-pressed",String(TOG.hostel)); $("tHybrid").setAttribute("aria-pressed",String(TOG.hybrid));
   $("bM").style.width=r.m*100+"%"; $("bF").style.width=r.f*100+"%";
   $("vM").textContent=pct(r.m)+"%"; $("vF").textContent=pct(r.f)+"%";
   $("vGap").textContent=fmt(Math.abs(r.gap)<1e-9?0:r.gap)+" points";
@@ -1076,7 +1039,7 @@ function lab(){
   $("labNote").textContent= extra>0
     ? `Men's cutoff = H + T − W = ${inr(r.cM)}. Women's cutoff adds S + N = ${inr(extra)}: ${Math.round(s.S/extra*100)}% safety, ${Math.round(s.N/extra*100)}% norm cost. Only S and N move the gap; W and H shift both cutoffs equally.`
     : "With no safety cost and no norm cost, women and men face the same cutoff, so the gap disappears: the textbook prediction.";
-  document.querySelectorAll("#scen button").forEach(b=>{const sc=SCEN.find(z=>z.k===b.dataset.k); b.setAttribute("aria-pressed", String(["W","H","S","N"].every(k=>sc[k]===s[k])))});
+  document.querySelectorAll("#scen button").forEach(b=>{const sc=SCEN.find(z=>z.k===b.dataset.k); b.setAttribute("aria-pressed", String(!on&&["W","H","S","N"].every(k=>sc[k]===raw[k])))});
 }
 function labInit(saved){
   const box=$("scen");
@@ -1084,6 +1047,9 @@ function labInit(saved){
     b.innerHTML=`<b>${sc.b}</b><span>${sc.d}</span><span class="g">${pct(r.m)}% · ${pct(r.f)}%</span><span>gap ${fmt(r.gap)} points</span>`;
     b.addEventListener("click",()=>setLab(sc)); box.appendChild(b)});
   ["sW","sH","sS","sN"].forEach(id=>$(id).addEventListener("input",lab));
+  $("tHostel").addEventListener("click",()=>{TOG.hostel=!TOG.hostel; lab()});
+  $("tHybrid").addEventListener("click",()=>{TOG.hybrid=!TOG.hybrid; lab()});
+  $("labReset").addEventListener("click",()=>setLab(DEF));
   setLab(saved&&saved.W!==undefined?saved:DEF);
 }
 
