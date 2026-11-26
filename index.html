@@ -308,7 +308,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 <div class="toplinks"><a href="#model">Model</a><a href="#policy">Policy Lab</a><a href="#play">Play</a></div>
 
 <!-- ================= ROOM ================= -->
-<section class="room" id="top" aria-label="Ananya's hostel room">
+<section class="room" id="top" aria-label="Priya's room">
  <div class="sticky">
   <canvas class="layer" id="cFar" width="384" height="216" aria-hidden="true"></canvas>
   <canvas class="layer" id="cMid" width="384" height="216" aria-hidden="true"></canvas>
@@ -323,14 +323,14 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
     <button class="hot" style="left:34%;top:57%;width:4.5%;height:6%" data-go="policy" id="phoneHot"><span class="tag below">Mummy calling… (policy lab)</span></button>
     <button class="hot" style="left:80%;top:32%;width:13%;height:56%" data-go="play"><span class="tag">Play: Pack Your Bags</span></button>
     <button class="hot" style="left:63%;top:77%;width:10%;height:15%" data-go="notes"><span class="tag">Model note</span></button>
-    <button class="hot" style="left:77%;top:12%;width:6%;height:10%" data-clock="1"><span class="tag" id="clockTag">9:30 pm · PG curfew at 10</span></button>
+    <button class="hot" style="left:77%;top:12%;width:6%;height:10%" data-clock="1"><span class="tag" id="clockTag">Women's PG curfew: 10 or 11 PM</span></button>
   </div>
   <div class="hint fadeable">
-    <h1>Same CGPA. Same offer. Only one of them goes.</h1>
-    <p>Ananya and Arjun both got a two-month internship at a Bengaluru startup. This site asks why women students are less likely to take internships in another city. Click the glowing things in the room, or scroll to fly out of the window.</p>
+    <h1>Same ability. Same offer. Only one of them goes.</h1>
+    <p>Priya and Rahul both get a two-month internship offer in Gurgaon. This site asks why women students are less likely than men to take internships in another city. Click the glowing things in the room, or scroll to fly out of the window.</p>
   </div>
   <div class="scrollcue fadeable">Scroll ↓ to fly out of the window</div>
-  <div class="arrive" id="arrive" aria-hidden="true"><b>Bengaluru</b><span>About 1,700 km from home. Rent is due before the first stipend arrives.</span></div>
+  <div class="arrive" id="arrive" aria-hidden="true"><b>Gurgaon</b><span>Girls' PGs here list at ₹8,000–₹20,000 a month.</span></div>
  </div>
 </section>
 
@@ -537,7 +537,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
     <div class="tnode root">Offer arrives · payoff R = ₹25,000 for both</div>
     <div class="tcols">
       <div class="tcol him">
-        <div class="tname m-col">Arjun</div>
+        <div class="tname m-col">Rahul</div>
         <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹10,000 = +₹15,000</b></div>
         <div class="tarrow">wants to go ✓</div>
         <div class="tnode">Parents: subtract N = ₹0<br><b>+₹15,000</b></div>
@@ -545,7 +545,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
         <div class="tnode out yes">He goes</div>
       </div>
       <div class="tcol her">
-        <div class="tname f-col">Ananya</div>
+        <div class="tname f-col">Priya</div>
         <div class="tnode">Student: R + W − H − T − S<br><b>₹25,000 − ₹18,000 = +₹7,000</b></div>
         <div class="tarrow">wants to go ✓</div>
         <div class="tnode">Parents: subtract N = ₹15,000<br><b>₹7,000 − ₹15,000 = −₹8,000</b></div>
@@ -661,7 +661,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
 <!-- ================= 3. GAME ================= -->
 <section class="panel" id="play">
   <header><span class="chip">Bridge to the model</span><h2>Pack Your Bags</h2></header>
-  <p class="lead">Same offer, two players, this year's Bengaluru prices. Choose a flight or train, a PG in Koramangala, HSR Layout, BTM Layout, Electronic City or near Silk Board (or a relative's place in Whitefield), a commute, a way home after launch nights, and whether to join the Friday outings. Rents, fares and passes come from listings and official fare charts. Every choice is sensible for the person making it. Play as Ananya, then as Arjun, and the game checks every possible plan for both.</p>
+  <p class="lead">The model as a game. Same offer, same rent, same stipend: play it as Priya, then as Rahul. Each step adds one part of the model, then the family decides. At the end, try a policy and see what changes.</p>
   <div class="arcade"><div class="screen" id="game" aria-live="polite"></div></div>
 </section>
 
@@ -672,7 +672,7 @@ footer{text-align:center;color:var(--paper);font-size:14px;padding:30px 16px 110
   <div class="tv">
     <button class="tvbtn" type="button" data-video="1" aria-label="Play the interviews video"><canvas id="tvc" width="38" height="30"></canvas></button>
     <div class="prose" style="flex:1;min-width:260px">
-      <p><strong>Six students on why they did or didn't go.</strong> Click the TV to watch. The interviews show what the barriers feel like. The survey is what shows the gap is real, so men are interviewed too, for contrast.</p>
+      <p><strong>Interviews with SNIoE students.</strong> Click the TV to watch.</p>
       <div class="tags"><span>Rent</span><span>Commute</span><span>Safety</span><span>Family</span></div>
     </div>
   </div>
@@ -770,9 +770,9 @@ function room(){
   px(r,"#FFE38A",68,26,2,6); px(r,"#FFE38A",71,26,1,3);
   // sign in window
   px(r,"#2A170C",146,26,26,9); px(r,"#FFF8EE",147,27,24,7);
-  // tiny "BLR" letters
-  const L={B:["110","101","110","101","110"],L:["100","100","100","100","111"],R:["110","101","110","110","101"],"→":["000","010","111","010","000"]};
-  let lx=149; ["B","L","R","→"].forEach(ch=>{L[ch].forEach((row,yy)=>[...row].forEach((b,xx)=>{if(b==="1")px(r,"#B5561B",lx+xx,28+yy)})); lx+=5;});
+  // tiny "GGN" letters (Gurgaon)
+  const L={G:["011","100","101","101","011"],N:["101","111","111","111","101"]};
+  let lx=151; ["G","G","N"].forEach(ch=>{L[ch].forEach((row,yy)=>[...row].forEach((b,xx)=>{if(b==="1")px(r,"#B5561B",lx+xx,28+yy)})); lx+=5;});
   // noticeboard (model)
   px(r,"#2A170C",12,16,38,42); px(r,"#C8955E",13,17,36,40);
   px(r,"#FFF8EE",16,20,14,10); px(r,"#FFE38A",32,21,14,9); px(r,"#9FE3DE",16,33,15,9); px(r,"#F7B7C6",33,33,13,9); px(r,"#FFF8EE",18,45,26,9);
@@ -895,227 +895,148 @@ const chapEl=document.getElementById("chapters");
 CHAPTERS.forEach(ch=>{const b=document.createElement("button"); b.type="button"; b.innerHTML=`<b>${ch.who}</b>${ch.tag}`;
   b.addEventListener("click",()=>{if(videoReady){video.currentTime=ch.t; video.play().catch(()=>{})}}); chapEl.appendChild(b)});
 
-// ---------------- game ----------------
+// ---------------- game: Component 3's model, played one step at a time ----------------
 const G=document.getElementById("game");
-// All money in rupees. Prices from Bengaluru listings and fare charts.
-const STIPEND=15000, MONTHS=2, DAYS=42, LATE=8, OUTINGS=4, BASE_DR=100000, MISC=1500;
-const OFFICE="a startup on 80 Feet Road, Koramangala";
-const autoFare=(km,night)=>Math.round((36+Math.max(0,km-2)*18)*(night?1.5:1));   // RTA Bengaluru meter fare from Aug 2025; 1.5x from 10 pm to 5 am
-const cabFare=(km,night)=>Math.round((100+Math.max(0,km-4)*24)*(night?1.1:1));   // Karnataka uniform cab fare (non-AC, first 4 km Rs 100, then Rs 24/km); 10% night charge
-const bikeFare=km=>Math.max(30,Math.round(km*12));                                 // estimate: bike taxis run below auto fares
+// Every number below is from Component 3's worked example (two months, Gurgaon) and its sources.
+const W0=16000, RMAX_G=80000;
 const rs=n=>(n<0?"−":"")+"₹"+Math.abs(Math.round(n)).toLocaleString("en-IN");
-const k=n=>Math.round(n/100)/10;
 const CHARS={
-  ananya:{name:"Ananya",girl:true,theta:.4,sigma:12000,parent:"Her parents",obj:"her",subj:"she",rel:"Chachi"},
-  arjun:{name:"Arjun",girl:false,theta:.5,sigma:0,parent:"His parents",obj:"him",subj:"he",rel:"Mama"}
+  priya:{name:"Priya",girl:true,obj:"her",subj:"she",poss:"Her"},
+  rahul:{name:"Rahul",girl:false,obj:"him",subj:"he",poss:"His"}
 };
-const F=(who,fx)=>CHARS[who].girl?fx:{};   // effects that only bite for Ananya
-
-// Round 1: getting there and back
-function travelOpts(who){
-  const girl=CHARS[who].girl;
-  return [
-    {k:"fly",b:"Flight + cab from the airport",s:"About ₹6,000 each way on a budget airline · airport cab to Koramangala ₹1,200–1,500 · lands 9:40 pm",cost:2*(6000+1300),fx:{},flags:["info:Fastest"]},
-    {k:"vv",b:"Flight + Vayu Vajra airport bus",s:`About ₹6,000 each way · airport bus to HSR ₹230–300, then a night auto · home around 11:30 pm`,cost:2*(6000+300+autoFare(4,true)),fx:F(who,{h:2000,sigma:3000}),flags:girl?["risk:Night auto from Silk Board, alone"]:[]},
-    {k:"raj",b:"Rajdhani Express, 3AC",s:"About ₹4,250 each way, meals included · 33½ hours · reaches KSR Bengaluru 5:20 am, then an auto",cost:2*(4250+autoFare(10)),fx:F(who,{sigma:2000}),flags:girl?["info:One night on the train"]:[]},
-    {k:"sl",b:"Karnataka Express, sleeper",s:"About ₹865 each way · nearly 40 hours, open berths",cost:2*(865+autoFare(10)),fx:F(who,{h:3000,sigma:6000}),flags:girl?["risk:Two nights alone in an open coach"]:["info:Cheapest"]}
-  ];
-}
-
-// Round 2: where to live. Same listings for both players; what differs is the deposit, the curfew and how parents react.
-const HOMES=[
-  {k:"kor",b:"Managed PG, Koramangala 6th Block",s:"Double sharing, meals included · 8-minute walk to work",month:14000,km:1.5,meals:true,curfewF:"10 pm"},
-  {k:"hsr",b:"PG in HSR Layout Sector 2",s:"Double sharing, meals included · 5 km from work",month:12000,km:5,meals:true,curfewF:"10 pm"},
-  {k:"btm",b:"PG in BTM Layout 2nd Stage",s:"Triple sharing, meals included · 4 km from work",month:9500,km:4,meals:true,curfewF:"9:30 pm"},
-  {k:"ec",b:"PG in Electronic City Phase 1",s:"Triple sharing, meals included · 16 km from work, via Silk Board",month:8000,km:16,meals:true,curfewF:"9:30 pm"},
-  {k:"cheap",b:"Budget co-ed PG near Silk Board",s:"Triple sharing, no meals (food about ₹3,500 a month) · no warden · 5 km",month:7000,km:5,meals:false,coed:true},
-  {k:"rel",b:"Stay with a relative in Whitefield",s:"Free room and home food · 17 km from work, up to 2 hours each way on the Outer Ring Road",month:0,km:17,meals:true,relative:true}
+const OFFERS=[
+  {k:"typ",b:"A typical internship",s:"Payoff R = ₹25,000: the typical student in the worked example",R:25000},
+  {k:"avg",b:"An average internship",s:"Payoff R = ₹40,000: the average of the payoff spread",R:40000},
+  {k:"good",b:"A good internship",s:"Payoff R = ₹60,000: the top of the ₹40,000–₹60,000 range for a good internship",R:60000}
 ];
-function homeOpts(who){
-  const girl=CHARS[who].girl, ch=CHARS[who];
-  return HOMES.map(h=>{
-    const food=h.meals?0:3500, dep=h.relative?0:Math.round(girl?h.month*1.62:h.month);
-    let fx={}, flags=[], b=h.b, s=h.s;
-    if(h.relative){ b=`Stay with ${ch.rel} in Whitefield`; fx={dR:-15000}; if(girl){fx.sigma=-12000; flags.push(`info:Family watching, so no "log kya kahenge"`)} flags.push("risk:Misses most evenings at work"); }
-    else if(girl && h.coed){ fx={h:6000,sigma:10000}; flags.push("risk:No warden, men on the same floor"); }
-    else if(girl){ flags.push(`info:Women's PG: in by ${h.curfewF}`); }
-    if(girl && !h.relative) flags.push(`info:Deposit ${rs(dep)}, women's hostels ask about 62% more`);
-    return {...h,b,s,cost:(h.month+food)*MONTHS,dep,food,curfew:girl&&h.curfewF?h.curfewF:null,fx,flags,costLabel:h.month?`${rs(h.month+food)}/mo`:"Free"};
-  });
+const HOMES=[
+  {k:"three",b:"Three-sharing bed",s:"From ₹5,177 a month (Zolostays, Gurugram)",H:2*5177},
+  {k:"shared",b:"Shared PG",s:"₹10,000 a month, within the ₹8,000–₹20,000 Stanza Living lists for girls' PGs near Gurgaon",H:20000},
+  {k:"private",b:"Private room",s:"₹25,800 a month, the top of the Zolostays range",H:2*25800}
+];
+const POLICIES=[
+  {k:"none",b:"No change",s:"The worked example as it stands",f:x=>x},
+  {k:"stip",b:"Stipend +₹4,000 a month",s:"W rises by ₹8,000 for everyone",f:x=>({...x,W:x.W+8000})},
+  {k:"info",b:"Information for parents",s:"N falls by a third, to ₹10,000",f:x=>({...x,N:x.girl?10000:0})},
+  {k:"cohort",b:"Cohort placement",s:"3+ women from one college together: S halves to ₹4,000, N halves to ₹7,500",f:x=>({...x,S:x.girl?4000:0,N:x.girl?7500:0})},
+  {k:"hostel",b:"Safe hostel, same rent",s:"S falls to ₹1,000, N halves to ₹7,500",f:x=>({...x,S:x.girl?1000:0,N:x.girl?7500:0})},
+  {k:"both",b:"Hostel + parent information",s:"S ₹1,000, N ₹5,000",f:x=>({...x,S:x.girl?1000:0,N:x.girl?5000:0})}
+];
+function base(who,picks){
+  const girl=CHARS[who].girl, offer=OFFERS.find(o=>o.k===picks[0]), home=HOMES.find(h=>h.k===picks[1]);
+  return {girl,R:offer?offer.R:0,W:W0,H:home?home.H:0,T:6000,S:girl?8000:0,N:girl?15000:0};
 }
-
-// Round 3: daily commute, priced from the distance
-function commuteOpts(who,home){
-  const girl=CHARS[who].girl, km=home.km, trips=DAYS*2, o=[];
-  if(km<=2){
-    o.push({k:"walk",b:"Walk",s:"8 minutes along 80 Feet Road",cost:0,fx:{}});
-    return o;
-  }
-  if(home.relative){
-    o.push({k:"vajra",b:"Vajra AC bus pass",s:`₹2,500 a month · 75–120 minutes each way${girl?" · Karnataka's free Shakti bus rides are for state residents, so she pays":""}`,cost:2500*MONTHS,fx:{}});
-    o.push({k:"cab",b:"Cab both ways",s:`${rs(cabFare(km))} a ride on the government fare chart · ${trips} rides`,cost:cabFare(km)*trips,fx:{}});
-    return o;
-  }
-  o.push({k:"bus",b:"BMTC bus pass",s:`Non-AC monthly pass ₹1,500${girl?" · free Shakti rides are for Karnataka residents only":""}${km>10?" · 60–90 min, packed at Silk Board":" · 30–45 min"}`,cost:1500*MONTHS,fx:F(who,km>10?{h:2000}:{h:1000}),flags:girl?["info:She pays: not a Karnataka resident"]:[]});
-  o.push({k:"auto",b:"Auto both ways",s:`${rs(autoFare(km))} a ride on the meter (₹36 for 2 km + ₹18/km) · ${trips} rides`,cost:autoFare(km)*trips,fx:{}});
-  o.push({k:"bike",b:"Bike taxi",s:`About ${rs(bikeFare(km))} a ride (estimate) · legal again since January 2026`,cost:bikeFare(km)*trips,fx:F(who,{sigma:3000}),flags:girl?["risk:Parents: behind a stranger, every day?"]:[]});
-  return o;
+function evalx(x){
+  const student=x.R+x.W-x.H-x.T-x.S, family=student-x.N, cutoff=x.H+x.T-x.W+x.S+x.N;
+  return {...x,student,family,cutoff,go:student>0&&family>0,share:Math.max(0,Math.min(1,(RMAX_G-cutoff)/RMAX_G))};
 }
-
-// Round 4: launch fortnight, eight nights past 10 pm
-function lateOpts(who,home){
-  const girl=CHARS[who].girl, km=home.km, o=[];
-  if(km<=2){
-    if(girl){
-      o.push({k:"early",b:"Leave at 9:45 to make curfew",s:"Miss the end of every launch night",cost:0,fx:{dR:-8000}});
-      o.push({k:"late",b:"Stay late, walk back after curfew",s:"The warden logs it and calls home",cost:0,fx:{sigma:5000,h:1000}});
-    } else o.push({k:"late",b:"Stay late and walk back",s:"8 minutes · no curfew",cost:0,fx:{}});
-    return o;
-  }
-  if(home.relative){
-    o.push({k:"early",b:"Leave at 7 for the bus",s:`${CHARS[who].rel} expects you for dinner · you miss launch nights`,cost:0,fx:{dR:-8000}});
-    o.push({k:"cab",b:"Stay late, night cab to Whitefield",s:`${rs(cabFare(km,true))} a night with the 10% night charge`,cost:cabFare(km,true)*LATE,fx:F(who,{sigma:3000}),flags:girl?[`risk:${CHARS[who].rel} waits up and tells your mother`]:[]});
-    o.push({k:"bus",b:"Stay late, last Vajra bus",s:"Covered by the pass · after midnight by the time you're home",cost:0,fx:F(who,{h:5000,sigma:5000}),flags:girl?["risk:Long walk from the stop after midnight"]:[]});
-    return o;
-  }
-  const curfew=girl&&home.curfew, cf=curfew?5000:0;
-  if(curfew) o.push({k:"early",b:`Leave in time for the ${home.curfew} curfew`,s:"Miss the end of every launch night",cost:0,fx:{dR:-8000}});
-  o.push({k:"auto",b:"Night auto home",s:`${rs(autoFare(km,true))} a night (meter + 50% after 10 pm)${curfew?" · breaks curfew":""}`,cost:autoFare(km,true)*LATE,fx:F(who,{sigma:cf,h:1000})});
-  o.push({k:"cab",b:"Cab home",s:`${rs(cabFare(km,true))} a night${curfew?" · breaks curfew":""}`,cost:cabFare(km,true)*LATE,fx:F(who,{sigma:cf})});
-  o.push({k:"bus",b:"Last bus and a walk",s:`Cheapest${km>10?" · over an hour at night":""}${curfew?" · breaks curfew":""}`,cost:0,fx:F(who,{sigma:cf,h:6000}),flags:girl?["risk:Dark stretch from the stop"]:[]});
-  return o;
-}
-
-// Round 5: Friday team outings, where the pre-placement offer gets talked about
-function outingOpts(who,home){
-  const girl=CHARS[who].girl, km=home.km, lock=girl&&(home.curfew||home.relative);
-  const ride=km<=2?0:(home.relative?cabFare(km,true):autoFare(km,true));
-  return [
-    {k:"go",b:"Go every Friday, home after 11",s:`About ₹600 a head${ride?` + ${rs(ride)} home`:""}, ${OUTINGS} times${lock?(home.relative?` · ${CHARS[who].rel} calls your mother`:" · breaks curfew"):""}`,cost:(600+ride)*OUTINGS,fx:F(who,lock?{sigma:5000}:(home.coed?{h:2000}:{}))},
-    {k:"half",b:"Go, leave by 9",s:"Make an appearance, miss the real conversations",cost:600*OUTINGS,fx:{dR:-5000}},
-    {k:"skip",b:"Skip them",s:"Save the money",cost:0,fx:{dR:-10000}}
-  ];
-}
-
-function rounds(who,picks){
-  const home=homeOpts(who).find(h=>h.k===picks[1]);
-  return [
-    {title:"Getting there",tag:"Delhi → Bengaluru and back",text:`The internship is at ${OFFICE}. First you have to get there, and home again in two months.`,opts:travelOpts(who),label:"Train or flight, return"},
-    {title:"Where do you live?",tag:"Two months of rent",text:"Rent and the deposit are due before the first stipend arrives. Prices are this year's listings.",opts:homeOpts(who),label:"Rent, food and bills"},
-    {title:"The daily commute",tag:`${DAYS} office days`,text:home?`${home.km} km to the office. In 2025, 10 km took about 45 minutes on average in Bengaluru traffic.`:"",opts:home?commuteOpts(who,home):[],label:"Daily commute"},
-    {title:"Launch fortnight",tag:`${LATE} late nights`,text:"The product ships this month. Eight nights run past 10 pm, and that's when the team decides who gets a pre-placement offer.",opts:home?lateOpts(who,home):[],label:"Late nights home"},
-    {title:"Friday team outings",tag:`${OUTINGS} Fridays`,text:"The team goes out every Friday. Your manager says this is where people get to know you.",opts:home?outingOpts(who,home):[],label:"Team outings"}
-  ];
-}
-const NROUNDS=5;
-function totals(who,picks){
-  const ch=CHARS[who], rd=rounds(who,picks); let h=0,sigma=ch.sigma,dR=BASE_DR; const lines=[];
-  picks.forEach((p,i)=>{const o=rd[i].opts.find(o=>o.k===p); if(!o)return; h+=o.fx.h||0; sigma+=o.fx.sigma||0; dR+=o.fx.dR||0; lines.push({label:rd[i].label,what:o.b,cost:o.cost});});
-  if(picks.length>=NROUNDS) lines.push({label:"Phone, laundry, toiletries",what:`About ${rs(MISC)} a month`,cost:MISC*MONTHS});
-  sigma=Math.max(0,sigma);
-  const home=homeOpts(who).find(x=>x.k===picks[1]);
-  const C=lines.reduce((a,l)=>a+l.cost,0), S=STIPEND*MONTHS, D=Math.max(0,C-S);
-  const upfront=(lines[0]?lines[0].cost/2:0)+(home?home.month+home.food+home.dep:0);
-  const studentOK=dR>=D+h, parentsGain=ch.theta*dR-sigma, parentsOK=parentsGain>=D;
-  return {C,S,D,h,sigma,dR,lines,upfront,deposit:home?home.dep:0,studentOK,parentsGain,parentsOK,go:studentOK&&parentsOK};
-}
-function allPaths(who){
-  const out=[];
-  for(const t of travelOpts(who)) for(const hm of homeOpts(who)) for(const c of commuteOpts(who,hm)) for(const l of lateOpts(who,hm)) for(const o of outingOpts(who,hm)){
-    const picks=[t.k,hm.k,c.k,l.k,o.k]; out.push({picks,home:hm.k,...totals(who,picks)});
-  }
-  return out;
-}
-function pathSummary(who){
-  const all=allPaths(who), ok=all.filter(p=>p.go);
-  const homes=[...new Set(ok.map(p=>p.home))].map(k=>HOMES.find(h=>h.k===k)).map(h=>h.relative?`staying with ${CHARS[who].rel}`:h.b.replace(/^(Managed |Budget )?/,"").replace(/^PG in /,"").replace(/^co-ed PG near /,"co-ed PG near ")).join(", ");
-  const avg=ok.length?ok.reduce((a,p)=>a+p.dR,0)/ok.length:0;
-  return {n:all.length,go:ok.length,homes,avg};
-}
-
-let gs={view:"start",who:null,step:0,picks:[],played:{}};
+const STEPS=["offer","home","around","setup","call","end"];
+let gs={view:"start",who:null,picks:[],policy:"none",played:{}};
 function faceCanvas(girl){const c=document.createElement("canvas");c.width=16;c.height=16;drawFace(c.getContext("2d"),girl);return c}
-function flagHTML(o){return (o.flags||[]).map(f=>{const i=f.indexOf(":");return `<span class="flag ${f.slice(0,i)}">${f.slice(i+1)}</span>`}).join("")}
-function receipt(t){
-  return `<div class="receipt"><table><tbody>${t.lines.map(l=>`<tr><td>${l.label}<small>${l.what}</small></td><td class="n">${rs(l.cost)}</td></tr>`).join("")}
-    <tr><td>Stipend, 2 months at ₹15,000</td><td class="n">−${rs(t.S)}</td></tr>
-    <tr class="tot"><td>Shortfall the family must cover, D</td><td class="n">${rs(t.D)}</td></tr></tbody></table>
-    <small>Cash needed in week one (one-way ticket, first month, deposit): <b>${rs(t.upfront)}</b>.${t.deposit?` The ${rs(t.deposit)} deposit comes back at the end, but someone has to find it now.`:""}</small></div>`;
+function hud(left,right){return `<div class="hud"><span>${left}</span><span>${right}</span></div>`}
+function ledger(x){
+  return `<div class="ledger">
+    <div><small>Payoff R</small><b>${rs(x.R)}</b></div><div><small>Stipend W</small><b>${rs(x.W)}</b></div>
+    <div><small>Rent H</small><b>${rs(x.H)}</b></div><div><small>Travel, setup T</small><b>${rs(x.T)}</b></div>
+    <div><small>Safety cost S</small><b>${rs(x.S)}</b></div><div><small>Parents' norm cost N</small><b>${rs(x.N)}</b></div></div>`;
 }
-function meter(t){
-  const max=Math.max(60000,t.C);
-  return `<div class="meter" aria-hidden="true"><span style="width:${Math.min(100,t.S/max*100)}%" class="m-st"></span><span style="width:${Math.min(100,Math.max(0,t.C-t.S)/max*100)}%" class="m-sh"></span></div>
-    <div class="meterkey"><span><i class="m-st"></i>Covered by stipend</span><span><i class="m-sh"></i>Family has to pay</span></div>`;
+function choiceList(opts,onPick){
+  const box=document.createElement("div"); box.className="choices";
+  opts.forEach(o=>{const b=document.createElement("button");b.type="button";b.className="choice";
+    b.innerHTML=`<div><b>${o.b}</b><span>${o.s}</span></div>${o.cost!==undefined?`<span class="cost">${o.cost}</span>`:""}`;
+    b.addEventListener("click",()=>onPick(o)); box.appendChild(b)});
+  return box;
 }
+function next(){gs.view=STEPS[STEPS.indexOf(gs.view)+1]; render()}
+function back(){const i=STEPS.indexOf(gs.view); if(i<=0){gs.view="start"} else {gs.view=STEPS[i-1]; if(gs.view==="offer"||gs.view==="home") gs.picks=gs.picks.slice(0,STEPS.indexOf(gs.view));} render()}
+function backBtn(){return `<div class="row"><button class="btn ghost" type="button" id="back">← Back</button></div>`}
+function wireBack(){const b=G.querySelector("#back"); if(b) b.addEventListener("click",back)}
 function render(){
   G.innerHTML="";
   if(gs.view==="start"){
-    G.innerHTML=`<div class="hud"><span>PACK YOUR BAGS</span><span>Bengaluru · 2 months · ₹15,000 a month</span></div>
-      <h3>The offer</h3><p>A two-month product internship at ${OFFICE}, in Bengaluru's startup belt. The stipend is <b>₹15,000 a month</b>. Doing it is worth about <b>₹1,00,000</b> in career value: a shot at a pre-placement offer, references, a line on the CV.</p>
-      <p>Five rounds of real choices, priced at this year's Bengaluru rates: the journey, where to live, the commute, late nights, and the Friday outings. Then you call home.</p>
-      <p>Pick who you play. Same CGPA, same offer, both from Delhi, same prices.</p><div class="who"></div>`;
+    G.innerHTML=`${hud("PACK YOUR BAGS","Gurgaon · 2 months · ₹8,000 a month")}
+      <h3>The offer</h3><p>A two-month internship in Gurgaon. The stipend is <b>₹8,000 a month</b>, the Internshala 2024 average, so W = ₹16,000. Play the same offer as Priya and as Rahul: same payoff, same rent, same stipend.</p>
+      <p>Each step adds one part of the model. At the end the family decides, using the cutoff C = (H + T − W) + S + N.</p><div class="who"></div>`;
     const w=G.querySelector(".who");
-    ["ananya","arjun"].forEach(key=>{const b=document.createElement("button");b.type="button";b.appendChild(faceCanvas(CHARS[key].girl));
+    ["priya","rahul"].forEach(key=>{const b=document.createElement("button");b.type="button";b.appendChild(faceCanvas(CHARS[key].girl));
       const p=gs.played[key];
-      b.insertAdjacentHTML("beforeend",`<b>${CHARS[key].name}</b><span>${p?`Played: ${p.go?"went":"stayed home"} · costs ${rs(p.C)}`:"3rd year · CGPA 8.4 · Delhi"}</span>`);
-      b.addEventListener("click",()=>{gs={...gs,view:"round",who:key,step:0,picks:[]};render()});w.appendChild(b)});
+      b.insertAdjacentHTML("beforeend",`<b>${CHARS[key].name}</b><span>${p?`Played: ${p.go?"goes":"stays"} · cutoff ${rs(p.cutoff)}`:"Undergraduate · same ability"}</span>`);
+      b.addEventListener("click",()=>{gs={...gs,view:"offer",who:key,picks:[],policy:"none"};render()});w.appendChild(b)});
     return;
   }
-  const ch=CHARS[gs.who];
-  if(gs.view==="round"){
-    const rd=rounds(gs.who,gs.picks)[gs.step], t=totals(gs.who,gs.picks);
-    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · ROUND ${gs.step+1} OF 6 · ${rd.tag.toUpperCase()}</span><span>Costs so far ${rs(t.C)} · stipend ${rs(STIPEND*MONTHS)}</span></div>
-      ${meter(t)}
-      <h3>${rd.title}</h3><p>${rd.text}</p><div class="choices"></div>
-      ${gs.step>0?`<div class="row"><button class="btn ghost" type="button" id="back">← Back</button></div>`:""}`;
-    const box=G.querySelector(".choices");
-    rd.opts.forEach(o=>{const b=document.createElement("button");b.type="button";b.className="choice";
-      b.innerHTML=`<div><b>${o.b}</b><span>${o.s}</span><div>${flagHTML(o)}</div></div><span class="cost">${o.costLabel||(o.cost?rs(o.cost):"₹0")}</span>`;
-      b.addEventListener("click",()=>{gs.picks=[...gs.picks,o.k]; gs.step++; gs.view=gs.step>=NROUNDS?"call":"round"; render()});
-      box.appendChild(b)});
-    const back=G.querySelector("#back"); if(back) back.addEventListener("click",()=>{gs.picks=gs.picks.slice(0,-1); gs.step--; render()});
-    return;
+  const ch=CHARS[gs.who], x=evalx(base(gs.who,gs.picks));
+  if(gs.view==="offer"){
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 1 OF 5 · THE PAYOFF`,"R is spread evenly from ₹0 to ₹80,000")}
+      <h3>How good is the internship?</h3><p>The payoff R is the present value of the future earnings gain: a better CV, skills, a network, maybe a pre-placement offer. It has the same spread for women and men.</p>`;
+    G.appendChild(choiceList(OFFERS.map(o=>({...o,cost:rs(o.R)})),o=>{gs.picks=[o.k];next()}));
+    G.insertAdjacentHTML("beforeend",backBtn()); wireBack(); return;
+  }
+  if(gs.view==="home"){
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 2 OF 5 · RENT H`,"Same prices for women and men")}
+      <h3>Where do you stay?</h3><p>Rent for two months. There's no evidence of a women's price premium per bed, so the listed price is the same for both.${ch.girl?" Traditional women's PGs commonly set 10 or 11 PM curfews.":""}</p>`;
+    G.appendChild(choiceList(HOMES.map(h=>({...h,cost:rs(h.H)})),h=>{gs.picks=[gs.picks[0],h.k];next()}));
+    G.insertAdjacentHTML("beforeend",backBtn()); wireBack(); return;
+  }
+  if(gs.view==="around"){
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 3 OF 5 · SAFETY COST S`,ch.girl?"S = ₹8,000":"S ≈ ₹0")}
+      <h3>Getting around after dark</h3>
+      ${ch.girl?`<p>For a woman, the same rent and the same distance buy less. Priya's safety cost for two months:</p>
+        <div class="receipt"><table><tbody>
+          <tr><td>Safer route<small>Delhi University women pay ₹7,500 a year more than men for a safer route (Borker), scaled to 2 months</small></td><td class="n">₹1,250</td></tr>
+          <tr><td>Evening cabs instead of the metro<small>₹2,500 a month (illustrative)</small></td><td class="n">₹5,000</td></tr>
+          <tr><td>A PG in a safer area<small>About ₹1,750 extra (illustrative)</small></td><td class="n">₹1,750</td></tr>
+          <tr class="tot"><td>Safety cost S</td><td class="n">₹8,000</td></tr></tbody></table></div>
+        <p>Women value commute about 20% more than men (Le Barbanchon, Rathelot and Roulet).</p>`
+      :`<p>A man faces almost none of these costs: no safer-area premium, no evening cabs. Rahul's safety cost S is about zero.</p>`}
+      <div class="row"><button class="btn" type="button" id="go">Continue</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
+    G.querySelector("#go").addEventListener("click",next); wireBack(); return;
+  }
+  if(gs.view==="setup"){
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 4 OF 5 · TRAVEL T`,"Same for women and men")}
+      <h3>Trips home and setup</h3>
+      <div class="receipt"><table><tbody>
+        <tr><td>Trips home and setup</td><td class="n">₹3,000</td></tr>
+        <tr><td>Metro, ₹1,500 a month</td><td class="n">₹3,000</td></tr>
+        <tr class="tot"><td>Travel and setup T</td><td class="n">₹6,000</td></tr></tbody></table></div>
+      ${ledger(x)}
+      <p>${ch.name}'s own net benefit: R + W − H − T − S = <b>${rs(x.student)}</b>. ${x.student>0?`${ch.subj[0].toUpperCase()+ch.subj.slice(1)} wants to go.`:`It isn't worth it to ${ch.obj}.`}</p>
+      <div class="row"><button class="btn" type="button" id="go">Call home</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
+    G.querySelector("#go").addEventListener("click",next); wireBack(); return;
   }
   if(gs.view==="call"){
-    const t=totals(gs.who,gs.picks);
-    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · ROUND 6 OF 6 · THE CALL</span><span>Calling home…</span></div>
-      ${meter(t)}
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · STEP 5 OF 5 · THE FAMILY CALL`,ch.girl?"N = ₹15,000":"N = ₹0")}
       <h3>The family call</h3>
-      <p>${t.D>0?`The stipend doesn't cover it. ${ch.parent} need to send <b>${rs(t.D)}</b>, and say yes.`:`The stipend covers the costs, but ${ch.parent.toLowerCase()} still have to say yes.`}</p>
-      ${receipt(t)}
-      <div class="ledger">
-        <div><small>Career value ΔR</small><b>${rs(t.dR)}</b></div>
-        <div><small>Risk cost to ${ch.obj}, h</small><b>${rs(t.h)}</b></div>
-        <div><small>Parents' worry, σ</small><b>${rs(t.sigma)}</b></div>
-        <div><small>Parents' share, θ</small><b>${ch.theta}</b></div>
-      </div>
-      <div class="row"><button class="btn" type="button" id="dial">Call home</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
-    G.querySelector("#dial").addEventListener("click",()=>{gs.view="end";render()});
-    G.querySelector("#back").addEventListener("click",()=>{gs.picks=gs.picks.slice(0,-1); gs.step=NROUNDS-1; gs.view="round"; render()});
-    return;
+      <p>Indian undergraduates usually need permission to live away, and parents often pay the rent gap. They permit only if the family's net benefit is positive: the student's net benefit minus their norm cost N.</p>
+      ${ch.girl?`<p>Priya's parents value her future earnings as much as a son's. But a daughter living alone in another city brings worry about her safety, questions from relatives, and fear for her reputation and marriage prospects. Only 42% of women aged 15–49 may go alone to the market, a health facility and outside their community (NFHS-5). Their norm cost: <b>₹15,000</b> (illustrative).</p>`
+      :`<p>A son's move brings none of these costs, so N = ₹0.</p>`}
+      <div class="row"><button class="btn" type="button" id="go">Hear the answer</button><button class="btn ghost" type="button" id="back">← Back</button></div>`;
+    G.querySelector("#go").addEventListener("click",next); wireBack(); return;
   }
   if(gs.view==="end"){
-    const t=totals(gs.who,gs.picks); gs.played[gs.who]=t;
-    const other=gs.who==="ananya"?"arjun":"ananya", o=gs.played[other];
-    const said=t.parentsOK?`"Theek hai, go. We'll send ${rs(t.D)}."`:(ch.girl?`"Beta, so far, alone… find something here."`:`"That's too much money this time."`);
-    let why;
-    if(!t.studentOK) why=`It isn't worth it to ${ch.obj}: the shortfall plus the risk (${rs(t.D+t.h)}) is more than the career value (${rs(t.dR)}).`;
-    else if(!t.parentsOK) why=`${ch.parent} get back ${ch.theta} of the ${rs(t.dR)} gain, which is ${rs(ch.theta*t.dR)}. Minus ${rs(t.sigma)} of worry, that leaves ${rs(t.parentsGain)}, less than the ${rs(t.D)} they would have to send. Saying no is the rational choice for them.`;
-    else why=`${ch.parent} get back ${ch.theta} × ${rs(t.dR)} − ${rs(t.sigma)} = ${rs(t.parentsGain)}, which covers the ${rs(t.D)} shortfall.${t.dR<BASE_DR?` But ${ch.subj} goes with ${rs(BASE_DR-t.dR)} less career value than the full offer${t.h>0?`, and carries ${rs(t.h)} of risk`:""}.`:(t.h>0?` ${ch.subj[0].toUpperCase()+ch.subj.slice(1)} carries ${rs(t.h)} of risk to get there.`:"")}`;
-    const sA=pathSummary("ananya"), sR=pathSummary("arjun");
-    G.innerHTML=`<div class="hud"><span>${ch.name.toUpperCase()} · RESULT</span><span>${said}</span></div>
-      <div class="verdict ${t.go?"yes":"no"}">${t.go?`${ch.name} goes to Bengaluru`:`${ch.name} stays home`}</div>
-      <div class="calc">Student: ΔR ${k(t.dR)}k ≥ D + h = ${k(t.D+t.h)}k? ${t.studentOK?"yes":"no"}<br>Parents: θ·ΔR − σ = ${ch.theta}×${k(t.dR)}k − ${k(t.sigma)}k = ${k(t.parentsGain)}k ≥ D = ${k(t.D)}k? ${t.parentsOK?"yes":"no"}</div>
+    const pol=POLICIES.find(p=>p.k===gs.policy), y=evalx(pol.f(base(gs.who,gs.picks)));
+    if(gs.policy==="none") gs.played[gs.who]=y;
+    const other=gs.who==="priya"?"rahul":"priya", o=gs.played[other];
+    const why=!(y.student>0)?`It isn't worth it to ${ch.obj}: R + W − H − T − S = ${rs(y.student)}.`
+      :!(y.family>0)?`${ch.subj[0].toUpperCase()+ch.subj.slice(1)} wants to go (${rs(y.student)}), but once the parents subtract N = ${rs(y.N)}, the family's net benefit is ${rs(y.family)}. ${ch.poss} family rationally says no, which matches DDU-GKY women citing family reasons for declining.`
+      :`The family's net benefit is ${rs(y.family)}, so ${ch.poss.toLowerCase()} family says yes.`;
+    G.innerHTML=`${hud(`${ch.name.toUpperCase()} · RESULT${gs.policy!=="none"?" · WITH "+pol.b.toUpperCase():""}`,`Cutoff C = ${rs(y.cutoff)}`)}
+      <div class="verdict ${y.go?"yes":"no"}">${y.go?`${ch.name} goes`:`${ch.name} stays`}</div>
+      <div class="calc">Student: R + W − H − T − S = ${rs(y.R)} + ${rs(y.W)} − ${rs(y.H)} − ${rs(y.T)} − ${rs(y.S)} = ${rs(y.student)}<br>Family: ${rs(y.student)} − N ${rs(y.N)} = ${rs(y.family)}</div>
       <p>${why}</p>
-      ${receipt(t)}
-      ${o?`<div class="vs"><div><b>${CHARS.ananya.name}</b>${gs.played.ananya.go?"Went":"Stayed home"} · costs ${rs(gs.played.ananya.C)} · career value ${rs(gs.played.ananya.dR)} · risk ${rs(gs.played.ananya.h)}</div><div><b>${CHARS.arjun.name}</b>${gs.played.arjun.go?"Went":"Stayed home"} · costs ${rs(gs.played.arjun.C)} · career value ${rs(gs.played.arjun.dR)} · risk ${rs(gs.played.arjun.h)}</div></div>`:`<p>Now play the same offer as ${CHARS[other].name}.</p>`}
-      <div class="paths"><h4>Every possible plan, checked</h4>
-        <div class="pathrow"><b class="m-col">Arjun</b><div class="pbar"><span style="width:${sR.go/sR.n*100}%;background:var(--him)"></span></div><span>${sR.go} of ${sR.n} plans get him there · average career value ${rs(sR.avg)}</span></div>
-        <div class="pathrow"><b class="f-col">Ananya</b><div class="pbar"><span style="width:${sA.go/sA.n*100}%;background:var(--her)"></span></div><span>${sA.go} of ${sA.n} plans get her there · average career value ${rs(sA.avg)}</span></div>
-        <p>Same prices, same offer. The plans that work for Ananya run through ${sA.homes||"none of the homes"}. Her safe choices cost more, her deposit is bigger, the curfew takes evenings away, and every extra rupee is divided by a smaller θ.</p></div>
+      ${ledger(y)}
+      <p>With this rent, the internship has to be worth more than <b>${rs(y.cutoff)}</b> before ${ch.poss.toLowerCase()} family says yes. Of internships spread evenly from ₹0 to ₹80,000, <b>${Math.round(y.share*1000)/10}%</b> clear that bar for ${ch.obj}.</p>
+      <h3 style="margin-top:16px">Change one thing</h3><p>Pick a policy from the model and see if ${ch.name} goes.</p>
+      <div class="scen gscen"></div>
+      ${o?`<div class="vs"><div><b>${CHARS.priya.name}</b>${gs.played.priya.go?"Goes":"Stays"} · cutoff ${rs(gs.played.priya.cutoff)} · ${Math.round(gs.played.priya.share*1000)/10}% of internships clear it</div><div><b>${CHARS.rahul.name}</b>${gs.played.rahul.go?"Goes":"Stays"} · cutoff ${rs(gs.played.rahul.cutoff)} · ${Math.round(gs.played.rahul.share*1000)/10}% of internships clear it</div></div>
+        <p>Same payoff spread, same rent, same stipend. ${gs.played.priya.cutoff>gs.played.rahul.cutoff?`Priya's cutoff is higher by S + N, and that's where the gap comes from.`:""}</p>`:`<p>Now play the same offer as ${CHARS[other].name}.</p>`}
       <div class="row"><button class="btn" type="button" id="again">Play as ${CHARS[other].name}</button><button class="btn ghost" type="button" id="retry">Try ${ch.name} again</button><a class="btn ghost" href="#model">See the model</a></div>`;
-    G.querySelector("#again").addEventListener("click",()=>{gs={...gs,view:"round",who:other,step:0,picks:[]};render()});
-    G.querySelector("#retry").addEventListener("click",()=>{gs={...gs,view:"round",step:0,picks:[]};render()});
+    const sb=G.querySelector(".gscen");
+    POLICIES.forEach(p=>{const b=document.createElement("button");b.type="button";b.setAttribute("aria-pressed",String(p.k===gs.policy));
+      const z=evalx(p.f(base(gs.who,gs.picks)));
+      b.innerHTML=`<b>${p.b}</b><span>${p.s}</span><span class="g">${z.go?`${ch.name} goes`:`${ch.name} stays`}</span>`;
+      b.addEventListener("click",()=>{gs.policy=p.k;render()}); sb.appendChild(b)});
+    G.querySelector("#again").addEventListener("click",()=>{gs={...gs,view:"offer",who:other,picks:[],policy:"none"};render()});
+    G.querySelector("#retry").addEventListener("click",()=>{gs={...gs,view:"offer",picks:[],policy:"none"};render()});
   }
 }
 
